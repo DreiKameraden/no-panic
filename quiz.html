@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test — Digital College</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav-top">
+  <div class="brand">
+    <span class="brand-dot"></span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Главная</a>
+  </div>
+</nav>
+
+<!-- TEST CONTAINER -->
+<div class="quiz-container">
+  
+  <!-- START SCREEN -->
+  <div class="quiz-screen active" id="startScreen">
+    <div class="quiz-header">
+      <h1 id="testTitle">Загрузка теста...</h1>
+      <p id="testSubtitle" class="lead">—</p>
+    </div>
+    
+    <div class="warning-box">
+      ⚠️ Не закрывайте эту вкладку до завершения теста. Результаты отправляются автоматически.
+    </div>
+    
+    <div class="start-form">
+      <h2>Начните тест</h2>
+      <input type="text" class="input-field" id="studentName" placeholder="ФИО" autocomplete="off">
+      <input type="text" class="input-field" id="studentGroup" placeholder="Группа (например, ИТ-91)" autocomplete="off">
+      <button class="btn btn-primary" onclick="startTest()">Начать тест</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="quiz-screen" id="quizScreen">
+    <div class="quiz-top-bar">
+      <div class="student-info" id="displayName">—</div>
+      <div class="timer" id="timer">15:00</div>
+    </div>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    
+    <div id="questionArea"></div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="quiz-screen" id="resultScreen">
+    <div class="result-card">
+      <h2>Тест завершён</h2>
+      <div class="score-big" id="scoreBig">0/0</div>
+      <div class="grade" id="gradeBig">—</div>
+      <p class="result-message">Результаты отправлены преподавателю.<br>Можете закрыть эту вкладку.</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/quiz-engine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Hub — Английский язык</title>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/hub.css">
+</head>
+<body>
+
+<nav class="nav-top">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span>Education is the most powerful weapon which you can use to change the world</span>
+  </div>
+  <div class="nav-links">
+    <a href="../index.html">Главная</a>
+  </div>
+</nav>
+
+<div class="hub-container">
+  <div class="hub-header">
+    <div class="hub-flag">🇬🇧</div>
+    <h1>English <span class="grad">Hub</span></h1>
+    <p class="lead">Education is not the learning of facts, but the training of the mind to think</p>
+  </div>
+
+
+  <!-- MATERIALS SECTION (теперь это пары материал+тест) -->
+  <section class="hub-section">
+    <h2>Учебные материалы</h2>
+    <p class="section-lead">Лекции и связанные с ними тесты для самопроверки</p>
+    <div class="pairs-list" id="materialsList">
+      <div class="loading">Загрузка...</div>
+    </div>
+  </section>
+</div>
+
+
+<!-- TESTS SECTION (для одиноких тестов) -->
+<section class="hub-section">
+  <h2>Дополнительные тесты</h2>
+  <p class="section-lead">Тесты без привязки к конкретному материалу</p>
+  <div class="hub-grid" id="testsList"></div>
+</section>
+
+<!-- FINAL TEST SECTION -->
+<section class="hub-section final-section">
+  <h2>Итоговая проверка</h2>
+  <p class="section-lead">Большой тест по всем пройденным материалам</p>
+  <div id="finalTestList"></div>
+</section>
+
+<script src="../js/hub.js"></script>
+<script>
+  // Инициализация хаба для английского
+  initHub('english');
+</script>
+
+</body>
+</html>

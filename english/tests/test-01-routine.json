@@ -1,0 +1,35 @@
+{
+  "name": "Test 1: Daily Routine",
+  "subtitle": "Блок 1 · Лексика рутины, предлоги, Present Simple/Continuous",
+  "timeLimit": 900,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "I usually ___ up at 7:00.",
+      "opts": ["get", "gets", "getting", "am get"],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "We have English ___ Monday.",
+      "opts": ["at", "in", "on", "to"],
+      "c": 3
+    },
+    {
+      "type": "true_false",
+      "q": "The word 'enjoy' is followed by -ing (enjoy doing).",
+      "answer": true
+    },
+    {
+      "type": "fill_blank",
+      "q": "I have classes ___ the evening. (введите предлог)",
+      "answer": "in"
+    },
+    {
+      "type": "multiple_select",
+      "q": "Which words are frequency adverbs? (выберите ВСЕ правильные)",
+      "opts": ["always", "quickly", "usually", "never", "beautiful"],
+      "correct": [0, 2, 3]
+    }
+  ]
+}

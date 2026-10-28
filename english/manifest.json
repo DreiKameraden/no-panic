@@ -1,0 +1,72 @@
+{
+  "tests": [
+    {
+      "num": "01",
+      "file": "test-01-basics.json",
+      "title": "Test 1: Basics",
+      "description": "Числа, национальность, семья, глаголы to be, to have и to do",
+      "questions": 15,       
+      "time": 15,
+      "groups": ["09", "ИТ-92", "new"],
+      "relatedMaterial": "lesson-01-basics.md"
+    },
+    {
+      "num": "01",
+      "file": "test-01-routine.json",
+      "title": "Daily Routine",
+      "description": "Лексика рутины, наречия частотности, предлоги времени",
+      "questions": 10,
+      "time": 15,
+      "groups": ["09"],
+      "relatedMaterial": "lesson-01-routine.md"
+    },
+    {
+      "num": "02",
+      "file": "test-02-future.json",
+      "title": "Plans & Future",
+      "description": "Will vs Going to, I'd like to, verb patterns",
+      "questions": 10,
+      "time": 15,
+      "groups": ["09"],
+      "relatedMaterial": "lesson-02-future.md"
+    }
+  ],
+  "materials": [
+    {
+      "num": "01",
+      "file": "lesson-01-basics.md",
+      "title": "Лекция №1: Basics",
+      "description": "Лексика рутины, Present Simple vs Continuous",
+      "type": "Лекция",
+      "groups": ["09", "ИТ-92"],
+      "relatedTest": "test-01-basics.json"
+    },
+    {
+      "num": "02",
+      "file": "lesson-02-future.md",
+      "title": "Лекция №2: Plans & Future",
+      "description": "Will vs Going to, I'd like to",
+      "type": "Лекция",
+      "groups": ["09"],
+      "relatedTest": "test-02-future.json"
+    },
+        {
+      "num": "01",
+      "file": "dop/L1.html",
+      "title": "Лекция №1",
+      "description": "Настоящее время",
+      "type": "Лекция",
+      "groups": ["other"],
+      "relatedTest": "test-01-basics.json"
+    }
+
+  ],
+  "finalTest": {
+    "file": "test-final.json",
+    "title": "⭐ Final Assessment",
+    "description": "Итоговый тест по всем материалам курса",
+    "questions": 20,
+    "time": 20,
+    "groups": ["09", "ИТ-92"]
+  }
+}

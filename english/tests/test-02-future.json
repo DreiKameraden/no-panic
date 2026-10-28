@@ -1,0 +1,64 @@
+{
+  "name": "Test 2: Plans & Future",
+  "subtitle": "Блок 2 · Will vs Going to, I'd like to, verb patterns",
+  "timeLimit": 100,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "\"The phone is ringing!\" — \"OK, I ___ it.\"",
+      "opts": ["will answer", "am going to answer", "answer", "am answering"],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "I bought the tickets. We ___ to Moscow next week.",
+      "opts": ["will fly", "fly", "are going to fly", "flew"],
+      "c": 3
+    },
+    {
+      "type": "multiple_choice",
+      "q": "I'd like ___ a developer in the future.",
+      "opts": ["be", "to be", "being", "am"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "My friend prefers coffee ___ tea.",
+      "opts": ["than", "from", "over", "to"],
+      "c": 4
+    },
+    {
+      "type": "multiple_choice",
+      "q": "I plan ___ my homework after dinner.",
+      "opts": ["to do", "doing", "do", "did"],
+      "c": 1
+    },
+    {
+      "type": "true_false",
+      "q": "'Will' is used for spontaneous decisions made at the moment of speaking.",
+      "answer": true
+    },
+    {
+      "type": "true_false",
+      "q": "After 'enjoy' we can use both 'to do' and 'doing'.",
+      "answer": false
+    },
+    {
+      "type": "fill_blank",
+      "q": "I ___ like to ask you a question. (введите сокращение от 'would')",
+      "answer": "'d"
+    },
+    {
+      "type": "multiple_select",
+      "q": "Which verbs are followed by 'to + infinitive'? (выберите ВСЕ)",
+      "opts": ["want", "enjoy", "plan", "decide", "like (both OK)"],
+      "correct": [0, 2, 3]
+    },
+    {
+      "type": "multiple_choice",
+      "q": "\"It's cold here.\" — \"I ___ close the window.\"",
+      "opts": ["am going to", "do", "will"],
+      "c": 3
+    }
+  ]
+}

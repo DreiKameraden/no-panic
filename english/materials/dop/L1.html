@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Tenses in IT & Aviation</title>
+<link rel="stylesheet" href="../../css/base.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  /* body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  } */
+
+  /* Navigation Bar */
+  .presentation-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 14, 26, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .brand-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .slide-counter {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    background: rgba(251,191,36,0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .back-to-hub {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .back-to-hub:hover {
+    color: var(--accent);
+  }
+
+  /* Slides Container */
+  .slides-container {
+    height: 100vh;
+    padding-top: 60px;
+    overflow: hidden;
+  }
+
+  .slide {
+    display: none;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    padding: 40px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .slide.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Slide Header */
+  .slide-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .slide-meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+  .meta-tag {
+    padding: 4px 12px;
+    background: rgba(251,191,36,0.1);
+    color: var(--accent);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .slide-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .slide-title .grad {
+    background: linear-gradient(120deg, var(--accent) 0%, #fff 60%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .slide-subtitle {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Content Styles */
+  h2 {
+    font-size: 32px;
+    color: var(--accent);
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 24px;
+    color: var(--accent-2);
+    margin: 30px 0 15px;
+  }
+
+  p {
+    margin-bottom: 18px;
+    line-height: 1.8;
+    font-size: 17px;
+  }
+
+  ul, ol {
+    margin-bottom: 20px;
+    padding-left: 28px;
+  }
+
+  li {
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+
+  .vocab-highlight {
+    background: rgba(251,191,36,0.15);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* Text Box */
+  .text-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0;
+  }
+
+  /* Grammar Box */
+  .grammar-box {
+    background: rgba(96,165,250,0.08);
+    border-left: 4px solid var(--accent-2);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .example-box {
+    background: rgba(52,211,153,0.08);
+    border-left: 4px solid var(--accent-4);
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+
+  /* Quiz Section */
+  .quiz-section {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+
+  .quiz-question {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .quiz-option {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+  }
+
+  .quiz-option:hover {
+    border-color: var(--accent);
+    background: rgba(251,191,36,0.05);
+  }
+
+  .quiz-option.correct {
+    background: rgba(52,211,153,0.2);
+    border-color: var(--accent-4);
+    color: var(--accent-4);
+  }
+
+  .quiz-option.incorrect {
+    background: rgba(239,68,68,0.15);
+    border-color: var(--danger);
+    color: #fca5a5;
+  }
+
+  /* Discussion Box */
+  .discussion-box {
+    background: rgba(167,139,250,0.08);
+    border: 2px solid var(--accent-5);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 30px 0;
+  }
+
+  .discussion-box h3 {
+    color: var(--accent-5);
+    margin-top: 0;
+  }
+
+  /* Vocabulary Table */
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 15px;
+  }
+
+  .vocab-table th {
+    background: rgba(251,191,36,0.15);
+    color: var(--accent);
+    padding: 14px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .vocab-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vocab-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--border);
+    z-index: 999;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-4));
+    transition: width 0.3s;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .slide {
+      padding: 20px;
+    }
+    .slide-title {
+      font-size: 32px;
+    }
+    h2 {
+      font-size: 24px;
+    }
+    .nav-controls {
+      gap: 8px;
+    }
+    .nav-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="presentation-nav">
+  <div class="nav-brand">
+    <span class="brand-dot"></span>
+    <span>ЦИФРОВОЙ КОЛЛЕДЖ</span>
+  </div>
+  <div class="nav-controls">
+    <a href="../english.html" class="back-to-hub">← К разделу</a>
+    <span class="slide-counter" id="slideCounter">1 / 10</span>
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Назад</button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Вперёд →</button>
+  </div>
+</nav>
+
+<!-- Slides Container -->
+<div class="slides-container">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide active">
+    <div class="slide-content">
+      <div class="slide-header">
+        <div class="slide-meta">
+          <span class="meta-tag">⏱️ 2 ак. часа</span>
+          <span class="meta-tag">📂 Grammar</span>
+          <span class="meta-tag">🎯 IELTS B2</span>
+        </div>
+        <h1 class="slide-title">Present Tenses in <span class="grad">IT & Aviation</span></h1>
+        <p class="slide-subtitle">How software engineers and aircraft technicians use Present Simple, Continuous, and Perfect in their daily work</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Reading Text -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>🔥 Warm-up: Read and Think</h2>
+      <p>Read the text below. Pay attention to the <span class="vocab-highlight">highlighted words</span> — you'll need them later.</p>
+      
+      <div class="text-box">
+        <h3 style="color: var(--accent); margin-top: 0;">When Code Meets the Sky</h3>
+        
+        <p>Alex <span class="vocab-highlight">works</span> as a software engineer at a company that <span class="vocab-highlight">develops</span> <span class="vocab-highlight">diagnostic systems</span> for aircraft. Every morning, he <span class="vocab-highlight">reviews</span> <span class="vocab-highlight">bug reports</span> from the previous day and <span class="vocab-highlight">prioritizes</span> tasks for his team. Currently, he <span class="vocab-highlight">is working</span> on a new <span class="vocab-highlight">algorithm</span> that <span class="vocab-highlight">detects</span> <span class="vocab-highlight">malfunctions</span> in the <span class="vocab-highlight">turbine</span> system.</p>
+        
+        <p>"The <span class="vocab-highlight">framework</span> we <span class="vocab-highlight">use</span> <span class="vocab-highlight">handles</span> real-time data from <span class="vocab-highlight">sensors</span> <span class="vocab-highlight">installed</span> on the <span class="vocab-highlight">fuselage</span>," Alex explains. "Right now, we <span class="vocab-highlight">are testing</span> a new <span class="vocab-highlight">module</span> that <span class="vocab-highlight">analyzes</span> <span class="vocab-highlight">vibration patterns</span>. If the system <span class="vocab-highlight">identifies</span> an <span class="vocab-highlight">anomaly</span>, it <span class="vocab-highlight">triggers</span> an alert for the <span class="vocab-highlight">maintenance</span> crew."</p>
+        
+        <p>His colleague, Maria, <span class="vocab-highlight">is an</span> aircraft technician. She <span class="vocab-highlight">inspects</span> the <span class="vocab-highlight">landing gear</span> and <span class="vocab-highlight">hydraulic systems</span> every day. "I <span class="vocab-highlight">have been working</span> in aviation for five years," she says. "Recently, we <span class="vocab-highlight">have implemented</span> Alex's software, and it <span class="vocab-highlight">has significantly reduced</span> our <span class="vocab-highlight">downtime</span>. Last week, the system <span class="vocab-highlight">detected</span> a <span class="vocab-highlight">crack</span> in the <span class="vocab-highlight">wing structure</span> that we <span class="vocab-highlight">had missed</span> during a <span class="vocab-highlight">routine inspection</span>."</p>
+        
+        <p>"The <span class="vocab-highlight">integration</span> of software and hardware <span class="vocab-highlight">has revolutionized</span> the industry," Alex adds. "We <span class="vocab-highlight">have already deployed</span> three <span class="vocab-highlight">updates</span> this year, and we <span class="vocab-highlight">are planning</span> to <span class="vocab-highlight">enhance</span> the <span class="vocab-highlight">predictive capabilities</span> of the system."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Discussion -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>💬 Discussion Questions</h2>
+      <div class="discussion-box">
+        <p><strong>Discuss these questions with a partner or think about them:</strong></p>
+        <ol>
+          <li>What does Alex do every day? What is he working on right now?</li>
+          <li>How has the software changed Maria's work?</li>
+          <li>Why is the integration of IT and aviation important?</li>
+          <li>Can you think of other industries where software helps detect problems?</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Vocabulary Check -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>📝 Vocabulary Check</h2>
+      <p>Before we move to grammar, let's check if you understood the key words from the text.</p>
+      
+      <div class="quiz-section">
+        <div class="quiz-question">1. What does "diagnostic system" mean?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A system that controls aircraft engines</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">A system that identifies problems and malfunctions</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A system that manages flight schedules</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">2. What is a "malfunction"?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A type of software update</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A routine inspection procedure</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">A failure or problem in how something works</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">3. What does "downtime" refer to?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, true)">Time when equipment is not working or being repaired</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">Time when engineers take a break</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">Time spent on routine maintenance</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">4. What is an "anomaly"?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A standard procedure</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">Something that deviates from what is expected or normal</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">A type of sensor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Present Simple -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>📚 Grammar: Present Simple</h2>
+      
+      <div class="grammar-box">
+        <p><strong>Use:</strong> Habits, routines, general truths, permanent situations</p>
+        <p><strong>Structure:</strong> Subject + verb (s/es for he/she/it)</p>
+        <p><strong>Signal words:</strong> every day, usually, always, often, sometimes, never</p>
+      </div>
+      
+      <div class="example-box">
+        <p>✅ Alex <strong>works</strong> as a software engineer. (permanent job)</p>
+        <p>✅ He <strong>reviews</strong> bug reports every morning. (routine)</p>
+        <p>✅ The framework <strong>handles</strong> real-time data. (general truth)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Present Continuous -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>📚 Grammar: Present Continuous</h2>
+      
+      <div class="grammar-box">
+        <p><strong>Use:</strong> Actions happening now, temporary situations, current projects</p>
+        <p><strong>Structure:</strong> Subject + am/is/are + verb-ing</p>
+        <p><strong>Signal words:</strong> now, right now, currently, at the moment, this week</p>
+      </div>
+      
+      <div class="example-box">
+        <p>✅ He <strong>is working</strong> on a new algorithm. (current project)</p>
+        <p>✅ Right now, we <strong>are testing</strong> a new module. (happening now)</p>
+        <p>✅ We <strong>are planning</strong> to enhance the system. (current intention)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Present Perfect -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>📚 Grammar: Present Perfect</h2>
+      
+      <div class="grammar-box">
+        <p><strong>Use:</strong> Past actions with present results, experiences, changes over time, completed actions with present relevance</p>
+        <p><strong>Structure:</strong> Subject + have/has + past participle (V3)</p>
+        <p><strong>Signal words:</strong> already, yet, just, recently, ever, never, so far, this year</p>
+      </div>
+      
+      <div class="example-box">
+        <p>✅ Maria <strong>has been working</strong> in aviation for five years. (started in past, continues now)</p>
+        <p>✅ We <strong>have implemented</strong> Alex's software. (past action, present result)</p>
+        <p>✅ It <strong>has significantly reduced</strong> our downtime. (change over time)</p>
+        <p>✅ We <strong>have already deployed</strong> three updates this year. (completed, present relevance)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Grammar Practice -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>🎯 Grammar Practice</h2>
+      <p>Choose the correct tense for each sentence:</p>
+      
+      <div class="quiz-section">
+        <div class="quiz-question">1. The technician ______ the landing gear every morning.</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, true)">inspects</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">is inspecting</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">has inspected</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">2. Right now, the team ______ a new diagnostic module.</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">develops</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">is developing</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">has developed</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">3. We ______ three software updates this year.</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">deploy</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">are deploying</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">have deployed</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">4. The system ______ anomalies in real-time.</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, true)">detects</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">is detecting</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">has detected</div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-question">5. Currently, engineers ______ predictive capabilities of the system.</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="checkAnswer(this, false)">enhance</div>
+          <div class="quiz-option" onclick="checkAnswer(this, true)">are enhancing</div>
+          <div class="quiz-option" onclick="checkAnswer(this, false)">have enhanced</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Speaking Practice -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>🗣 Speaking Practice</h2>
+      <div class="discussion-box">
+        <h3>Use the vocabulary and tenses you've learned:</h3>
+        <ol>
+          <li><strong>Describe your daily routine</strong> using Present Simple. What do you usually do when you work on a programming project or study aircraft systems?</li>
+          <li><strong>Talk about what you're working on right now</strong> using Present Continuous. What current projects or tasks are you focusing on?</li>
+          <li><strong>Share your achievements</strong> using Present Perfect. What have you accomplished in your studies or work so far?</li>
+          <li><strong>Imagine you work at the company from the text.</strong> Describe what you do, what you're working on now, and what you've achieved.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Summary + Vocabulary -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>📊 Summary</h2>
+      <p>Today you learned:</p>
+      <ul>
+        <li><strong>Present Simple</strong> — for routines, habits, and general truths</li>
+        <li><strong>Present Continuous</strong> — for actions happening now and current projects</li>
+        <li><strong>Present Perfect</strong> — for past actions with present results and experiences</li>
+        <li><strong>30+ new words and phrases</strong> related to IT and aviation</li>
+      </ul>
+
+      <h2>📖 Vocabulary List</h2>
+      <table class="vocab-table">
+        <thead>
+          <tr>
+            <th>Word/Phrase</th>
+            <th>Translation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>diagnostic system</td><td>диагностическая система</td></tr>
+          <tr><td>bug report</td><td>отчёт об ошибке</td></tr>
+          <tr><td>to prioritize</td><td>расставлять приоритеты</td></tr>
+          <tr><td>algorithm</td><td>алгоритм</td></tr>
+          <tr><td>to detect</td><td>обнаруживать</td></tr>
+          <tr><td>malfunction</td><td>неисправность</td></tr>
+          <tr><td>turbine</td><td>турбина</td></tr>
+          <tr><td>framework</td><td>фреймворк, основа</td></tr>
+          <tr><td>to handle</td><td>обрабатывать, справляться</td></tr>
+          <tr><td>sensor</td><td>датчик</td></tr>
+          <tr><td>to install</td><td>устанавливать</td></tr>
+          <tr><td>fuselage</td><td>фюзеляж</td></tr>
+          <tr><td>module</td><td>модуль</td></tr>
+          <tr><td>to analyze</td><td>анализировать</td></tr>
+          <tr><td>vibration pattern</td><td>паттерн вибрации</td></tr>
+          <tr><td>anomaly</td><td>аномалия</td></tr>
+          <tr><td>to trigger</td><td>запускать, активировать</td></tr>
+          <tr><td>alert</td><td>оповещение, сигнал тревоги</td></tr>
+          <tr><td>maintenance</td><td>техническое обслуживание</td></tr>
+          <tr><td>to inspect</td><td>осматривать, проверять</td></tr>
+          <tr><td>landing gear</td><td>шасси</td></tr>
+          <tr><td>hydraulic system</td><td>гидравлическая система</td></tr>
+          <tr><td>to implement</td><td>внедрять, реализовывать</td></tr>
+          <tr><td>downtime</td><td>простой, время неработы</td></tr>
+          <tr><td>crack</td><td>трещина</td></tr>
+          <tr><td>wing structure</td><td>конструкция крыла</td></tr>
+          <tr><td>routine inspection</td><td>плановый осмотр</td></tr>
+          <tr><td>integration</td><td>интеграция</td></tr>
+          <tr><td>to revolutionize</td><td>революционизировать</td></tr>
+          <tr><td>to deploy</td><td>развёртывать, внедрять</td></tr>
+          <tr><td>update</td><td>обновление</td></tr>
+          <tr><td>to enhance</td><td>улучшать, совершенствовать</td></tr>
+          <tr><td>predictive capabilities</td><td>прогностические возможности</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (n + totalSlides) % totalSlides;
+  slides[currentSlide].classList.add('active');
+  
+  // Update counter
+  document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+  
+  // Update buttons
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  
+  // Update progress bar
+  const progress = ((currentSlide + 1) / totalSlides) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+  
+  // Scroll to top
+  slides[currentSlide].scrollTop = 0;
+}
+
+function changeSlide(direction) {
+  showSlide(currentSlide + direction);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') changeSlide(-1);
+  if (e.key === 'ArrowRight') changeSlide(1);
+});
+
+// Initialize
+showSlide(0);
+
+// Quiz answer checker
+function checkAnswer(element, isCorrect) {
+  const parent = element.parentElement;
+  const options = parent.querySelectorAll('.quiz-option');
+  
+  options.forEach(opt => {
+    opt.style.pointerEvents = 'none';
+  });
+  
+  if (isCorrect) {
+    element.classList.add('correct');
+  } else {
+    element.classList.add('incorrect');
+    options.forEach(opt => {
+      if (opt.onclick.toString().includes('true')) {
+        opt.classList.add('correct');
+      }
+    });
+  }
+}
+</script>
+
+</body>
+</html>
