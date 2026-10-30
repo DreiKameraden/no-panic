@@ -1,148 +1,64 @@
 {
-  "name": "Test 1: Basics (Numbers, Family, To Be)",
-  "subtitle": "Числа, национальность, семья, глаголы to be, to have и to do",
-  "timeLimit": 900,
+  "name": "Unit 1: Present continuous (I am doing)",
+  "subtitle": "Упражнения 1.1 – 1.4 из оригинального учебника",
+  "timeLimit": 600,
   "questions": [
     {
       "type": "multiple_choice",
-      "q": "Как правильно написать число 47 по-английски?",
+      "q": "Упр. 1.1.2: Выберите правильную форму глагола для картинки: He ___ a shoelace. (Слова для выбора: cross, hide, scratch, take, tie, wave)",
       "opts": [
-        "fourty-seven",
-        "forty-seven",
-        "forty seven",
-        "fourty seven"
+        "is crossing",
+        "is tying",
+        "is scratching",
+        "is waving"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Упр. 1.1.3: Выберите правильную форму глагола: They ___ the road.",
+      "opts": [
+        "are hiding",
+        "are crossing",
+        "are taking",
+        "are waving"
       ],
       "c": 2
     },
     {
       "type": "fill_blank",
-      "q": "Введите число 15 словами на английском языке (строчными буквами):",
-      "answer": "fifteen"
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Какое из этих чисел меняет корень при образовании (согласно правилу из урока)?",
-      "opts": [
-        "fourteen",
-        "sixteen",
-        "fifteen",
-        "nineteen"
-      ],
-      "c": 3
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Выберите правильный вариант: 'I ___ Russia.'",
-      "opts": [
-        "am",
-        "am from",
-        "from",
-        "is from"
-      ],
-      "c": 2
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Как правильно сказать 'испанец' (житель Испании), согласно примерам в уроке?",
-      "opts": [
-        "Spainish",
-        "Spaniard",
-        "Spainese",
-        "Spainian"
-      ],
-      "c": 2
-    },
-    {
-      "type": "true_false",
-      "q": "В анкете слова 'nationality' (национальность) и 'city' (город) означают одно и то же поле.",
-      "answer": false
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Новая жена вашего отца (не ваша биологическая мать) — это ваша:",
-      "opts": [
-        "mother-in-law",
-        "stepmother",
-        "stepsister",
-        "niece"
-      ],
-      "c": 2
-    },
-    {
-      "type": "multiple_select",
-      "q": "Какие из этих слов обозначают родственников через брак (используют суффикс -in-law)? (Выберите ВСЕ правильные)",
-      "opts": [
-        "stepfather",
-        "mother-in-law",
-        "brother-in-law",
-        "nephew"
-      ],
-      "correct": [1, 2]
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Дочь вашей сестры или брата — это ваша:",
-      "opts": [
-        "stepdaughter",
-        "niece",
-        "nephew",
-        "daughter-in-law"
-      ],
-      "c": 2
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Вставьте правильную форму глагола: '___ you from Kazan?'",
-      "opts": [
-        "Is",
-        "Am",
-        "Are",
-        "Do"
-      ],
-      "c": 3
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Выберите грамматически верное предложение:",
-      "opts": [
-        "We is from Kazan.",
-        "They are students.",
-        "He am a developer.",
-        "I are 19."
-      ],
-      "c": 2
+      "q": "Упр. 1.3.2: Составьте вопрос в Present Continuous. What's the matter? (why / you / cry?)",
+      "answer": "Why are you crying?"
     },
     {
       "type": "fill_blank",
-      "q": "Дополните отрицание: 'She ___ not a developer.' (введите только глагол)",
-      "answer": "is"
+      "q": "Упр. 1.3.3: Составьте вопрос в Present Continuous. Where's your mother? (she / work / today?)",
+      "answer": "Is she working today?"
     },
     {
-      "type": "true_false",
-      "q": "В предложении 'Do you have a sister?' слово 'Do' является смысловым глаголом.",
-      "answer": false
+      "type": "fill_blank",
+      "q": "Упр. 1.4.3: Раскройте скобки, используя правильную форму (positive or negative). You can turn off the radio. I ___ (not / listen) to it.",
+      "answer": "am not listening"
     },
     {
-      "type": "multiple_choice",
-      "q": "В предложении 'I do my homework' глагол 'do' выполняет роль:",
-      "opts": [
-        "вспомогательного глагола",
-        "смыслового глагола",
-        "глагола-связки",
-        "модального глагола"
-      ],
-      "c": 2
+      "type": "fill_blank",
+      "q": "Упр. 1.4.4: Раскройте скобки. Kate phoned last night. She's on holiday with friends. She ___ (have) a great time and doesn't want to come back.",
+      "answer": "is having"
     },
     {
-      "type": "multiple_choice",
-      "q": "Как правильно сказать 'Мне 19 лет' по-английски?",
-      "opts": [
-        "I have 19 years.",
-        "I am 19.",
-        "I has 19.",
-        "I do 19."
-      ],
-      "c": 2
+      "type": "fill_blank",
+      "q": "Упр. 1.4.8: Раскройте скобки. Tim ___ (not / work) today. He's taken the day off.",
+      "answer": "isn't working"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.8 (альтернативный правильный ответ из ключей): Tim ___ (not / work) today. He's taken the day off.",
+      "answer": "is not working"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.13: Раскройте скобки. ___ (The weather / change). Look at those clouds. I think it's going to rain.",
+      "answer": "The weather is changing"
     }
   ]
 }

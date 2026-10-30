@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>ZEITSCHLEIFE // Временная Петля</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    html, body { 
+        height: 100%; 
+        height: -webkit-fill-available;
+        font-family: 'Courier New', monospace; 
+        background: #000; 
+        color: #00ff41;
+        overflow: hidden;
+        touch-action: manipulation;
+    }
+    
+    #boot-screen {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #00ff41;
+        font-size: 1.2em;
+        text-shadow: 0 0 10px #00ff41;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .glitch-text { animation: glitch 0.3s infinite; }
+    
+    @keyframes glitch {
+        0% { transform: translate(0); text-shadow: 0 0 10px #00ff41; }
+        20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+        40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+        60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+        80% { transform: translate(2px, -2px); text-shadow: 0 0 10px #00ff41; }
+        100% { transform: translate(0); }
+    }
+    
+    #main-container {
+        display: none;
+        width: 100%;
+        height: 100%;
+        height: -webkit-fill-available;
+        grid-template-columns: 1fr 380px;
+        grid-template-rows: 60px 1fr 120px;
+        background: #0a0a0a;
+    }
+    
+    #main-container.active { display: grid; }
+    
+    #top-bar {
+        grid-column: 1 / 3;
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 2px solid #00ff41;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        gap: 10px;
+    }
+    
+    #title {
+        color: #00ff41;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-shadow: 0 0 10px #00ff41;
+        letter-spacing: 2px;
+        white-space: nowrap;
+    }
+    
+    #timer-box { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    
+    .timer-item {
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid #00ff41;
+        padding: 4px 10px;
+        border-radius: 3px;
+        text-align: center;
+    }
+    
+    .timer-label { color: #666; font-size: 0.65em; text-transform: uppercase; }
+    .timer-value { color: #00ff41; font-size: 0.95em; font-weight: bold; }
+    
+    #tab-bar {
+        display: none;
+        grid-column: 1;
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid #333;
+    }
+    
+    .tab-btn {
+        flex: 1;
+        padding: 10px;
+        background: transparent;
+        border: none;
+        color: #666;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        position: relative;
+        transition: all 0.2s;
+    }
+    
+    .tab-btn.active { color: #00ff41; border-bottom-color: #00ff41; }
+    .tab-btn[data-tab="robot"].active { color: #ff00ff; border-bottom-color: #ff00ff; }
+    
+    .tab-badge {
+        display: none;
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        background: #ff3333;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 0.7em;
+        line-height: 18px;
+        text-align: center;
+    }
+    
+    .tab-badge.show { display: block; animation: pulse 1s infinite; }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+    
+    #main-chat {
+        grid-column: 1;
+        background: rgba(0, 10, 0, 0.5);
+        border-right: 2px solid #00ff41;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0;
+    }
+    
+    #main-chat-header {
+        padding: 8px 15px;
+        background: rgba(0, 255, 65, 0.1);
+        border-bottom: 1px solid #00ff41;
+        font-size: 0.85em;
+        color: #00ff41;
+        flex-shrink: 0;
+    }
+    
+    #main-messages {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #main-messages::-webkit-scrollbar { width: 6px; }
+    #main-messages::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
+    #main-messages::-webkit-scrollbar-thumb { background: #00ff41; }
+    
+    #robot-panel {
+        grid-column: 2;
+        background: rgba(10, 0, 20, 0.5);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0;
+    }
+    
+    #robot-header {
+        padding: 8px 15px;
+        background: rgba(255, 0, 255, 0.1);
+        border-bottom: 1px solid #ff00ff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    
+    .robot-icon {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 1px;
+        flex-shrink: 0;
+    }
+    
+    .rp { background: transparent; }
+    .rp.on { background: #ff00ff; box-shadow: 0 0 2px #ff00ff; }
+    .rp.eye { background: #00ffff; box-shadow: 0 0 2px #00ffff; }
+    
+    #robot-name {
+        color: #ff00ff;
+        font-weight: bold;
+        text-shadow: 0 0 10px #ff00ff;
+        font-size: 0.9em;
+    }
+    
+    #robot-messages {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #robot-messages::-webkit-scrollbar { width: 6px; }
+    #robot-messages::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
+    #robot-messages::-webkit-scrollbar-thumb { background: #ff00ff; }
+    
+    .msg {
+        display: flex;
+        gap: 8px;
+        animation: msgIn 0.3s ease-out;
+    }
+    
+    @keyframes msgIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .msg-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+    }
+    
+    .msg.verter .msg-avatar { background: rgba(255, 0, 0, 0.2); border: 2px solid #ff3333; }
+    .msg.npc .msg-avatar { background: rgba(0, 150, 255, 0.2); border: 2px solid #0096ff; }
+    .msg.user .msg-avatar { background: rgba(255, 0, 255, 0.2); border: 2px solid #ff00ff; }
+    .msg.robot .msg-avatar { background: rgba(255, 0, 255, 0.2); border: 2px solid #ff00ff; }
+    .msg.system .msg-avatar { background: rgba(255, 215, 0, 0.2); border: 2px solid #ffd700; }
+    
+    .msg-body {
+        flex: 1;
+        padding: 8px 12px;
+        border-radius: 8px;
+        min-width: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .msg.verter .msg-body { background: rgba(255, 0, 0, 0.08); border: 1px solid #ff3333; color: #ff6666; }
+    .msg.npc .msg-body { background: rgba(0, 150, 255, 0.08); border: 1px solid #0096ff; color: #66b3ff; }
+    .msg.user .msg-body { background: rgba(255, 0, 255, 0.08); border: 1px solid #ff00ff; color: #ff66ff; }
+    .msg.robot .msg-body { background: rgba(255, 0, 255, 0.08); border: 1px solid #ff00ff; color: #ff99ff; }
+    .msg.system .msg-body { background: rgba(255, 215, 0, 0.08); border: 1px solid #ffd700; color: #ffd700; }
+    
+    .msg-sender { font-weight: bold; font-size: 0.8em; margin-bottom: 3px; opacity: 0.8; }
+    .msg-text { line-height: 1.5; font-size: 0.9em; }
+    .msg-text em { color: #aaa; font-style: italic; }
+    
+    .grammar-block {
+        background: rgba(0, 255, 255, 0.05);
+        border-left: 3px solid #00ffff;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .grammar-block h4 { color: #00ffff; margin-bottom: 6px; font-size: 0.95em; }
+    .grammar-block ul { list-style: none; padding: 0; }
+    .grammar-block li { padding: 3px 0; color: #ccc; font-size: 0.85em; }
+    .grammar-block li strong { color: #00ffff; }
+    .grammar-block .example { 
+        background: rgba(0,0,0,0.3); 
+        padding: 6px 10px; 
+        margin: 5px 0; 
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        color: #ffd700;
+    }
+    .grammar-block .rule {
+        color: #ff99ff;
+        font-weight: bold;
+        margin-top: 6px;
+    }
+    
+    .test-block {
+        background: rgba(255, 215, 0, 0.08);
+        border: 2px solid #ffd700;
+        border-radius: 8px;
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
+    .test-q { color: #ffd700; font-weight: bold; margin-bottom: 10px; font-size: 0.95em; }
+    
+    .test-progress {
+        color: #ffd700;
+        font-size: 0.75em;
+        margin-bottom: 8px;
+        opacity: 0.7;
+    }
+    
+    .test-opts { display: flex; flex-direction: column; gap: 6px; }
+    
+    .test-opt {
+        padding: 10px 12px;
+        background: rgba(255, 215, 0, 0.08);
+        border: 1px solid #ffd700;
+        color: #ffd700;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85em;
+        text-align: left;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .test-opt:hover:not(.locked) { background: rgba(255, 215, 0, 0.2); }
+    .test-opt.correct { background: rgba(0, 255, 65, 0.25); border-color: #00ff41; color: #00ff41; }
+    .test-opt.wrong { background: rgba(255, 0, 0, 0.25); border-color: #ff3333; color: #ff6666; }
+    .test-opt.locked { cursor: not-allowed; opacity: 0.5; }
+    
+    #input-panel {
+        grid-column: 1 / 2;
+        background: rgba(0, 0, 0, 0.95);
+        border-top: 2px solid #00ff41;
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    #input-context {
+        color: #ffd700;
+        font-size: 0.8em;
+        padding: 5px 8px;
+        background: rgba(255, 215, 0, 0.08);
+        border-left: 2px solid #ffd700;
+        display: none;
+    }
+    
+    #input-row { display: flex; gap: 8px; }
+    
+    #user-input {
+        flex: 1;
+        background: rgba(255, 0, 255, 0.08);
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        padding: 10px 12px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        outline: none;
+        min-width: 0;
+    }
+    
+    #user-input:focus { box-shadow: 0 0 10px rgba(255, 0, 255, 0.4); }
+    #user-input::placeholder { color: #666; }
+    
+    .input-btn {
+        padding: 10px 14px;
+        background: rgba(0, 255, 65, 0.15);
+        border: 2px solid #00ff41;
+        color: #00ff41;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85em;
+        font-weight: bold;
+        transition: all 0.2s;
+        white-space: nowrap;
+        min-height: 42px;
+    }
+    
+    .input-btn:hover:not(:disabled) { background: rgba(0, 255, 65, 0.3); }
+    .input-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    
+    .input-btn.hint {
+        background: rgba(255, 215, 0, 0.15);
+        border-color: #ffd700;
+        color: #ffd700;
+    }
+    
+    .input-btn.hint:hover:not(:disabled) { background: rgba(255, 215, 0, 0.3); }
+    
+    #robot-footer {
+        grid-column: 2 / 3;
+        background: rgba(0, 0, 0, 0.95);
+        border-top: 2px solid #ff00ff;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    #robot-ask-btn {
+        padding: 12px;
+        background: rgba(255, 0, 255, 0.15);
+        border: 2px solid #ff00ff;
+        color: #ff00ff;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        font-weight: bold;
+        transition: all 0.2s;
+        min-height: 44px;
+    }
+    
+    #robot-ask-btn:hover:not(:disabled) { background: rgba(255, 0, 255, 0.3); }
+    #robot-ask-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    
+    #robot-status { color: #666; font-size: 0.75em; text-align: center; }
+    
+    #freeze-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 255, 255, 0.15);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        z-index: 5000;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    #freeze-overlay.active { display: flex; }
+    
+    #freeze-text {
+        color: #00ffff;
+        font-size: 2em;
+        font-weight: bold;
+        text-shadow: 0 0 20px #00ffff;
+        animation: freeze 1s infinite;
+        letter-spacing: 3px;
+    }
+    
+    #freeze-sub { color: #00ffff; margin-top: 15px; font-size: 1em; }
+    
+    @keyframes freeze {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+    
+    #final-stats {
+        display: none;
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.98);
+        border: 3px solid #00ff41;
+        border-radius: 10px;
+        padding: 30px 25px;
+        z-index: 8000;
+        box-shadow: 0 0 50px rgba(0, 255, 65, 0.6);
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    #final-stats.active { display: block; }
+    
+    #final-stats h2 {
+        color: #00ff41;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+        text-shadow: 0 0 20px #00ff41;
+        letter-spacing: 2px;
+    }
+    
+    .final-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        font-size: 1em;
+        gap: 10px;
+    }
+    
+    .final-label { color: #888; }
+    .final-value { color: #00ff41; font-weight: bold; text-align: right; }
+    
+    #restart-btn {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        background: rgba(0, 255, 65, 0.15);
+        border: 2px solid #00ff41;
+        color: #00ff41;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 1em;
+        font-weight: bold;
+        min-height: 44px;
+    }
+    
+    #restart-btn:hover { background: rgba(0, 255, 65, 0.3); }
+    
+    @media (max-width: 900px) {
+        #main-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 56px 44px 1fr 110px;
+        }
+        
+        #top-bar { grid-column: 1; padding: 8px 10px; }
+        #title { font-size: 0.85em; letter-spacing: 1px; }
+        #timer-box { gap: 5px; }
+        .timer-item { padding: 3px 6px; }
+        .timer-label { font-size: 0.55em; }
+        .timer-value { font-size: 0.8em; }
+        
+        #tab-bar { display: flex; grid-column: 1; }
+        
+        #main-chat { grid-column: 1; grid-row: 3; border-right: none; }
+        #main-chat.hidden-mobile { display: none; }
+        
+        #robot-panel { grid-column: 1; grid-row: 3; display: none; }
+        #robot-panel.active-mobile { display: flex; }
+        
+        #input-panel {
+            grid-column: 1;
+            grid-row: 4;
+            padding: 8px 10px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        }
+        
+        #robot-footer {
+            grid-column: 1;
+            grid-row: 4;
+            display: none;
+            padding: 8px 10px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        }
+        
+        #robot-footer.active-mobile { display: flex; }
+        
+        #main-messages, #robot-messages { padding: 10px; }
+        .msg-avatar { width: 28px; height: 28px; font-size: 1em; }
+        .msg-body { padding: 7px 10px; }
+        .msg-text { font-size: 0.85em; }
+        .msg-sender { font-size: 0.75em; }
+        
+        .grammar-block { padding: 8px; }
+        .grammar-block h4 { font-size: 0.85em; }
+        .grammar-block li { font-size: 0.8em; }
+        .grammar-block .example { font-size: 0.85em; }
+        
+        .test-block { padding: 10px; }
+        .test-q { font-size: 0.85em; }
+        .test-opt { font-size: 0.8em; padding: 9px 10px; min-height: 38px; }
+        
+        #user-input { font-size: 0.9em; padding: 9px 10px; }
+        .input-btn { font-size: 0.8em; padding: 9px 10px; }
+        #robot-ask-btn { font-size: 0.9em; }
+        
+        #freeze-text { font-size: 1.5em; }
+        #freeze-sub { font-size: 0.9em; }
+        
+        #final-stats { padding: 20px 15px; }
+        #final-stats h2 { font-size: 1.2em; }
+        .final-row { font-size: 0.9em; }
+    }
+    
+    @media (max-width: 400px) {
+        #title { font-size: 0.75em; }
+        .timer-item { padding: 2px 5px; }
+        .timer-value { font-size: 0.75em; }
+        .timer-label { font-size: 0.5em; }
+    }
+    
+    @media (max-height: 500px) and (max-width: 900px) {
+        #main-container { grid-template-rows: 44px 36px 1fr 90px; }
+        #top-bar { padding: 5px 10px; }
+        #title { font-size: 0.75em; }
+    }
+</style>
+</head>
+<body>
+
+<div id="boot-screen">
+    <div class="glitch-text" id="boot-text">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...</div>
+</div>
+
+<div id="main-container">
+    <div id="top-bar">
+        <div id="title">◢ ZEITSCHLEIFE ◣</div>
+        <div id="timer-box">
+            <div class="timer-item">
+                <div class="timer-label">ВРЕМЯ</div>
+                <div class="timer-value" id="timer">60:00</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-label">ЗАМОРОЗКИ</div>
+                <div class="timer-value" id="freezes">0</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-label">СЧЁТ</div>
+                <div class="timer-value" id="score">0</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tab-bar">
+        <button class="tab-btn active" data-tab="chat" onclick="switchTab('chat')">💬 ЧАТ</button>
+        <button class="tab-btn" data-tab="robot" onclick="switchTab('robot')">
+            🤖 РОБОТ
+            <span class="tab-badge" id="robot-badge">!</span>
+        </button>
+    </div>
+    
+    <div id="main-chat">
+        <div id="main-chat-header">◈ КАНАЛ СВЯЗИ // АНОНИМНЫЕ СУБЪЕКТЫ</div>
+        <div id="main-messages"></div>
+    </div>
+    
+    <div id="robot-panel">
+        <div id="robot-header">
+            <div class="robot-icon">
+                <div class="rp"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp"></div>
+                <div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div><div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div><div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div>
+                <div class="rp"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp"></div>
+            </div>
+            <div id="robot-name">ASSISTENT-404</div>
+        </div>
+        <div id="robot-messages"></div>
+    </div>
+    
+    <div id="input-panel">
+        <div id="input-context"></div>
+        <div id="input-row">
+            <input type="text" id="user-input" placeholder="Напишите на немецком..." disabled autocomplete="off" autocapitalize="off" spellcheck="false">
+            <button class="input-btn hint" id="hint-btn" onclick="showHint()" disabled>💡</button>
+            <button class="input-btn" id="send-btn" onclick="submitInput()" disabled>▶</button>
+        </div>
+    </div>
+    
+    <div id="robot-footer">
+        <button id="robot-ask-btn" onclick="askRobot()" disabled>🤖 СПРОСИТЬ РОБОТА</button>
+        <div id="robot-status">ОЖИДАНИЕ КОМАНДЫ...</div>
+    </div>
+</div>
+
+<div id="freeze-overlay">
+    <div id="freeze-text">⏸ ZEIT EINGEFROREN ⏸</div>
+    <div id="freeze-sub">ВРЕМЯ ОСТАНОВИЛОСЬ</div>
+</div>
+
+<div id="final-stats">
+    <h2>◢ ПЕТЛЯ РАЗОРВАНА ◣</h2>
+    <div class="final-row">
+        <span class="final-label">Познакомился с:</span>
+        <span class="final-value" id="fs-npc">0 / 3</span>
+    </div>
+    <div class="final-row">
+        <span class="final-label">Тестов пройдено:</span>
+        <span class="final-value" id="fs-tests">0</span>
+    </div>
+    <div class="final-row">
+        <span class="final-label">Всего попыток:</span>
+        <span class="final-value" id="fs-attempts">0</span>
+    </div>
+    <div class="final-row">
+        <span class="final-label">Заморозок времени:</span>
+        <span class="final-value" id="fs-freezes">0</span>
+    </div>
+    <div class="final-row">
+        <span class="final-label">Итоговый счёт:</span>
+        <span class="final-value" id="fs-score">0</span>
+    </div>
+    <button id="restart-btn" onclick="location.reload()">ПЕРЕЗАГРУЗИТЬ СИСТЕМУ</button>
+</div>
+
+<script>
+    const state = {
+        phase: 'boot',
+        currentNPC: null,
+        dialogueStep: 0,
+        collectedInfo: {
+            max: { name: null, from: null, job: null, hobby: null },
+            lisa: { name: null, from: null, job: null, hobby: null },
+            thomas: { name: null, from: null, job: null, hobby: null }
+        },
+        robotExplained: { 1: false, 2: false, 3: false },
+        freezes: 0,
+        score: 0,
+        testsPassed: 0,
+        totalAttempts: 0,
+        hintUsed: false,
+        timeFrozen: false,
+        timerSeconds: 3600,
+        activeTab: 'chat',
+        robotUnread: 0
+    };
+    
+    const npcs = {
+        max: {
+            name: 'Max',
+            emoji: '👨',
+            intro: 'Hallo! Ich bin Max. Wer bist du?',
+            responses: {
+                name: 'Ich heiße Max Müller.',
+                from: 'Ich komme aus Berlin.',
+                job: 'Ich bin Student. Ich studiere Informatik.',
+                hobby: 'Mein Hobby ist Fußball. Ich spiele gern Fußball.'
+            }
+        },
+        lisa: {
+            name: 'Lisa',
+            emoji: '👩',
+            intro: 'Hi! Ich bin Lisa. Schön, dich kennenzulernen!',
+            responses: {
+                name: 'Ich bin Lisa Schmidt.',
+                from: 'Ich komme aus München.',
+                job: 'Ich arbeite als Ärztin im Krankenhaus.',
+                hobby: 'Ich höre gern Musik und spiele Gitarre.'
+            }
+        },
+        thomas: {
+            name: 'Thomas',
+            emoji: '🧑',
+            intro: 'Servus! Ich bin Thomas. Freut mich!',
+            responses: {
+                name: 'Mein Name ist Thomas Weber.',
+                from: 'Ich komme aus Hamburg.',
+                job: 'Ich bin Koch in einem Restaurant.',
+                hobby: 'Ich koche auch gern zu Hause. Und ich lese Bücher.'
+            }
+        }
+    };
+    
+    const npcOrder = ['max', 'lisa', 'thomas'];
+    let currentNPCIndex = 0;
+    
+    // ==================== УТИЛИТЫ ====================
+    function addMainMessage(type, text, sender) {
+        const container = document.getElementById('main-messages');
+        const msg = document.createElement('div');
+        msg.className = `msg ${type}`;
+        
+        let avatar = '';
+        if (type === 'verter') avatar = '🎭';
+        else if (type === 'npc') avatar = npcs[state.currentNPC]?.emoji || '👤';
+        else if (type === 'user') avatar = '👤';
+        else if (type === 'system') avatar = '⚠';
+        
+        let senderHtml = sender ? `<div class="msg-sender">${sender}</div>` : '';
+        
+        msg.innerHTML = `
+            <div class="msg-avatar">${avatar}</div>
+            <div class="msg-body">
+                ${senderHtml}
+                <div class="msg-text">${text}</div>
+            </div>
+        `;
+        container.appendChild(msg);
+        container.scrollTop = container.scrollHeight;
+    }
+    
+    function addRobotMessage(text, showBadge = true) {
+        const container = document.getElementById('robot-messages');
+        const msg = document.createElement('div');
+        msg.className = 'msg robot';
+        msg.innerHTML = `
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-body">
+                <div class="msg-sender">ASSISTENT-404</div>
+                <div class="msg-text">${text}</div>
+            </div>
+        `;
+        container.appendChild(msg);
+        container.scrollTop = container.scrollHeight;
+        
+        if (showBadge && window.innerWidth <= 900 && state.activeTab !== 'robot') {
+            state.robotUnread++;
+            updateRobotBadge();
+        }
+    }
+    
+    function updateRobotBadge() {
+        const badge = document.getElementById('robot-badge');
+        if (state.robotUnread > 0) {
+            badge.innerText = state.robotUnread > 9 ? '9+' : state.robotUnread;
+            badge.classList.add('show');
+        } else {
+            badge.classList.remove('show');
+        }
+    }
+    
+    function switchTab(tab) {
+        state.activeTab = tab;
+        const chatPanel = document.getElementById('main-chat');
+        const robotPanel = document.getElementById('robot-panel');
+        const inputPanel = document.getElementById('input-panel');
+        const robotFooter = document.getElementById('robot-footer');
+        
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+        
+        if (tab === 'chat') {
+            chatPanel.classList.remove('hidden-mobile');
+            robotPanel.classList.remove('active-mobile');
+            inputPanel.style.display = 'flex';
+            robotFooter.classList.remove('active-mobile');
+        } else {
+            chatPanel.classList.add('hidden-mobile');
+            robotPanel.classList.add('active-mobile');
+            inputPanel.style.display = 'none';
+            robotFooter.classList.add('active-mobile');
+            state.robotUnread = 0;
+            updateRobotBadge();
+        }
+    }
+    
+    function addTestToRobot(question, options, callback, testIdx, totalTests) {
+        const container = document.getElementById('robot-messages');
+        const block = document.createElement('div');
+        block.className = 'test-block';
+        
+        let optsHtml = options.map((opt, i) => 
+            `<button class="test-opt" data-idx="${i}">${opt.text}</button>`
+        ).join('');
+        
+        block.innerHTML = `
+            <div class="test-progress">ТЕСТ ${testIdx} / ${totalTests}</div>
+            <div class="test-q">${question}</div>
+            <div class="test-opts">${optsHtml}</div>
+        `;
+        
+        container.appendChild(block);
+        container.scrollTop = container.scrollHeight;
+        
+        block.querySelectorAll('.test-opt').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                handleTestAnswer(idx, options, block, callback);
+            };
+        });
+    }
+    
+    function handleTestAnswer(idx, options, block, callback) {
+        state.totalAttempts++;
+        const buttons = block.querySelectorAll('.test-opt');
+        
+        if (options[idx].correct) {
+            buttons[idx].classList.add('correct');
+            buttons.forEach(b => b.classList.add('locked'));
+            state.testsPassed++;
+            state.score += 20;
+            updateStats();
+            
+            setTimeout(() => {
+                addRobotMessage('✅ Верно! Отличная работа.');
+                if (callback) setTimeout(callback, 500);
+            }, 600);
+        } else {
+            buttons[idx].classList.add('wrong');
+            buttons[idx].classList.add('locked');
+            addRobotMessage('❌ Неверно. Попробуйте другой вариант.');
+        }
+    }
+    
+    function updateStats() {
+        document.getElementById('score').innerText = state.score;
+        document.getElementById('freezes').innerText = state.freezes;
+    }
+    
+    function setInputContext(text) {
+        const ctx = document.getElementById('input-context');
+        if (text) {
+            ctx.innerHTML = text;
+            ctx.style.display = 'block';
+        } else {
+            ctx.style.display = 'none';
+        }
+    }
+    
+    function enableInput(placeholder, context) {
+        const input = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        
+        input.disabled = false;
+        input.placeholder = placeholder || 'Напишите...';
+        input.value = '';
+        sendBtn.disabled = false;
+        hintBtn.disabled = false;
+        
+        setInputContext(context);
+        
+        if (window.innerWidth > 900) {
+            setTimeout(() => input.focus(), 100);
+        }
+    }
+    
+    function disableInput() {
+        document.getElementById('user-input').disabled = true;
+        document.getElementById('send-btn').disabled = true;
+        document.getElementById('hint-btn').disabled = true;
+        setInputContext(null);
+    }
+    
+    function enableAskRobot(enabled, statusText) {
+        document.getElementById('robot-ask-btn').disabled = !enabled;
+        if (statusText) {
+            document.getElementById('robot-status').innerText = statusText;
+        }
+    }
+    
+    function startTimer() {
+        setInterval(() => {
+            if (state.timeFrozen) return;
+            if (state.timerSeconds > 0) {
+                state.timerSeconds--;
+                const min = Math.floor(state.timerSeconds / 60);
+                const sec = state.timerSeconds % 60;
+                document.getElementById('timer').innerText = 
+                    `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+            }
+        }, 1000);
+    }
+    
+    function freezeTime() {
+        state.freezes++;
+        state.timeFrozen = true;
+        updateStats();
+        
+        const overlay = document.getElementById('freeze-overlay');
+        overlay.classList.add('active');
+        
+        setTimeout(() => {
+            overlay.classList.remove('active');
+            state.timeFrozen = false;
+        }, 3000);
+    }
+    
+    function sleep(ms) {
+        return new Promise(r => setTimeout(r, ms));
+    }
+    
+    // ==================== BOOT ====================
+    async function bootSequence() {
+        const bootText = document.getElementById('boot-text');
+        const messages = [
+            'ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...',
+            'ОБНАРУЖЕНА АНОМАЛИЯ...',
+            'ВРЕМЕННАЯ ПЕТЛЯ ACTIVATED',
+            'WARNING: ZEITSCHLEIFE DETECTED',
+            'ПОДКЛЮЧЕНИЕ К КАНАЛУ СВЯЗИ...'
+        ];
+        
+        for (let msg of messages) {
+            bootText.innerText = msg;
+            await sleep(700);
+        }
+        
+        await sleep(500);
+        document.getElementById('boot-screen').style.display = 'none';
+        document.getElementById('main-container').classList.add('active');
+        
+        startTimer();
+        startIntro();
+    }
+    
+    // ==================== INTRO ====================
+    async function startIntro() {
+        state.phase = 'intro';
+        
+        await sleep(500);
+        addMainMessage('system', '⚠ ВХОДЯЩЕЕ СООБЩЕНИЕ ОТ НЕИЗВЕСТНОГО "VERTER"');
+        
+        await sleep(1000);
+        addMainMessage('verter', 
+            'Ты попал во <strong>временную петлю</strong>. Время зациклилось, и единственный способ выбраться — выполнить задание.', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1500);
+        addMainMessage('verter', 
+            'Тебе нужно <strong>познакомиться с тремя людьми</strong>. Узнай о каждом:<br>' +
+            '• <strong>Имя</strong> (Name)<br>' +
+            '• <strong>Откуда он/она</strong> (Herkunft)<br>' +
+            '• <strong>Чем занимается</strong> (Beruf)<br>' +
+            '• <strong>Хобби</strong> (Hobby)', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1500);
+        addMainMessage('verter', 
+            'Они говорят <strong>только по-немецки</strong>. Справа — твой помощник <strong>ASSISTENT-404</strong>. ' +
+            'Перед каждым собеседником он будет объяснять <strong>новую грамматическую тему</strong> и проводить тесты. ' +
+            'Только после этого ты сможешь общаться.', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1500);
+        addMainMessage('verter', 
+            '⚠ <strong>ВАЖНО:</strong> После каждого знакомства я спрошу, что ты узнал. ' +
+            'Если ответишь неправильно — <strong>время заморозится</strong>.', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1000);
+        addMainMessage('verter', 'Готов? Первый человек появляется...', 'VERTER [неизвестный]');
+        
+        await sleep(2000);
+        startNPCMeeting(0);
+    }
+    
+    // ==================== ВСТРЕЧА С NPC ====================
+    async function startNPCMeeting(npcIdx) {
+        currentNPCIndex = npcIdx;
+        const npcKey = npcOrder[npcIdx];
+        state.currentNPC = npcKey;
+        state.dialogueStep = 0;
+        state.phase = `npc${npcIdx + 1}_meeting`;
+        
+        const npc = npcs[npcKey];
+        
+        addMainMessage('system', `⚠ ПОДКЛЮЧЕНИЕ К СУБЪЕКТУ #${npcIdx + 1}: ${npc.name.toUpperCase()}`);
+        
+        await sleep(1500);
+        addMainMessage('npc', npc.intro, npc.name);
+        
+        await sleep(1000);
+        addMainMessage('verter', 
+            `Собеседник ждёт. Нажми <strong>🤖 СПРОСИТЬ РОБОТА</strong> — он объяснит новую тему и проведёт тесты.`, 
+            'VERTER [неизвестный]'
+        );
+        
+        enableAskRobot(true, 'НАЖМИТЕ ДЛЯ ОБУЧЕНИЯ');
+        disableInput();
+        
+        if (window.innerWidth <= 900) {
+            switchTab('chat');
+        }
+    }
+    
+    // ==================== РОБОТ: ДИСПЕТЧЕР УРОКОВ ====================
+    function askRobot() {
+        const npcNum = currentNPCIndex + 1;
+        
+        if (state.robotExplained[npcNum]) {
+            addRobotMessage('Я уже объяснил все правила для этого собеседника. Общайся! Если забудешь — нажми 💡 ПОДСКАЗКА.');
+            return;
+        }
+        
+        enableAskRobot(false, 'ОБУЧЕНИЕ В ПРОЦЕССЕ...');
+        
+        // Выбираем урок в зависимости от номера NPC
+        if (npcNum === 1) {
+            robotLesson1_Questions();
+        } else if (npcNum === 2) {
+            robotLesson2_WordOrder();
+        } else if (npcNum === 3) {
+            robotLesson3_Conjugation();
+        }
+    }
+    
+    // ==================== УРОК 1: ВОПРОСИТЕЛЬНЫЕ СЛОВА ====================
+    async function robotLesson1_Questions() {
+        const npcName = npcs[npcOrder[0]].name;
+        
+        addRobotMessage(`🔍 Анализирую собеседника: <strong>${npcName}</strong>. Тебе нужно узнать 4 вещи. <strong>Тема урока: ВОПРОСИТЕЛЬНЫЕ СЛОВА (W-Fragen)</strong>.`);
+        
+        await sleep(600);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ТЕМА 1: ВОПРОСЫ</h4>
+                <ul>
+                    <li><strong>Wie heißt du?</strong> — Как тебя зовут?</li>
+                    <li>Ответ: <strong>Ich bin...</strong> / <strong>Ich heiße...</strong></li>
+                </ul>
+                <ul>
+                    <li><strong>Woher kommst du?</strong> — Откуда ты?</li>
+                    <li>Ответ: <strong>Ich komme aus...</strong></li>
+                </ul>
+                <ul>
+                    <li><strong>Was machst du?</strong> — Что ты делаешь?</li>
+                    <li>Ответ: <strong>Ich bin Student.</strong> / <strong>Ich arbeite als...</strong></li>
+                </ul>
+                <ul>
+                    <li><strong>Was sind deine Hobbys?</strong> — Какие у тебя хобби?</li>
+                    <li>Ответ: <strong>Ich spiele gern...</strong></li>
+                </ul>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 1 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Как спросить "Как тебя зовут?"',
+                [
+                    { text: 'Wer du heißt?', correct: false },
+                    { text: 'Wie heißt du?', correct: true },
+                    { text: 'Wie du heißt?', correct: false },
+                    { text: 'Heißt wie du?', correct: false }
+                ],
+                resolve, 1, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Как спросить "Откуда ты?"',
+                [
+                    { text: 'Wo kommst du?', correct: false },
+                    { text: 'Woher du kommst?', correct: false },
+                    { text: 'Woher kommst du?', correct: true },
+                    { text: 'Kommst du woher?', correct: false }
+                ],
+                resolve, 2, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Как спросить "Что ты делаешь?"',
+                [
+                    { text: 'Was du machst?', correct: false },
+                    { text: 'Was machst du?', correct: true },
+                    { text: 'Machst was du?', correct: false },
+                    { text: 'Du was machst?', correct: false }
+                ],
+                resolve, 3, 4
+            );
+        });
+        
+        await sleep(400);
+                
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Как спросить "Какие у тебя хобби?"',
+                [
+                    { text: 'Was sind deine Hobbys?', correct: true },
+                    { text: 'Was deine Hobbys sind?', correct: false },
+                    { text: 'Wie sind deine Hobbys?', correct: false },
+                    { text: 'Deine Hobbys was sind?', correct: false }
+                ],
+                resolve, 4, 4
+            );
+        });
+        
+        await sleep(500);
+        finishLesson(1);
+    }
+    
+    // ==================== УРОК 2: ПОРЯДОК СЛОВ ====================
+    async function robotLesson2_WordOrder() {
+        const npcName = npcs[npcOrder[1]].name;
+        
+        addRobotMessage(`🔍 Анализирую собеседника: <strong>${npcName}</strong>. <strong>Тема урока: ПОРЯДОК СЛОВ В ПРЕДЛОЖЕНИИ</strong>.`);
+        
+        await sleep(600);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 1: ПОВЕСТВОВАТЕЛЬНОЕ ПРЕДЛОЖЕНИЕ</h4>
+                <p class="rule">Подлежащее + Глагол (2-е место) + Остальное</p>
+                <div class="example">Ich <strong>komme</strong> aus Berlin.</div>
+                <div class="example">Ich <strong>bin</strong> Student.</div>
+                <div class="example">Ich <strong>spiele</strong> gern Fußball.</div>
+                <p style="margin-top:6px;color:#ff99ff;">💡 Глагол ВСЕГДА на ВТОРОМ месте!</p>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 1 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери ПРАВИЛЬНЫЙ порядок слов: "Я из Мюнхена"',
+                [
+                    { text: 'Ich aus München komme.', correct: false },
+                    { text: 'Ich komme aus München.', correct: true },
+                    { text: 'Komme ich aus München.', correct: false },
+                    { text: 'Aus München ich komme.', correct: false }
+                ],
+                resolve, 1, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 2: ВОПРОС С W-СЛОВОМ</h4>
+                <p class="rule">W-слово + Глагол (2-е место) + Подлежащее + ...</p>
+                <div class="example"><strong>Woher</strong> <strong>kommst</strong> du?</div>
+                <div class="example"><strong>Was</strong> <strong>machst</strong> du?</div>
+                <div class="example"><strong>Wie</strong> <strong>heißt</strong> du?</div>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 2 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери ПРАВИЛЬНЫЙ вопрос: "Чем ты занимаешься?"',
+                [
+                    { text: 'Was du machst?', correct: false },
+                    { text: 'Du was machst?', correct: false },
+                    { text: 'Was machst du?', correct: true },
+                    { text: 'Machst was du?', correct: false }
+                ],
+                resolve, 2, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 3: ДА/НЕТ ВОПРОС</h4>
+                <p class="rule">Глагол (1-е место!) + Подлежащее + ...</p>
+                <div class="example"><strong>Kommst</strong> du aus Berlin?</div>
+                <div class="example"><strong>Bist</strong> du Student?</div>
+                <div class="example"><strong>Spielst</strong> du Fußball?</div>
+                <p style="margin-top:6px;color:#ff99ff;">💡 Ответ: Ja / Nein</p>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 3 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери ПРАВИЛЬНЫЙ вопрос: "Ты студент?"',
+                [
+                    { text: 'Du bist Student?', correct: false },
+                    { text: 'Bist du Student?', correct: true },
+                    { text: 'Student bist du?', correct: false },
+                    { text: 'Du Student bist?', correct: false }
+                ],
+                resolve, 3, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 4: ОТВЕТ НА "WAS"</h4>
+                <p class="rule">Подлежащее + Глагол + Дополнение</p>
+                <div class="example">Ich <strong>höre</strong> Musik.</div>
+                <div class="example">Ich <strong>arbeite</strong> als Ärztin.</div>
+                <div class="example">Ich <strong>spiele</strong> Gitarre.</div>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 4 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери ПРАВИЛЬНЫЙ ответ: "Я работаю врачом"',
+                [
+                    { text: 'Ich als Ärztin arbeite.', correct: false },
+                    { text: 'Arbeite ich als Ärztin.', correct: false },
+                    { text: 'Ich arbeite als Ärztin.', correct: true },
+                    { text: 'Als Ärztin ich arbeite.', correct: false }
+                ],
+                resolve, 4, 4
+            );
+        });
+        
+        await sleep(500);
+        finishLesson(2);
+    }
+    
+    // ==================== УРОК 3: СПРЯЖЕНИЕ ГЛАГОЛОВ ====================
+    async function robotLesson3_Conjugation() {
+        const npcName = npcs[npcOrder[2]].name;
+        
+        addRobotMessage(`🔍 Анализирую собеседника: <strong>${npcName}</strong>. <strong>Тема урока: СПРЯЖЕНИЕ ГЛАГОЛОВ В ПРЕЗЕНСЕ</strong>.`);
+        
+        await sleep(600);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 1: ОКОНЧАНИЯ ПРАВИЛЬНЫХ ГЛАГОЛОВ</h4>
+                <p class="rule">Основа глагола + окончание по лицу</p>
+                <ul>
+                    <li><strong>ich</strong> — <strong>-e</strong> → ich komm<strong>e</strong></li>
+                    <li><strong>du</strong> — <strong>-st</strong> → du komm<strong>st</strong></li>
+                    <li><strong>er/sie/es</strong> — <strong>-t</strong> → er komm<strong>t</strong></li>
+                    <li><strong>wir</strong> — <strong>-en</strong> → wir komm<strong>en</strong></li>
+                    <li><strong>ihr</strong> — <strong>-t</strong> → ihr komm<strong>t</strong></li>
+                    <li><strong>sie/Sie</strong> — <strong>-en</strong> → sie komm<strong>en</strong></li>
+                </ul>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 1 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери правильную форму: "Ich ___ aus Hamburg." (kommen)',
+                [
+                    { text: 'Ich kommst aus Hamburg.', correct: false },
+                    { text: 'Ich komme aus Hamburg.', correct: true },
+                    { text: 'Ich kommt aus Hamburg.', correct: false },
+                    { text: 'Ich kommen aus Hamburg.', correct: false }
+                ],
+                resolve, 1, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери правильную форму: "Du ___ gern Fußball." (spielen)',
+                [
+                    { text: 'Du spiele gern Fußball.', correct: false },
+                    { text: 'Du spielt gern Fußball.', correct: false },
+                    { text: 'Du spielst gern Fußball.', correct: true },
+                    { text: 'Du spielen gern Fußball.', correct: false }
+                ],
+                resolve, 2, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери правильную форму: "Wir ___ Bücher." (lesen)',
+                [
+                    { text: 'Wir lese Bücher.', correct: false },
+                    { text: 'Wir lest Bücher.', correct: false },
+                    { text: 'Wir liest Bücher.', correct: false },
+                    { text: 'Wir lesen Bücher.', correct: true }
+                ],
+                resolve, 3, 4
+            );
+        });
+        
+        await sleep(400);
+        
+        addRobotMessage(`
+            <div class="grammar-block">
+                <h4>📖 ПРАВИЛО 4: ГЛАГОЛ "sein" (быть) — НЕПРАВИЛЬНЫЙ!</h4>
+                <p class="rule">Запомни наизусть:</p>
+                <ul>
+                    <li><strong>ich bin</strong> — я есть</li>
+                    <li><strong>du bist</strong> — ты есть</li>
+                    <li><strong>er/sie ist</strong> — он/она есть</li>
+                    <li><strong>wir sind</strong> — мы есть</li>
+                </ul>
+                <div class="example">Ich <strong>bin</strong> Koch. — Я повар.</div>
+                <div class="example">Du <strong>bist</strong> nett. — Ты милый.</div>
+            </div>
+        `);
+        
+        await sleep(500);
+        addRobotMessage('📝 Тест 4 из 4:');
+        
+        await new Promise(resolve => {
+            addTestToRobot(
+                'Выбери правильную форму: "Ich ___ Koch." (sein)',
+                [
+                    { text: 'Ich bist Koch.', correct: false },
+                    { text: 'Ich bin Koch.', correct: true },
+                    { text: 'Ich ist Koch.', correct: false },
+                    { text: 'Ich sind Koch.', correct: false }
+                ],
+                resolve, 4, 4
+            );
+        });
+        
+        await sleep(500);
+        finishLesson(3);
+    }
+    
+    function finishLesson(lessonNum) {
+        state.robotExplained[lessonNum] = true;
+        
+        const topics = {
+            1: 'ВОПРОСИТЕЛЬНЫЕ СЛОВА',
+            2: 'ПОРЯДОК СЛОВ',
+            3: 'СПРЯЖЕНИЕ ГЛАГОЛОВ'
+        };
+        
+        addRobotMessage(`✅ <strong>Урок "${topics[lessonNum]}" завершён!</strong> Теперь ты готов общаться. Переходи в чат.<br><br>💡 Если забудешь — нажми <strong>💡</strong> внизу, я подскажу.`);
+        
+        enableAskRobot(true, 'МОЖЕТЕ ОБЩАТЬСЯ');
+        
+        if (window.innerWidth <= 900) {
+            switchTab('chat');
+        }
+        
+        setTimeout(() => startDialogue(), 800);
+    }
+    
+    // ==================== ДИАЛОГ С NPC ====================
+    const dialogueQuestions = [
+        {
+            keywords: ['bin', 'heiße', 'heisse'],
+            context: '📝 Представься: скажи своё имя',
+            placeholder: 'Ich bin... / Ich heiße...',
+            hint: 'Ich bin [имя]. или Ich heiße [имя].'
+        },
+        {
+            keywords: ['heißt', 'heisst', 'name'],
+            context: '📝 Спроси, как зовут собеседника',
+            placeholder: 'Вопрос об имени...',
+            hint: 'Wie heißt du?'
+        },
+        {
+            keywords: ['woher', 'kommst'],
+            context: '📝 Спроси, откуда собеседник',
+            placeholder: 'Вопрос о городе/стране...',
+            hint: 'Woher kommst du?'
+        },
+        {
+            keywords: ['machst', 'beruf', 'arbeit', 'studier'],
+            context: '📝 Спроси, чем занимается собеседник',
+            placeholder: 'Вопрос о работе/учёбе...',
+            hint: 'Was machst du? или Was bist du von Beruf?'
+        },
+        {
+            keywords: ['hobby', 'hobbys', 'freizeit'],
+            context: '📝 Спроси о хобби',
+            placeholder: 'Вопрос о хобби...',
+            hint: 'Was sind deine Hobbys?'
+        }
+    ];
+    
+    function startDialogue() {
+        state.phase = 'dialogue';
+        state.dialogueStep = 0;
+        enableInput(
+            dialogueQuestions[0].placeholder,
+            dialogueQuestions[0].context
+        );
+    }
+    
+    function submitInput() {
+        const input = document.getElementById('user-input');
+        const text = input.value.trim();
+        if (!text) return;
+        
+        if (state.phase === 'dialogue') {
+            handleDialogueInput(text);
+        }
+    }
+    
+    function handleDialogueInput(text) {
+        const step = state.dialogueStep;
+        const q = dialogueQuestions[step];
+        const normalized = text.toLowerCase().replace(/[.,!?]/g, '').replace(/ß/g, 'ss');
+        
+        addMainMessage('user', text, 'ВЫ');
+        document.getElementById('user-input').value = '';
+        
+        const matched = q.keywords.some(kw => normalized.includes(kw));
+        
+        if (!matched) {
+            setTimeout(() => {
+                addMainMessage('npc', '??? Ich verstehe nicht. Kannst du das wiederholen?', npcs[state.currentNPC].name);
+                addRobotMessage(`💬 Собеседник не понял. Нажми 💡 для подсказки.`);
+            }, 500);
+            return;
+        }
+        
+        disableInput();
+        const npc = npcs[state.currentNPC];
+        
+        setTimeout(() => {
+            let response = '';
+            if (step === 0) {
+                response = `Schön, dich kennenzulernen!`;
+            } else if (step === 1) {
+                response = npc.responses.name;
+                state.collectedInfo[state.currentNPC].name = npc.name;
+            } else if (step === 2) {
+                response = npc.responses.from;
+                const fromMatch = npc.responses.from.match(/aus ([A-Za-zÄÖÜäöüß]+)/);
+                if (fromMatch) state.collectedInfo[state.currentNPC].from = fromMatch[1];
+            } else if (step === 3) {
+                response = npc.responses.job;
+                state.collectedInfo[state.currentNPC].job = npc.responses.job;
+            } else if (step === 4) {
+                response = npc.responses.hobby;
+                state.collectedInfo[state.currentNPC].hobby = npc.responses.hobby;
+            }
+            
+            addMainMessage('npc', response, npc.name);
+            
+            state.dialogueStep++;
+            
+            if (state.dialogueStep >= dialogueQuestions.length) {
+                setTimeout(() => {
+                    addMainMessage('npc', 'Tschüss! Bis bald!', npc.name);
+                    setTimeout(() => verterCheck(), 1500);
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    enableInput(
+                        dialogueQuestions[state.dialogueStep].placeholder,
+                        dialogueQuestions[state.dialogueStep].context
+                    );
+                }, 1000);
+            }
+        }, 800);
+    }
+    
+    function showHint() {
+        if (state.phase === 'dialogue') {
+            const q = dialogueQuestions[state.dialogueStep];
+            addRobotMessage(`💡 Подсказка: <strong>${q.hint}</strong>`);
+            state.hintUsed = true;
+            
+            if (window.innerWidth <= 900) {
+                switchTab('robot');
+                setTimeout(() => switchTab('chat'), 3000);
+            }
+        }
+    }
+    
+    // ==================== ПРОВЕРКА ВЕРТЕРА ====================
+    async function verterCheck() {
+        state.phase = 'verter_check';
+        const npcKey = state.currentNPC;
+        const npc = npcs[npcKey];
+        const info = state.collectedInfo[npcKey];
+        
+        addMainMessage('system', '⚠ ВХОДЯЩЕЕ СООБЩЕНИЕ ОТ VERTER');
+        
+        await sleep(1000);
+        addMainMessage('verter', 
+            `Хорошо. Ты поговорил с <strong>${npc.name}</strong>. Что ты о нём узнал?`, 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1000);
+        
+        const correctAnswer = `${npc.name}: из ${info.from}, ${extractJobShort(info.job)}, хобби — ${extractHobbyShort(info.hobby)}`;
+        const wrongAnswers = generateWrongAnswers(npcKey);
+        
+        const allOptions = shuffle([
+            { text: correctAnswer, correct: true },
+            ...wrongAnswers.map(w => ({ text: w, correct: false }))
+        ]);
+        
+        addMainMessage('verter', 'Выбери правильный вариант:', 'VERTER [неизвестный]');
+        
+        const container = document.getElementById('main-messages');
+        const block = document.createElement('div');
+        block.className = 'msg system';
+        block.innerHTML = `
+            <div class="msg-avatar">⚠</div>
+            <div class="msg-body">
+                <div class="test-block">
+                    <div class="test-q">Кто такой ${npc.name}?</div>
+                    <div class="test-opts">
+                        ${allOptions.map((opt, i) => `<button class="test-opt" data-idx="${i}">${opt.text}</button>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(block);
+        container.scrollTop = container.scrollHeight;
+        
+        block.querySelectorAll('.test-opt').forEach(btn => {
+            btn.onclick = () => {
+                const idx = parseInt(btn.dataset.idx);
+                handleVerterAnswer(idx, allOptions, block, npcKey);
+            };
+        });
+    }
+    
+    function extractJobShort(job) {
+        if (job.includes('Student')) return 'студент';
+        if (job.includes('Ärztin')) return 'врач';
+        if (job.includes('Koch')) return 'повар';
+        return job;
+    }
+    
+    function extractHobbyShort(hobby) {
+        if (hobby.includes('Fußball')) return 'футбол';
+        if (hobby.includes('Musik') || hobby.includes('Gitarre')) return 'музыка/гитара';
+        if (hobby.includes('koche') || hobby.includes('lese')) return 'готовка/чтение';
+        return hobby;
+    }
+    
+    function generateWrongAnswers(npcKey) {
+        const others = npcOrder.filter(n => n !== npcKey);
+        const answers = [];
+        
+        const other1 = others[0];
+        const info1 = npcs[other1];
+        const fromMatch1 = info1.responses.from.match(/aus ([A-Za-zÄÖÜäöüß]+)/);
+        answers.push(`${npcs[npcKey].name}: из ${fromMatch1[1]}, ${extractJobShort(info1.responses.job)}, хобби — ${extractHobbyShort(info1.responses.hobby)}`);
+        
+        const other2 = others[1];
+        const info2 = npcs[other2];
+        const fromMatch2 = info2.responses.from.match(/aus ([A-Za-zÄÖÜäöüß]+)/);
+        answers.push(`${npcs[npcKey].name}: из ${fromMatch2[1]}, ${extractJobShort(info2.responses.job)}, хобби — ${extractHobbyShort(info2.responses.hobby)}`);
+        
+        answers.push(`${npcs[npcKey].name}: из Wien, Lehrer, хобби — Schwimmen`);
+        
+        return answers;
+    }
+    
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+    
+    async function handleVerterAnswer(idx, options, block, npcKey) {
+        state.totalAttempts++;
+        const buttons = block.querySelectorAll('.test-opt');
+        
+        if (options[idx].correct) {
+            buttons[idx].classList.add('correct');
+            buttons.forEach(b => b.classList.add('locked'));
+            state.score += 50;
+            updateStats();
+            
+            await sleep(800);
+            addMainMessage('verter', '✅ Верно. Запоминаю...', 'VERTER [неизвестный]');
+            
+            await sleep(1500);
+            moveToNextNPC();
+        } else {
+            buttons[idx].classList.add('wrong');
+            buttons[idx].classList.add('locked');
+            
+            freezeTime();
+            
+            await sleep(3000);
+            addMainMessage('verter', '❌ Неверно! <strong>Время заморожено.</strong> Попробуй ещё раз.', 'VERTER [неизвестный]');
+        }
+    }
+    
+    async function moveToNextNPC() {
+        currentNPCIndex++;
+        
+        if (currentNPCIndex >= npcOrder.length) {
+            await finale();
+        } else {
+            addMainMessage('verter', `Отлично. Переходим к следующему человеку...`, 'VERTER [неизвестный]');
+            await sleep(1500);
+            startNPCMeeting(currentNPCIndex);
+        }
+    }
+    
+    // ==================== ФИНАЛ ====================
+    async function finale() {
+        state.phase = 'finale';
+        
+        addMainMessage('system', '⚠ КРИТИЧЕСКОЕ СООБЩЕНИЕ ОТ VERTER');
+        
+        await sleep(1000);
+        addMainMessage('verter', 
+            'Ты собрал всю информацию. <strong>Временная петля разрушена!</strong>', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(1500);
+        addMainMessage('verter', 
+            'Спасибо. Теперь я могу раскрыть себя. До встречи в следующем измерении...', 
+            'VERTER [неизвестный]'
+        );
+        
+        await sleep(2000);
+        
+        document.getElementById('fs-npc').innerText = '3 / 3';
+        document.getElementById('fs-tests').innerText = state.testsPassed;
+        document.getElementById('fs-attempts').innerText = state.totalAttempts;
+        document.getElementById('fs-freezes').innerText = state.freezes;
+        document.getElementById('fs-score').innerText = state.score;
+        
+        document.getElementById('final-stats').classList.add('active');
+    }
+    
+    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+    document.getElementById('user-input').addEventListener('keypress', e => {
+        if (e.key === 'Enter' && !document.getElementById('send-btn').disabled) {
+            submitInput();
+        }
+    });
+    
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+            document.getElementById('main-chat').classList.remove('hidden-mobile');
+            document.getElementById('robot-panel').classList.remove('active-mobile');
+            document.getElementById('input-panel').style.display = 'flex';
+            document.getElementById('robot-footer').classList.remove('active-mobile');
+        }
+    });
+    
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', e => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
+    bootSequence();
+</script>
+</body>
+</html>

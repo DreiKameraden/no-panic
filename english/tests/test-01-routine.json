@@ -1,35 +1,64 @@
 {
-  "name": "Test 1: Daily Routine",
-  "subtitle": "Блок 1 · Лексика рутины, предлоги, Present Simple/Continuous",
-  "timeLimit": 900,
+  "name": "Unit 1: Present continuous (I am doing)",
+  "subtitle": "Упражнения 1.1 – 1.4 из оригинального учебника",
+  "timeLimit": 600,
   "questions": [
     {
       "type": "multiple_choice",
-      "q": "I usually ___ up at 7:00.",
-      "opts": ["get", "gets", "getting", "am get"],
-      "c": 1
+      "q": "Упр. 1.1.2: Выберите правильную форму глагола для картинки: He ___ a shoelace. (Слова для выбора: cross, hide, scratch, take, tie, wave)",
+      "opts": [
+        "is crossing",
+        "is tying",
+        "is scratching",
+        "is waving"
+      ],
+      "c": 2
     },
     {
       "type": "multiple_choice",
-      "q": "We have English ___ Monday.",
-      "opts": ["at", "in", "on", "to"],
-      "c": 3
-    },
-    {
-      "type": "true_false",
-      "q": "The word 'enjoy' is followed by -ing (enjoy doing).",
-      "answer": true
+      "q": "Упр. 1.1.3: Выберите правильную форму глагола: They ___ the road.",
+      "opts": [
+        "are hiding",
+        "are crossing",
+        "are taking",
+        "are waving"
+      ],
+      "c": 2
     },
     {
       "type": "fill_blank",
-      "q": "I have classes ___ the evening. (введите предлог)",
-      "answer": "in"
+      "q": "Упр. 1.3.2: Составьте вопрос в Present Continuous. What's the matter? (why / you / cry?)",
+      "answer": "Why are you crying?"
     },
     {
-      "type": "multiple_select",
-      "q": "Which words are frequency adverbs? (выберите ВСЕ правильные)",
-      "opts": ["always", "quickly", "usually", "never", "beautiful"],
-      "correct": [0, 2, 3]
+      "type": "fill_blank",
+      "q": "Упр. 1.3.3: Составьте вопрос в Present Continuous. Where's your mother? (she / work / today?)",
+      "answer": "Is she working today?"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.3: Раскройте скобки, используя правильную форму (positive or negative). You can turn off the radio. I ___ (not / listen) to it.",
+      "answer": "am not listening"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.4: Раскройте скобки. Kate phoned last night. She's on holiday with friends. She ___ (have) a great time and doesn't want to come back.",
+      "answer": "is having"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.8: Раскройте скобки. Tim ___ (not / work) today. He's taken the day off.",
+      "answer": "isn't working"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.8 (альтернативный правильный ответ из ключей): Tim ___ (not / work) today. He's taken the day off.",
+      "answer": "is not working"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Упр. 1.4.13: Раскройте скобки. ___ (The weather / change). Look at those clouds. I think it's going to rain.",
+      "answer": "The weather is changing"
     }
   ]
 }
