@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>ZEITSCHLEIFE</title>
+<link rel="stylesheet" href="style/common.css">
+</head>
+<body>
+
+
+
+<div id="boot-screen">
+    <div class="glitch-text" id="boot-text">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...</div>
+</div>
+
+<div id="main-container">
+    <div id="top-bar">
+        <div id="title">◢ ZEITSCHLEIFE ◣<span class="day-tag" id="day-tag">// TAG 1</span></div>
+        <div id="timer-box">
+            <div class="timer-item">
+                <div class="timer-label">ВРЕМЯ</div>
+                <div class="timer-value" id="timer">60:00</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-label">ЗАМОРОЗКИ</div>
+                <div class="timer-value" id="freezes">0</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-label">ОШИБКИ</div>
+                <div class="timer-value" id="errors">0</div>
+            </div>
+            <div class="timer-item">
+                <div class="timer-label">СЧЁТ</div>
+                <div class="timer-value" id="score">0</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tab-bar">
+        <button class="tab-btn active" data-tab="chat" onclick="switchTab('chat')">💬 ЧАТ</button>
+        <button class="tab-btn" data-tab="robot" onclick="switchTab('robot')">
+            🤖 РОБОТ
+            <span class="tab-badge" id="robot-badge">!</span>
+        </button>
+    </div>
+    
+    <div id="main-chat">
+        <div id="main-chat-header">◈ КАНАЛ СВЯЗИ</div>
+        <div id="main-messages"></div>
+    </div>
+    
+    <div id="robot-panel">
+        <div id="robot-header">
+            <div class="robot-icon">
+                <div class="rp"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp"></div>
+                <div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div><div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div>
+                <div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div><div class="rp on"></div><div class="rp eye"></div><div class="rp on"></div>
+                <div class="rp"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp on"></div><div class="rp"></div>
+            </div>
+            <div id="robot-name">ASSISTENT-404</div>
+        </div>
+        <div id="robot-messages"></div>
+    </div>
+    
+    <div id="input-panel">
+        <div id="input-context"></div>
+        <div id="input-row">
+            <input type="text" id="user-input" placeholder="Напишите на немецком..." disabled autocomplete="off" autocapitalize="off" spellcheck="false">
+            <button class="input-btn hint" id="hint-btn" onclick="showHint()" disabled>💡</button>
+            <button class="input-btn" id="send-btn" onclick="submitInput()" disabled>▶</button>
+        </div>
+    </div>
+    
+    <div id="robot-footer">
+        <button id="robot-ask-btn" onclick="askRobot()" disabled>🤖 СПРОСИТЬ РОБОТА</button>
+        <div id="robot-status">ОЖИДАНИЕ КОМАНДЫ...</div>
+    </div>
+</div>
+
+<div id="freeze-overlay">
+    <div id="freeze-text">⏸ ZEIT EINGEFROREN ⏸</div>
+    <div id="freeze-sub">ВРЕМЯ ОСТАНОВИЛОСЬ</div>
+</div>
+
+<div id="final-stats">
+    <h2 id="fs-title">◢ TAG ABGESCHLOSSEN ◣</h2>
+    
+    <!-- 🆕 строки статистики рендерит день через finalRows() -->
+    <div id="fs-rows"></div>
+    
+    <div class="condition-block">
+        <h4>🔐 УСЛОВИЯ ПЕРЕХОДА:</h4>
+        <div class="condition-item">
+            <span>Счёт ≥ 70% (≥ <span id="cond-threshold">0</span>):</span>
+            <span id="cond-score" class="status-ok">✓</span>
+        </div>
+        <div class="condition-item">
+            <span>Заморозок = 0:</span>
+            <span id="cond-freezes" class="status-ok">✓</span>
+        </div>
+    </div>
+    
+    <div id="lock-reason" class="lock-reason" style="display:none;"></div>
+    <a id="next-btn" class="locked">▶ ПЕРЕХОД</a>
+    <button id="restart-btn" onclick="resetProgress(); location.href='tags.html'">↻ ПЕРЕЗАГРУЗИТЬ СИСТЕМУ</button>
+</div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/tag-loader.js"></script>
+</body>
+</html>
