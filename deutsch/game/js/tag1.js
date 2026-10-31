@@ -298,7 +298,7 @@ function tag1AskRobot() {
 }
 
 async function robotLesson3() {
-    addRobotMessage('🔍 Анализирую собеседника: <strong>Mark</strong>. <strong>Тема:</strong> глагол <em>sein</em>.');
+    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> глагол <em>sein</em>.');
     await sleep(600);
     addRobotMessage(`<div class="grammar-block"><h4>📖 ГЛАГОЛ «sein» (быть)</h4><p class="rule">Неправильный глагол. Запомни наизусть:</p><ul><li><strong>ich bin</strong> — я есть</li><li><strong>du bist</strong> — ты есть</li><li><strong>er/sie/es ist</strong> — он/она/оно есть</li><li><strong>wir sind</strong> — мы есть</li><li><strong>ihr seid</strong> — вы есть</li><li><strong>sie/Sie sind</strong> — они/Вы есть</li></ul><div class="example">Ich <strong>bin</strong> Mark. — Я Марк.</div><div class="example">Du <strong>bist</strong> Student. — Ты студент.</div></div>`);
     await sleep(500);
@@ -312,7 +312,7 @@ async function robotLesson3() {
 }
 
 async function robotLesson2() {
-    addRobotMessage('🔍 Анализирую собеседника: <strong>Lisa</strong>. <strong>Тема:</strong> спряжение правильных глаголов.');
+    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> спряжение правильных глаголов.');
     await sleep(600);
     addRobotMessage(`<div class="grammar-block"><h4>📖 СПРЯЖЕНИЕ ПРАВИЛЬНЫХ ГЛАГОЛОВ (Präsens)</h4><p class="rule">Основа + окончание по лицу:</p><ul><li><strong>ich</strong> — <strong>-e</strong> → ich komm<strong>e</strong></li><li><strong>du</strong> — <strong>-st</strong> → du komm<strong>st</strong></li><li><strong>er/sie/es</strong> — <strong>-t</strong> → er komm<strong>t</strong></li><li><strong>wir</strong> — <strong>-en</strong> → wir komm<strong>en</strong></li><li><strong>ihr</strong> — <strong>-t</strong> → ihr komm<strong>t</strong></li><li><strong>sie/Sie</strong> — <strong>-en</strong> → sie komm<strong>en</strong></li></ul><div class="example">Ich <strong>komme</strong> aus Berlin.</div><div class="example">Du <strong>wohnst</strong> in München.</div><div class="example">Er <strong>arbeitet</strong> als Programmierer.</div></div>`);
     await sleep(500);
@@ -326,7 +326,7 @@ async function robotLesson2() {
 }
 
 async function robotLesson1() {
-    addRobotMessage('🔍 Анализирую собеседника: <strong>Mia</strong>. <strong>Тема:</strong> W-вопросы.');
+    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> W-вопросы.');
     await sleep(600);
     addRobotMessage(`<div class="grammar-block"><h4>📖 W-ВОПРОСЫ</h4><p class="rule">W-слово + глагол (2-е место) + подлежащее</p><ul><li><strong>Wie heißt du?</strong> — Как тебя зовут?</li><li><strong>Woher kommst du?</strong> — Откуда ты?</li><li><strong>Was machst du?</strong> — Что ты делаешь?</li><li><strong>Wo wohnst du?</strong> — Где ты живёшь?</li><li><strong>Was sind deine Hobbys?</strong> — Какие у тебя хобби?</li><li><strong>Wer ist Jonas?</strong> — Кто такой Йонас?</li></ul><p style="margin-top:6px;color:#ff99ff;">💡 Сравни: «Du <strong>heißt</strong> Mark» → «Wie <strong>heißt</strong> du?» — глагол перед подлежащим!</p></div>`);
     await sleep(500);
