@@ -183,6 +183,17 @@ const npcs = {
                 hint: 'Woher kommst du?',
                 npcSays: 'Ich komme aus Hamburg. Aber ich wohne jetzt bei meiner Mama in Berlin. Papa wohnt noch in Hamburg.',
                 npcSays_tr: 'Я из Гамбурга. Но сейчас живу у мамы в Берлине. Папа всё ещё в Гамбурге.',
+                npcThen: 'Und du? Woher kommst du?',
+                npcThen_tr: 'А ты? Откуда ты?',
+                next: 'answer_from'
+            },
+            {
+                id: 'answer_from',
+                keywords: ['ich', 'komme'],
+                context: '📝 Ответь из какого ты города',
+                hint: 'Ich komme aus',
+                npcSays: 'Oho... ich kenne diese Stadt nicht',
+                npcSays_tr: 'Ого... я не знаю этот город',
                 next: 'ask_job'
             },
             {
@@ -192,6 +203,17 @@ const npcs = {
                 hint: 'Was machst du? / Wie ist es in der Schule?',
                 npcSays: 'Ich gehe in die Schule. Ich lerne gern Englisch. Mathe ist doof. Aber Englisch ist toll!',
                 npcSays_tr: 'Я хожу в школу. Люблю учить английский. Математика дурацкая. А английский классный!',
+                npcThen: 'Und du? Was bist du von Beruf?',
+                npcThen_tr: 'А ты? Кто ты по профессии?',
+                next: 'answer_job'
+            },
+            {
+                id: 'answer_job',
+                keywords: ['arbeite', 'beruf', 'mache', 'schule', 'lerne', 'gehe', 'bin'],
+                context: '📝 Ответь, кто ты по профессии',
+                hint: 'Was machst du? / Wie ist es in der Schule?',
+                npcSays: 'Verstehe. Es klingt interessant...',
+                npcSays_tr: 'Понятно. Звучит интересно',
                 next: 'ask_home'
             },
             {
@@ -297,38 +319,41 @@ function tag1AskRobot() {
     else if (npcNum === 3) robotLesson3();
 }
 
-async function robotLesson3() {
-    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> глагол <em>sein</em>.');
-    await sleep(600);
-    addRobotMessage(`<div class="grammar-block"><h4>📖 ГЛАГОЛ «sein» (быть)</h4><p class="rule">Неправильный глагол. Запомни наизусть:</p><ul><li><strong>ich bin</strong> — я есть</li><li><strong>du bist</strong> — ты есть</li><li><strong>er/sie/es ist</strong> — он/она/оно есть</li><li><strong>wir sind</strong> — мы есть</li><li><strong>ihr seid</strong> — вы есть</li><li><strong>sie/Sie sind</strong> — они/Вы есть</li></ul><div class="example">Ich <strong>bin</strong> Mark. — Я Марк.</div><div class="example">Du <strong>bist</strong> Student. — Ты студент.</div></div>`);
-    await sleep(500);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Ich ___ Mark.»', [{ text: 'bin', correct: true }, { text: 'bist', correct: false }, { text: 'ist', correct: false }, { text: 'sind', correct: false }], resolve, 1, 3));
-    await sleep(400);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Du ___ Lisa.»', [{ text: 'bin', correct: false }, { text: 'bist', correct: true }, { text: 'ist', correct: false }, { text: 'sind', correct: false }], resolve, 2, 3));
-    await sleep(400);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Sie ___ Mia.»', [{ text: 'bin', correct: false }, { text: 'bist', correct: false }, { text: 'ist', correct: true }, { text: 'sind', correct: false }], resolve, 3, 3));
-    await sleep(500);
-    finishLesson(1, 'ГЛАГОЛ SEIN');
-}
-
-async function robotLesson2() {
-    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> спряжение правильных глаголов.');
-    await sleep(600);
-    addRobotMessage(`<div class="grammar-block"><h4>📖 СПРЯЖЕНИЕ ПРАВИЛЬНЫХ ГЛАГОЛОВ (Präsens)</h4><p class="rule">Основа + окончание по лицу:</p><ul><li><strong>ich</strong> — <strong>-e</strong> → ich komm<strong>e</strong></li><li><strong>du</strong> — <strong>-st</strong> → du komm<strong>st</strong></li><li><strong>er/sie/es</strong> — <strong>-t</strong> → er komm<strong>t</strong></li><li><strong>wir</strong> — <strong>-en</strong> → wir komm<strong>en</strong></li><li><strong>ihr</strong> — <strong>-t</strong> → ihr komm<strong>t</strong></li><li><strong>sie/Sie</strong> — <strong>-en</strong> → sie komm<strong>en</strong></li></ul><div class="example">Ich <strong>komme</strong> aus Berlin.</div><div class="example">Du <strong>wohnst</strong> in München.</div><div class="example">Er <strong>arbeitet</strong> als Programmierer.</div></div>`);
-    await sleep(500);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Ich ___ aus Berlin.» (kommen)', [{ text: 'komme', correct: true }, { text: 'kommst', correct: false }, { text: 'kommt', correct: false }, { text: 'kommen', correct: false }], resolve, 1, 3));
-    await sleep(400);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Du ___ in München.» (wohnen)', [{ text: 'wohne', correct: false }, { text: 'wohnst', correct: true }, { text: 'wohnt', correct: false }, { text: 'wohnen', correct: false }], resolve, 2, 3));
-    await sleep(400);
-    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Er ___ als Programmierer.» (arbeiten)', [{ text: 'arbeite', correct: false }, { text: 'arbeitest', correct: false }, { text: 'arbeitet', correct: true }, { text: 'arbeiten', correct: false }], resolve, 3, 3));
-    await sleep(500);
-    finishLesson(2, 'СПРЯЖЕНИЕ ГЛАГОЛОВ');
-}
-
 async function robotLesson1() {
     addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> W-вопросы.');
     await sleep(600);
-    addRobotMessage(`<div class="grammar-block"><h4>📖 W-ВОПРОСЫ</h4><p class="rule">W-слово + глагол (2-е место) + подлежащее</p><ul><li><strong>Wie heißt du?</strong> — Как тебя зовут?</li><li><strong>Woher kommst du?</strong> — Откуда ты?</li><li><strong>Was machst du?</strong> — Что ты делаешь?</li><li><strong>Wo wohnst du?</strong> — Где ты живёшь?</li><li><strong>Was sind deine Hobbys?</strong> — Какие у тебя хобби?</li><li><strong>Wer ist Jonas?</strong> — Кто такой Йонас?</li></ul><p style="margin-top:6px;color:#ff99ff;">💡 Сравни: «Du <strong>heißt</strong> Mark» → «Wie <strong>heißt</strong> du?» — глагол перед подлежащим!</p></div>`);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📖 W-ВОПРОСЫ</h4>
+                <p class="rule">W-слово + глагол (2-е место) + подлежащее</p>
+                <ul>
+                    <li><strong>Wie heißt du?</strong> — Как тебя зовут?</li>
+                    <li><strong>Woher kommst du?</strong> — Откуда ты?</li>
+                    <li><strong>Was machst du?</strong> — Что ты делаешь?</li>
+                    <li><strong>Wo wohnst du?</strong> — Где ты живёшь?</li>
+                    <li><strong>Was sind deine Hobbys?</strong> — Какие у тебя хобби?</li>
+                    <li><strong>Wer ist Jonas?</strong> — Кто такой Йонас?</li>
+                </ul>
+                <p style="margin-top:6px;color:#ff99ff;">💡 Сравни: «Du <strong>heißt</strong> Mark» → «Wie <strong>heißt</strong> du?» — глагол перед подлежащим!</p>
+            </div>`);
+    await sleep(500);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📋 ВОПРОСИТЕЛЬНЫЕ СЛОВА (W-Wörter)</h4>
+            <ul>
+                <li><strong>Wie</strong> — как</li>
+                <li><strong>Wo</strong> — где</li>
+                <li><strong>Woher</strong> — откуда</li>
+                <li><strong>Wohin</strong> — куда</li>
+                <li><strong>Was</strong> — что</li>
+                <li><strong>Wer</strong> — кто</li>
+                <li><strong>Wann</strong> — когда</li>
+                <li><strong>Warum</strong> — почему</li>
+                <li><strong>Wessen</strong> — чей</li>
+            </ul>
+            <p style="margin-top:6px;color:#ff99ff;">💡 Все W-слова начинаются с <strong>W</strong> — поэтому их называют W-Fragen!</p>
+        </div>
+    `);
     await sleep(500);
     await new Promise(resolve => addTestToRobot('Как спросить «Как тебя зовут?»', [{ text: 'Wer du heißt?', correct: false }, { text: 'Wie heißt du?', correct: true }, { text: 'Wie du heißt?', correct: false }, { text: 'Heißt wie du?', correct: false }], resolve, 1, 6));
     await sleep(400);
@@ -342,15 +367,59 @@ async function robotLesson1() {
     await sleep(400);
     await new Promise(resolve => addTestToRobot('Как спросить «Кто такой Йонас?»', [{ text: 'Wer Jonas ist?', correct: false }, { text: 'Wer ist Jonas?', correct: true }, { text: 'Ist wer Jonas?', correct: false }, { text: 'Jonas wer ist?', correct: false }], resolve, 6, 6));
     await sleep(500);
-    finishLesson(3, 'W-ВОПРОСЫ');
+    finishLesson(1, 'W-ВОПРОСЫ');
 }
 
-function finishLesson(lessonNum, topicName) {
-    state.robotExplained[lessonNum] = true;
-    addRobotMessage(`✅ <strong>Часть ${lessonNum} изучена: ${topicName}!</strong> Теперь общайся с собеседником.<br><br>💡 Если забудешь — нажми 💡 ПОДСКАЗКА.`);
-    enableAskRobot(true, 'МОЖЕТЕ ОБЩАТЬСЯ');
-    if (window.innerWidth <= 900) switchTab('chat');
-    setTimeout(() => startDialogue(), 800);
+async function robotLesson2() {
+    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> спряжение правильных глаголов.');
+    await sleep(600);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📖 СПРЯЖЕНИЕ ПРАВИЛЬНЫХ ГЛАГОЛОВ (Präsens)</h4>
+            <p class="rule">Основа + окончание по лицу:</p>
+            <ul>
+                <li><strong>ich</strong> — <strong>-e</strong> → ich komm<strong>e</strong></li>
+                <li><strong>du</strong> — <strong>-st</strong> → du komm<strong>st</strong></li>
+                <li><strong>er/sie/es</strong> — <strong>-t</strong> → er komm<strong>t</strong></li>
+                <li><strong>wir</strong> — <strong>-en</strong> → wir komm<strong>en</strong></li>
+                <li><strong>ihr</strong> — <strong>-t</strong> → ihr komm<strong>t</strong></li>
+                <li><strong>sie/Sie</strong> — <strong>-en</strong> → sie komm<strong>en</strong></li>
+            </ul>
+            <div class="example">Ich <strong>komme</strong> aus Berlin.</div><div class="example">Du <strong>wohnst</strong> in München.</div><div class="example">Er <strong>arbeitet</strong> als Programmierer.</div></div>`);
+    await sleep(500);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Ich ___ aus Berlin.» (kommen) (Я из Берлина)', [{ text: 'komme', correct: true }, { text: 'kommst', correct: false }, { text: 'kommt', correct: false }, { text: 'kommen', correct: false }], resolve, 1, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Du ___ in München.» (wohnen) (Я живу в Мюнхене)', [{ text: 'wohne', correct: false }, { text: 'wohnst', correct: true }, { text: 'wohnt', correct: false }, { text: 'wohnen', correct: false }], resolve, 2, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Er ___ als Programmierer.» (arbeiten) (Я работаю программистом', [{ text: 'arbeite', correct: false }, { text: 'arbeitest', correct: false }, { text: 'arbeitet', correct: true }, { text: 'arbeiten', correct: false }], resolve, 3, 3));
+    await sleep(500);
+    finishLesson(2, 'СПРЯЖЕНИЕ ГЛАГОЛОВ');
+}
+
+async function robotLesson3() {
+    addRobotMessage('🔍 Анализирую собеседника. <strong>Тема:</strong> глагол <em>sein</em>.');
+    await sleep(600);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📖 ГЛАГОЛ «sein» (быть)</h4>
+            <p class="rule">Неправильный глагол. Запомни наизусть:</p>
+            <ul>
+                <li><strong>ich bin</strong> — я есть</li>  
+                <li><strong>du bist</strong> — ты есть</li>
+                <li><strong>er/sie/es ist</strong> — он/она/оно есть</li>
+                <li><strong>wir sind</strong> — мы есть</li>
+                <li><strong>ihr seid</strong> — вы есть</li>
+                <li><strong>sie/Sie sind</strong> — они/Вы есть</li>
+            </ul>
+            <div class="example">Ich <strong>bin</strong> Mark. — Я Марк.</div><div class="example">Du <strong>bist</strong> Student. — Ты студент.</div></div>`);
+    await sleep(500);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Ich ___ Mark.»', [{ text: 'bin', correct: true }, { text: 'bist', correct: false }, { text: 'ist', correct: false }, { text: 'sind', correct: false }], resolve, 1, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Du ___ Lisa.»', [{ text: 'bin', correct: false }, { text: 'bist', correct: true }, { text: 'ist', correct: false }, { text: 'sind', correct: false }], resolve, 2, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('Выбери правильную форму: «Sie ___ Mia.»', [{ text: 'bin', correct: false }, { text: 'bist', correct: false }, { text: 'ist', correct: true }, { text: 'sind', correct: false }], resolve, 3, 3));
+    await sleep(500);
+    finishLesson(3, 'ГЛАГОЛ SEIN');
 }
 
 function startDialogue() {
@@ -358,13 +427,6 @@ function startDialogue() {
     state.currentStepId = 'intro';
     const npc = npcs[state.currentNPC];
     enableInput(npc.steps[0].context);
-}
-
-function tag1SubmitInput() {
-    const input = document.getElementById('user-input');
-    const text = input.value.trim();
-    if (!text) return;
-    if (state.phase === 'dialogue') handleDialogueInput(text);
 }
 
 async function handleDialogueInput(text) {
@@ -417,20 +479,6 @@ async function handleDialogueInput(text) {
     enableInput(nextStep.context);
 }
 
-function tag1ShowHint() {
-    if (state.phase !== 'dialogue') return;
-    const npc = npcs[state.currentNPC];
-    const step = npc.steps.find(s => s.id === state.currentStepId);
-    if (!step) return;
-    addRobotMessage(`💡 Подсказка: <strong>${step.hint}</strong>`);
-    state.hintUsed = true;
-    state.currentInputFirstTry = false;
-    if (window.innerWidth <= 900) {
-        switchTab('robot');
-        setTimeout(() => switchTab('chat'), 3000);
-    }
-}
-
 async function verterCheck() {
     state.phase = 'verter_check';
     const npcKey = state.currentNPC;
@@ -455,59 +503,20 @@ async function verterCheck() {
         ...wrongAnswers.map(w => ({ text: w, correct: false }))
     ]);
 
-    const container = document.getElementById('main-messages');
-    const block = document.createElement('div');
-    block.className = 'msg system';
-    block.innerHTML = `
-        <div class="msg-avatar">⚠</div>
-        <div class="msg-body">
-            <div class="test-block">
-                <div class="test-q">Что ты узнал о ${npc.name}?</div>
-                <div class="test-opts">
-                    ${allOptions.map((opt, i) => `<button class="test-opt" data-idx="${i}">${opt.text}</button>`).join('')}
-                </div>
-            </div>
-        </div>
-    `;
-    container.appendChild(block);
-    container.scrollTop = container.scrollHeight;
-
-    state.currentTestFirstTry = true;
-    block.querySelectorAll('.test-opt').forEach(btn => {
-        btn.onclick = () => {
-            const idx = parseInt(btn.dataset.idx);
-            handleVerterAnswer(idx, allOptions, block, npcKey);
-        };
-    });
-}
-
-async function handleVerterAnswer(idx, options, block, npcKey) {
-    state.totalAttempts++;
-    const buttons = block.querySelectorAll('.test-opt');
-
-    if (options[idx].correct) {
-        buttons[idx].classList.add('correct');
-        buttons.forEach(b => b.classList.add('locked'));
-        state.score += 50;
-        updateStats();
-
-        await sleep(800);
-        addMainMessage('verter', '✅ Верно. Фрагмент восстановлен.', 'VERTER [неизвестный]');
-
-        await sleep(1500);
-        moveToNextNPC();
-    } else {
-        buttons[idx].classList.add('wrong');
-        buttons[idx].classList.add('locked');
-        state.errors++;
-        state.currentTestFirstTry = false;
-        updateStats();
-
-        freezeTime();
-
-        await sleep(3000);
-        addMainMessage('verter', '❌ Неверно! <strong>Время заморожено.</strong> Попробуй ещё раз.', 'VERTER [неизвестный]');
-    }
+    showVerterTest(
+        `Что ты узнал о ${npc.name}?`,
+        allOptions,
+        async () => {
+            await sleep(800);
+            addMainMessage('verter', '✅ Верно. Фрагмент восстановлен.', 'VERTER [неизвестный]');
+            await sleep(1500);
+            moveToNextNPC();
+        },
+        async () => {
+            await sleep(3000);
+            addMainMessage('verter', '❌ Неверно! <strong>Время заморожено.</strong> Попробуй ещё раз.', 'VERTER [неизвестный]');
+        }
+    );
 }
 
 async function moveToNextNPC() {
@@ -530,12 +539,86 @@ async function finale() {
     await sleep(1500);
     addMainMessage('verter', 'Время разомкнуто. Доступ к следующему дню разрешён.', 'VERTER [неизвестный]');
     await sleep(1500);
-    addMainMessage('verter', 'Отдыхай. Петля ждёт.', 'VERTER [неизвестный]');
-    await sleep(2000);
-    showFinalStats();
+
+    /* 🆕 Сбой системы — появляются кнопки */
+    addMainMessage('system', '⚠ СБОЙ СИСТЕМЫ. ОБНАРУЖЕН ЗАПРОС.');
+    await sleep(1200);
+
+    /* Показываем кнопки */
+    const container = document.getElementById('main-messages');
+    const block = document.createElement('div');
+    block.className = 'msg system';
+    block.innerHTML = `
+        <div class="msg-avatar">⚠</div>
+        <div class="msg-body">
+            <div class="test-block">
+                <div class="test-q">Что ты хочешь спросить?</div>
+                <div class="test-opts">
+                    <button class="test-opt" data-q="place">Что это за место?</button>
+                    <button class="test-opt" data-q="how">Как я сюда попал?</button>
+                    <button class="test-opt" data-q="jonas">Кто такой Йонас?</button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.appendChild(block);
+    container.scrollTop = container.scrollHeight;
+
+    block.querySelectorAll('.test-opt').forEach(btn => {
+        btn.onclick = async () => {
+            const q = btn.dataset.q;
+            block.querySelectorAll('.test-opt').forEach(b => b.classList.add('locked'));
+            btn.classList.add('correct');
+
+            /* 🆕 Скрываем кнопки после выбора */
+            await sleep(400);
+            block.style.display = 'none';
+
+            /* Вопрос игрока появляется в чате */
+            let question = '';
+            if (q === 'place') question = 'Что это за место?';
+            else if (q === 'how') question = 'Как я сюда попал?';
+            else if (q === 'jonas') question = 'Кто такой Йонас?';
+
+            addMainMessage('user', question, 'ВЫ');
+            await sleep(1200);
+
+            /* VERTER отвечает уклончиво */
+            if (q === 'place') {
+                addMainMessage('verter', 'Это не имеет значения. Ты выполнил задание.', 'VERTER [неизвестный]');
+                await sleep(1200);
+                addMainMessage('user', 'Но я хочу понять.', 'ВЫ');
+                await sleep(1000);
+                addMainMessage('verter', 'Понимание не входит в протокол.', 'VERTER [неизвестный]');
+            } else if (q === 'how') {
+                addMainMessage('verter', 'Ты здесь. Этого достаточно.', 'VERTER [неизвестный]');
+                await sleep(1200);
+                addMainMessage('user', 'Я не помню, как попал сюда.', 'ВЫ');
+                await sleep(1000);
+                addMainMessage('verter', 'Память — ненадёжный источник. Не доверяй ей.', 'VERTER [неизвестный]');
+            } else if (q === 'jonas') {
+                addMainMessage('verter', '...', 'VERTER [неизвестный]');
+                await sleep(1500);
+                addMainMessage('system', '⚠ ОШИБКА РАСПОЗНАВАНИЯ. ПОВТОРИТЕ ПОЗЖЕ.');
+                await sleep(1200);
+                addMainMessage('verter', 'Это имя не входит в протокол. Продолжай.', 'VERTER [неизвестный]');
+            }
+
+            await sleep(1500);
+            addMainMessage('verter', 'Отдыхай. Петля ждёт.', 'VERTER [неизвестный]');
+            await sleep(2000);
+            showFinalStats();
+        };
+    });
 }
 
 initGame({
+    npcs: npcs,
+    npcColors: {   // 🆕 цвета NPC
+        mark: { color: '#00c8ff', bg: 'rgba(0, 200, 255, 0.2)', bgLight: 'rgba(0, 200, 255, 0.08)' },
+        lisa: { color: '#ff66ff', bg: 'rgba(255, 102, 255, 0.2)', bgLight: 'rgba(255, 102, 255, 0.08)' },
+        mia:  { color: '#ffd700', bg: 'rgba(255, 215, 0, 0.2)', bgLight: 'rgba(255, 215, 0, 0.08)' }
+    }, 
     dayTag: 'TAG 1',
     chatHeader: '◈ КАНАЛ СВЯЗИ // ФРАГМЕНТ 1: ЗНАКОМСТВО',
     bootMessages: [
@@ -553,7 +636,6 @@ initGame({
     awardAlways: true,
     finalTitle: '◢ ФРАГМЕНТ 1 ВОССТАНОВЛЕН ◣',
     finalRows: () => [
-        { label: 'Воспоминаний:',    value: '3 / 3' },
         { label: 'Тестов пройдено:', value: state.testsPassed },
         { label: 'Всего попыток:',   value: state.totalAttempts },
         { label: 'Ошибок:',          value: state.errors },
@@ -564,6 +646,5 @@ initGame({
     ],
     onBoot: tag1Intro,
     onAskRobot: tag1AskRobot,
-    onSubmitInput: tag1SubmitInput,
-    onShowHint: tag1ShowHint
+    onSubmitInput: handleDialogueInput,
 });

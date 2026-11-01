@@ -29,6 +29,7 @@ let CONFIG = {
     chatHeader: '◈ КАНАЛ СВЯЗИ',
     bootMessages: ['ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...'],
     avatars: {},
+    npcColors: {}, 
     npcAvatar: null,
     maxScore: 0,
     threshold: 0,
@@ -101,6 +102,15 @@ function addMainMessage(type, text, sender, translation) {
     const msg = document.createElement('div');
     msg.className = `msg ${type}`;
 
+    // 🆕 если это NPC и в CONFIG есть цвет — применяем
+    const npcColor = (type === 'npc') ? CONFIG.npcColors?.[state.currentNPC] : null;
+    if (npcColor) {
+        msg.setAttribute('data-npc', state.currentNPC);
+        msg.style.setProperty('--npc-color', npcColor.color);
+        msg.style.setProperty('--npc-bg', npcColor.bg);
+        msg.style.setProperty('--npc-bg-light', npcColor.bgLight);
+    }
+
     let avatar = '';
     if (type === 'user') avatar = '👤';
     else if (type === 'system') avatar = '⚠';
@@ -111,7 +121,7 @@ function addMainMessage(type, text, sender, translation) {
 
     let translateHtml = '';
     if (translation) {
-        translateHtml = `<button class="translate-btn" onclick="showTranslation(this, '${translation.replace(/'/g, "\\'")}')">🔍 ПЕРЕВОД</button>`;
+        translateHtml = `<button class="translate-btn" onclick="showTranslation(this, '${translation.replace(/'/g, "\\'")}')">🌐</button>`;
     }
 
     msg.innerHTML = `
@@ -133,6 +143,21 @@ function showTranslation(btn, translation) {
     box.innerHTML = translation;
     body.appendChild(box);
     btn.style.display = 'none';
+}
+
+function showHint() {
+    if (state.phase !== 'dialogue') return;
+    const npc = CONFIG.npcs[state.currentNPC];
+    if (!npc) return;
+    const step = npc.steps.find(s => s.id === state.currentStepId);
+    if (!step) return;
+    addRobotMessage(`💡 Подсказка: <strong>${step.hint}</strong>`);
+    state.hintUsed = true;
+    state.currentInputFirstTry = false;
+    if (window.innerWidth <= 900) {
+        switchTab('robot');
+        setTimeout(() => switchTab('chat'), 3000);
+    }
 }
 
 function addRobotMessage(text, showBadge = true) {
@@ -163,6 +188,14 @@ function updateRobotBadge() {
     } else {
         badge.classList.remove('show');
     }
+}
+
+function finishLesson(lessonNum, topicName) {
+    state.robotExplained[lessonNum] = true;
+    addRobotMessage(`✅ <strong>Часть ${lessonNum} изучена: ${topicName}!</strong> Теперь общайся с собеседником.<br><br>💡 Если забудешь — нажми 💡 ПОДСКАЗКА.`);
+    enableAskRobot(true, 'МОЖЕТЕ ОБЩАТЬСЯ');
+    if (window.innerWidth <= 900) switchTab('chat');
+    setTimeout(() => startDialogue(), 800);
 }
 
 /* ---------- ТАБЫ ---------- */
@@ -203,61 +236,112 @@ function matchesKeywords(text, keywords) {
 }
 
 /* ---------- ТЕСТЫ ---------- */
-function addTestToRobot(question, options, callback, testIdx, totalTests) {
+/* ---------- УНИВЕРСАЛЬНЫЙ ТЕСТ ---------- */
+function showTest(opts) {
     state.currentTestFirstTry = true;
 
-    const container = document.getElementById('robot-messages');
+    const container = document.getElementById(opts.container || 'robot-messages');
     const block = document.createElement('div');
-    block.className = 'test-block';
 
-    const optsHtml = options.map((opt, i) =>
-        `<button class="test-opt" data-idx="${i}">${opt.text}</button>`
-    ).join('');
+    let inner;
+    if (opts.container === 'main-messages') {
+        block.className = 'msg system';
+        inner = `
+            <div class="msg-avatar">${opts.avatar || '⚠'}</div>
+            <div class="msg-body">
+                <div class="test-block">
+                    <div class="test-q">${opts.question}</div>
+                    <div class="test-opts">
+                        ${opts.options.map((opt, i) => `<button class="test-opt" data-idx="${i}">${opt.text}</button>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        block.className = 'test-block';
+        inner = `
+            <div class="test-progress">ТЕСТ ${opts.testIdx} / ${opts.totalTests}</div>
+            <div class="test-q">${opts.question}</div>
+            <div class="test-opts">
+                ${opts.options.map((opt, i) => `<button class="test-opt" data-idx="${i}">${opt.text}</button>`).join('')}
+            </div>
+        `;
+    }
 
-    block.innerHTML = `
-        <div class="test-progress">ТЕСТ ${testIdx} / ${totalTests}</div>
-        <div class="test-q">${question}</div>
-        <div class="test-opts">${optsHtml}</div>
-    `;
-
+    block.innerHTML = inner;
     container.appendChild(block);
     container.scrollTop = container.scrollHeight;
 
     block.querySelectorAll('.test-opt').forEach(btn => {
         btn.onclick = () => {
             const idx = parseInt(btn.dataset.idx);
-            handleTestAnswer(idx, options, block, callback);
+            const isCorrect = opts.options[idx].correct;
+            const buttons = block.querySelectorAll('.test-opt');
+
+            state.totalAttempts++;
+
+            if (isCorrect) {
+                buttons[idx].classList.add('correct');
+                buttons.forEach(b => b.classList.add('locked'));
+                state.testsPassed++;
+
+                if (opts.points && (CONFIG.awardAlways || state.currentTestFirstTry)) {
+                    state.score += opts.points;
+                }
+                updateStats();
+
+                if (opts.onCorrect) opts.onCorrect();
+            } else {
+                buttons[idx].classList.add('wrong');
+                buttons[idx].classList.add('locked');
+                state.errors++;
+                state.currentTestFirstTry = false;
+                updateStats();
+
+                if (opts.freezeOnWrong) freezeTime();
+                if (opts.onWrong) opts.onWrong();
+            }
         };
     });
 }
 
-function handleTestAnswer(idx, options, block, callback) {
-    state.totalAttempts++;
-    const buttons = block.querySelectorAll('.test-opt');
-
-    if (options[idx].correct) {
-        buttons[idx].classList.add('correct');
-        buttons.forEach(b => b.classList.add('locked'));
-        state.testsPassed++;
-
-        const award = CONFIG.awardAlways || state.currentTestFirstTry;
-        if (award) {
-            state.score += CONFIG.pointsPerTest;
-            addRobotMessage(`✅ Верно! <strong>+${CONFIG.pointsPerTest} очков</strong>`);
-        } else {
-            addRobotMessage('✅ Верно! (Очки не начислены — были ошибки)');
+/* ---------- ОБЁРТКА: ТЕСТ РОБОТА ---------- */
+function addTestToRobot(question, options, callback, testIdx, totalTests) {
+    showTest({
+        container: 'robot-messages',
+        avatar: '🤖',
+        question,
+        options,
+        points: CONFIG.pointsPerTest,
+        testIdx,
+        totalTests,
+        onCorrect: () => {
+            const award = CONFIG.awardAlways || state.currentTestFirstTry;
+            if (award) {
+                addRobotMessage(`✅ Верно! <strong>+${CONFIG.pointsPerTest} очков</strong>`);
+            } else {
+                addRobotMessage('✅ Верно! (Очки не начислены — были ошибки)');
+            }
+            if (callback) setTimeout(callback, 600);
+        },
+        onWrong: () => {
+            addRobotMessage('❌ Неверно. Попробуйте другой вариант.');
         }
+    });
+}
 
-        updateStats();
-        if (callback) setTimeout(callback, 600);
-    } else {
-        buttons[idx].classList.add('wrong');
-        buttons[idx].classList.add('locked');
-        state.errors++;
-        state.currentTestFirstTry = false;
-        updateStats();
-        addRobotMessage('❌ Неверно. Попробуйте другой вариант.');
-    }
+/* ---------- ОБЁРТКА: ПРОВЕРКА VERTER ---------- */
+function showVerterTest(question, options, onCorrect, onWrong) {
+    showTest({
+        container: 'main-messages',
+        avatar: '⚠',
+        question,
+        options,
+        points: 50,
+        freezeOnWrong: true,
+        onCorrect,
+        onWrong
+    });
 }
 
 /* ---------- СТАТИСТИКА / INPUT / ASK ---------- */
@@ -436,8 +520,15 @@ function showFinalStats() {
 
 /* ---------- ДЕЛЕГАТЫ ---------- */
 function askRobot()    { if (CONFIG.onAskRobot) CONFIG.onAskRobot(); }
-function submitInput() { if (CONFIG.onSubmitInput) CONFIG.onSubmitInput(); }
-function showHint()    { if (CONFIG.onShowHint) CONFIG.onShowHint(); }
+
+function submitInput() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text) return;
+    if (state.phase !== 'dialogue') return;
+    if (CONFIG.onSubmitInput) CONFIG.onSubmitInput(text);
+}
+
 
 /* ---------- ГЛОБАЛЬНЫЕ ОБРАБОТЧИКИ ---------- */
 function bindGlobalEvents() {
