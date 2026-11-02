@@ -1,0 +1,45 @@
+{
+  "name": "Present Simple: Проверка знаний",
+  "subtitle": "7 вопросов · 5 минут",
+  "timeLimit": 300,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "She _____ to school by bus every day.",
+      "opts": ["go", "goes", "going", "gone"],
+      "c": 2
+    },
+    {
+      "type": "true_false",
+      "q": "В предложении 'They play football' вспомогательный глагол для вопроса будет 'Does'.",
+      "answer": false
+    },
+    {
+      "type": "fill_blank",
+      "q": "My brother _____ (watch) TV in the evening. (Напишите глагол в правильной форме)",
+      "answer": "watches"
+    },
+    {
+      "type": "multiple_select",
+      "q": "Выберите ВСЕ слова-маркеры, которые используются с Present Simple:",
+      "opts": ["now", "usually", "every day", "yesterday", "often"],
+      "correct": [1, 2, 4]
+    },
+    {
+      "type": "multiple_choice",
+      "q": "We _____ like coffee. Choose the correct negative form.",
+      "opts": ["doesn't", "not", "don't", "aren't"],
+      "c": 3
+    },
+    {
+      "type": "fill_blank",
+      "q": "_____ your friend speak English? (Напишите пропущенный вспомогательный глагол)",
+      "answer": "does"
+    },
+    {
+      "type": "true_false",
+      "q": "Глагол 'to be' (am, is, are) в Present Simple требует вспомогательного глагола do/does для построения вопроса.",
+      "answer": false
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грамматика: Present Tenses</title>
+<link rel="stylesheet" href="../../../css/base.css">
+<link rel="stylesheet" href="../../../css/hub.css">
+<link rel="stylesheet" href="../../../css/lesson.css">
+<style>
+    :root {
+        --accent: #fbbf24;
+        --accent-2: #f59e0b;
+        --accent-3: #d97706;
+        --border: rgba(255,255,255,0.1);
+        --muted: #9ca3af;
+        --danger: #ef4444;
+    }
+
+    .slide-nav { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+    .slide-btn { padding: 8px 16px; background: rgba(255,255,255,0.1); border: none; color: white; cursor: pointer; border-radius: 6px; }
+    .slide-btn.active { background: var(--accent); color: black; font-weight: bold; }
+    .slide-content { display: none; animation: fadeIn 0.5s; }
+    .slide-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav class="nav-top">
+  <div class="brand"><span class="brand-dot"></span><span>English Hub</span></div>
+  <div class="nav-links"><a href="../../../index.html">Главная</a></div>
+</nav>
+
+<div class="lesson-container">
+
+  <div class="lesson-header">
+    <a href="../../english.html" class="back-link">← Назад к материалам</a>
+    <h1 id="lessonTitle">Настоящие времена: Present Tenses</h1>
+    <div class="lesson-meta" id="lessonMeta">
+      <span class="meta-tag">⏱️ 10 мин</span>
+      <span class="meta-tag">📂 Грамматика</span>
+    </div>
+    <p class="lead" style="color: var(--muted)">Разбираем отличия Simple, Continuous и Perfect</p>
+  </div>
+
+  <div class="lesson-content" id="lessonContent">
+
+    <div class="slide-nav">
+      <button class="slide-btn active" onclick="showSlide(1)">1. Present Simple</button>
+      <button class="slide-btn" onclick="showSlide(2)">2. Present Continuous</button>
+      <button class="slide-btn" onclick="showSlide(3)">3. Present Perfect</button>
+    </div>
+
+    <!-- СЛАЙД 1 -->
+    <div id="slide-1" class="slide-content active">
+      <h2>1. Present Simple (Простое настоящее)</h2>
+      <p>Используется для <strong>регулярных действий</strong>, фактов и расписаний. Это "база", рутина.</p>
+
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> always, usually, often, every day, on Mondays.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>I / You / We / They</th>
+            <th>He / She / It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>V1 (play)</td>
+            <td>V1 + <strong>s/es</strong> (plays)</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td><strong>don't</strong> + V1</td>
+            <td><strong>doesn't</strong> + V1</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Do</strong> ... V1?</td>
+            <td><strong>Does</strong> ... V1?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⚠️ Важно: Глагол To Be</h4>
+      <p>Глагол <code>to be</code> не требует do/does. Он меняется сам:</p>
+      <ul>
+        <li>I <strong>am</strong> / He <strong>is</strong> / We <strong>are</strong></li>
+        <li>Вопрос: <strong>Is</strong> he a doctor? (Не: Does he be...)</li>
+      </ul>
+    </div>
+
+    <!-- СЛАЙД 2 -->
+    <div id="slide-2" class="slide-content">
+      <h2>2. Present Continuous (Настоящее длительное)</h2>
+      <p>Используется для действий, которые происходят <strong>прямо сейчас</strong> (в момент речи) или временных ситуаций.</p>
+
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> now, at the moment, Look!, Listen!, today (в значении "сегодняшний день").
+      </blockquote>
+
+      <h3>Схема построения</h3>
+      <p>Формула: <code>to be (am/is/are) + V-ing</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>I <strong>am working</strong> now.<br>She <strong>is sleeping</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td>We <strong>aren't watching</strong> TV.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Are</strong> you <strong>listening</strong>?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>🚫 Stative Verbs (Глаголы состояния)</h4>
+      <p>Некоторые глаголы <strong>нельзя</strong> использовать в Continuous, даже если действие происходит сейчас. Это глаголы чувств и мышления:</p>
+      <p><code>like, love, hate, know, understand, want, need, believe</code>.</p>
+      <p><em>Правильно:</em> I <strong>understand</strong> you. (Не: I am understanding)</p>
+    </div>
+
+    <!-- СЛАЙД 3 -->
+    <div id="slide-3" class="slide-content">
+      <h2>3. Present Perfect (Настоящее совершенное)</h2>
+      <p>Связывает прошлое с настоящим. Нам важен <strong>результат</strong> к настоящему моменту, а не время действия.</p>
+
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> just, already, yet, ever, never, recently, since, for.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <p>Формула: <code>have/has + V3 (Past Participle)</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Подлежащее</th>
+            <th>Вспомогательный</th>
+            <th>Основной глагол</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>I / You / We / They</td>
+            <td><strong>have</strong></td>
+            <td>V3 (played / gone)</td>
+            <td>I <strong>have finished</strong>.</td>
+          </tr>
+          <tr>
+            <td>He / She / It</td>
+            <td><strong>has</strong></td>
+            <td>V3 (played / gone)</td>
+            <td>She <strong>has lost</strong> her keys.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Разница с Past Simple</h4>
+      <ul>
+        <li><strong>Past Simple:</strong> Я потерял ключи вчера. (Факт в прошлом, время указано). → <em>I lost my keys yesterday.</em></li>
+        <li><strong>Present Perfect:</strong> Я потерял ключи. (Результат: я стою перед дверью и не могу войти). → <em>I have lost my keys.</em></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="lesson-footer">
+    <p>Проверьте свои знания:</p>
+    <a href="../../../quiz.html?test=english/tests/grammar/01.json" class="btn btn-secondary" style="background: var(--accent); color: #000; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+      Пройти тест по теме →
+    </a>
+  </div>
+</div>
+
+<script>
+  function showSlide(n) {
+    document.querySelectorAll('.slide-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.slide-btn').forEach(el => el.classList.remove('active'));
+
+    document.getElementById('slide-' + n).classList.add('active');
+    document.querySelectorAll('.slide-btn')[n - 1].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

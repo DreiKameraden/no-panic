@@ -1,68 +1,96 @@
 {
-  "tests": [
+  "items": [
     {
-      "num": "01",
-      "file": "test-01-basics.json",
-      "title": "Test 1: Basics",
-      "description": "Числа, национальность, семья, глаголы to be, to have и to do",
-      "questions": 15,       
-      "time": 15,
-      "groups": ["09", "ИТ-92", "new"],
-      "relatedMaterial": "lesson-01-basics.md"
+      "id": "9.1",
+      "material": {
+        "file": "materials/09/01.md",
+        "title": "Лекция №1",
+        "description": "",
+        "type": "Лекция"
+      },
+      "test": {
+        "file": "tests/09/01.json",
+        "title": "Test 1",
+        "description": "",
+        "questions": 15,
+        "time": 15
+      },
+      "groups": ["09"]
     },
     {
-      "num": "01",
-      "file": "test-01-routine.json",
-      "title": "Daily Routine",
-      "description": "Лексика рутины, наречия частотности, предлоги времени",
-      "questions": 10,
-      "time": 15,
-      "groups": ["09"],
-      "relatedMaterial": "lesson-01-routine.md"
+      "id": "9.2",
+      "material": {
+        "file": "materials/09/02.md",
+        "title": "Лекция №2",
+        "description": "",
+        "type": "Лекция"
+      },
+      "test": {
+        "file": "tests/09/02.json",
+        "title": "Test 2",
+        "description": "",
+        "questions": 10,
+        "time": 15
+      },
+      "groups": ["09"]
     },
     {
-      "num": "02",
-      "file": "test-02-future.json",
-      "title": "Plans & Future",
-      "description": "Will vs Going to, I'd like to, verb patterns",
-      "questions": 10,
-      "time": 15,
-      "groups": ["09"],
-      "relatedMaterial": "lesson-02-future.md"
-    }
-  ],
-  "materials": [
-    {
-      "num": "01",
-      "file": "lesson-01-basics.md",
-      "title": "Лекция №1: Basics",
-      "description": "Лексика рутины, Present Simple vs Continuous",
-      "type": "Лекция",
-      "groups": ["09", "ИТ-92"],
-      "relatedTest": "test-01-basics.json"
+      "id": "9.3",
+      "material": {
+        "file": "materials/09/03.md",
+        "title": "Лекция №3",
+        "description": "",
+        "type": "Лекция"
+      },
+      "test": {
+        "file": "tests/09/03.json",
+        "title": "Test 3",
+        "description": "",
+        "questions": 10,
+        "time": 15
+      },
+      "groups": ["09"]
     },
     {
-      "num": "02",
-      "file": "lesson-02-future.md",
-      "title": "Лекция №2: Plans & Future",
-      "description": "Will vs Going to, I'd like to",
-      "type": "Лекция",
-      "groups": ["09"],
-      "relatedTest": "test-02-future.json"
+      "id": "9.4",
+      "material": {
+        "file": "materials/09/04.md",
+        "title": "",
+        "description": "Правила, схемы и примеры использования настоящего простого времени",
+        "type": "Лекция",
+        "time": 5
+      },
+      "test": {
+        "file": "tests/09/04.json",
+        "title": "Test 4",
+        "description": "",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["09"]
     },
         {
-      "num": "01",
-      "file": "dop/L1.html",
-      "title": "Лекция №1",
-      "description": "Настоящее время",
-      "type": "Лекция",
-      "groups": ["other"],
-      "relatedTest": "test-01-basics.json"
+      "id": "grammar-1",
+      "material": {
+        "file": "materials/grammar/01.html",
+        "title": "",
+        "description": "Правила, схемы и примеры использования настоящего простого времени",
+        "type": "Лекция",
+        "time": 5
+      },
+      "test": {
+        "file": "tests/grammar/01.json",
+        "title": "Test 1",
+        "description": "",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["gr"]
     }
 
   ],
   "finalTest": {
-    "file": "test-final.json",
+    "file": "tests/test-final.json",
     "title": "⭐ Final Assessment",
     "description": "Итоговый тест по всем материалам курса",
     "questions": 20,

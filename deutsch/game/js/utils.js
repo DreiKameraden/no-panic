@@ -103,9 +103,10 @@ function addMainMessage(type, text, sender, translation) {
     msg.className = `msg ${type}`;
 
     // 🆕 если это NPC и в CONFIG есть цвет — применяем
-    const npcColor = (type === 'npc') ? CONFIG.npcColors?.[state.currentNPC] : null;
+    const colorKey = (type === 'npc') ? state.currentNPC : type;
+    const npcColor = CONFIG.npcColors?.[colorKey];
     if (npcColor) {
-        msg.setAttribute('data-npc', state.currentNPC);
+        msg.setAttribute('data-npc', colorKey);
         msg.style.setProperty('--npc-color', npcColor.color);
         msg.style.setProperty('--npc-bg', npcColor.bg);
         msg.style.setProperty('--npc-bg-light', npcColor.bgLight);
@@ -115,6 +116,7 @@ function addMainMessage(type, text, sender, translation) {
     if (type === 'user') avatar = '👤';
     else if (type === 'system') avatar = '⚠';
     else if (type === 'npc' && CONFIG.npcAvatar) avatar = CONFIG.npcAvatar();
+    else if (CONFIG.npcs?.[type]?.emoji) avatar = CONFIG.npcs[type].emoji;
     else if (CONFIG.avatars[type]) avatar = CONFIG.avatars[type];
 
     const senderHtml = sender ? `<div class="msg-sender">${sender}</div>` : '';
@@ -235,7 +237,56 @@ function matchesKeywords(text, keywords) {
     return keywords.some(kw => normalized.includes(normalizeText(kw)));
 }
 
-/* ---------- ТЕСТЫ ---------- */
+
+/* ---------- УНИВЕРСАЛЬНАЯ ОБРАБОТКА ДИАЛОГА ---------- */
+async function handleDialogueInputBase(text, npcs, onEnd) {
+    addMainMessage('user', text, 'ВЫ');
+    document.getElementById('user-input').value = '';
+
+    const npc = npcs[state.currentNPC];
+    if (!npc) return null;
+
+    const step = npc.steps.find(s => s.id === state.currentStepId);
+    if (!step) return null;
+
+    if (!matchesKeywords(text, step.keywords)) {
+        setTimeout(() => {
+            addMainMessage('npc', '??? Ich verstehe nicht. Kannst du das wiederholen?', npc.name);
+            addRobotMessage(`💬 ${npc.name} не понял(а). Нажми 💡 для подсказки.`);
+        }, 500);
+        return null;
+    }
+
+    disableInput();
+    await sleep(800);
+
+    /* 🆕 показываем ВСЕ сообщения шага — циклом */
+    const messages = step.messages || [];
+    for (const msg of messages) {
+        addMainMessage(msg.type, msg.text, msg.sender, msg.text_tr);
+        await sleep(1200);
+    }
+
+    if (step.nextEvent) {
+    state.currentNPC = step.nextEvent;
+    }
+
+    if (step.next === null) {
+        if (onEnd) await onEnd(step, npc);
+        return step;
+    }
+
+    state.currentStepId = step.next;
+
+    /* 🆕 ищем следующий шаг в текущем (или уже переключённом) событии */
+    const currentNpc = npcs[state.currentNPC];
+    const nextStep = currentNpc.steps.find(s => s.id === state.currentStepId);
+    await sleep(800);
+    if (nextStep && nextStep.context) enableInput(nextStep.context);
+    return step;
+}
+
+
 /* ---------- УНИВЕРСАЛЬНЫЙ ТЕСТ ---------- */
 function showTest(opts) {
     state.currentTestFirstTry = true;

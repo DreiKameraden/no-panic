@@ -1,0 +1,25 @@
+# Памятка изменений — README
+
+**Дата:** 02.11.2026 (рефакторинг структуры материалов и тестов / english)
+
+1. **`manifest.json` — единый массив `items`** — вместо отдельных `materials` и `tests` теперь `items: [{ id, material, test?, groups }]`. Убраны `relatedMaterial` / `relatedTest`, `file` хранится с подпапкой (`materials/...`, `tests/...`), `groups` — на уровне пары.
+
+2. **`js/hub.js` — упрощён рендер** — убраны `buildPairs`, `renderPairs`, `renderOrphanTests`; вместо них `renderItems` + `renderItem` + `renderTestOnly`. `fetch('manifest.json')` относительно страницы раздела. Исправлены ссылки: `../lesson.html`, `../quiz.html`, опечатка `<../a href=...>`.
+
+3. **`js/lesson.js` — поиск по `items`** — материал ищется через `manifest.items.map(i => i.material).find(...)` по `filePath.replace(\`${section}/\`, '')`. Добавлена кнопка «Перейти к тесту», если у `item` есть `test`.
+
+
+
+**Дата:** 01.11.2026 (работа над игрой)
+
+1. **Универсальный движок тестов** — вынесены в `utils.js` функции `showTest`, обёртки `addTestToRobot` (для робота) и `showVerterTest` (для проверки VERTER). Удалены дублирующие `handleTestAnswer` и `handleVerterAnswer`.
+
+2. **Универсальные функции вынесены в `utils.js`** — `finishLesson`, `showHint`, `submitInput` (проверяет `state.phase === 'dialogue'` и вызывает `handleDialogueInput` дня). Из `tagN.js` удалены дубли: `tagNSubmitInput`, `tagNShowHint`, свои `finishLesson`.
+
+3. **Цвета NPC — универсальные через CSS-переменные** — вместо жёстких `.msg.sophie`/`.msg.lukas` в `common.css` добавлен селектор `.msg[data-npc]` с переменными `--npc-color`, `--npc-bg`, `--npc-bg-light`. Цвета задаются в `CONFIG.npcColors` при `initGame` в каждом `tagN.js`. Новый NPC = одна запись в конфиге, без правки CSS.
+4. **По мелочам** пересмотрены диалоги, немного отредактирована грамматика, заменили кнопку "перевод" - на символ, отредактировали его положение. Поменяли цвета на бирюзовый, но текст так и остался фиолетовым... надо поработать
+
+**Идея**
+1. Для урока два мы сделали возможности отвечать кнопками, кнопки при этом после ответа удаляются
+
+

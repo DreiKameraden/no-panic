@@ -1,33 +1,34 @@
 /* =========================================
-   hub.js — Скрипт для динамической загрузки списков
-   С поддержкой фильтрации по группам и связями материал↔тест
+   hub.js — динамическая загрузка списков
+   Структура: manifest.items = [{ id, material, test, groups }]
    ========================================= */
 
 let currentGroup = 'all';
 let manifestData = null;
+let currentSection = '';
 
 function initHub(sectionName) {
+  currentSection = sectionName;
   fetch('manifest.json')
     .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}: файл не найден`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}: manifest.json не найден`);
       return r.json();
     })
     .then(manifest => {
       manifestData = manifest;
-      
-      // Собираем уникальные группы
+
       const allGroups = new Set();
-      [...(manifest.tests || []), ...(manifest.materials || [])].forEach(item => {
-        if (item.groups) item.groups.forEach(g => allGroups.add(g));
+      (manifest.items || []).forEach(item => {
+        (item.groups || []).forEach(g => allGroups.add(g));
       });
-      if (manifest.finalTest && manifest.finalTest.groups) {
+      if (manifest.finalTest?.groups) {
         manifest.finalTest.groups.forEach(g => allGroups.add(g));
       }
-      
+
       if (allGroups.size > 1) {
         renderGroupSwitcher(Array.from(allGroups));
       }
-      
+
       renderContent(sectionName);
     })
     .catch(err => {
@@ -46,26 +47,18 @@ function renderGroupSwitcher(groups) {
       ${groups.map(g => `<button class="group-btn" data-group="${g}">${g}</button>`).join('')}
     </div>
   `;
-  
+
   const firstSection = document.querySelector('.hub-section');
   if (firstSection) firstSection.parentNode.insertBefore(switcher, firstSection);
-  
+
   switcher.querySelectorAll('.group-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       switcher.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentGroup = btn.dataset.group;
-      renderContent(getSectionName());
+      renderContent(currentSection);
     });
   });
-}
-
-function getSectionName() {
-  const path = window.location.pathname;
-  if (path.includes('/english/')) return 'english';
-  if (path.includes('/deutsch/')) return 'deutsch';
-  if (path.includes('/linguistic/')) return 'linguistic';
-  return '';
 }
 
 // ===== ФИЛЬТРАЦИЯ =====
@@ -79,125 +72,89 @@ function filterByGroup(items) {
 
 // ===== ГЛАВНЫЙ РЕНДЕР =====
 function renderContent(sectionName) {
-  const materials = filterByGroup(manifestData.materials || []);
-  const tests = filterByGroup(manifestData.tests || []);
-  const finalTest = manifestData.finalTest;
-  
-  // Создаём пары: материал + связанный тест
-  const pairs = buildPairs(materials, tests, sectionName);
-  renderPairs(pairs, sectionName);
-  
-  // Одинокие тесты (без связанного материала)
-  const orphanTests = tests.filter(t => !t.relatedMaterial);
-  renderOrphanTests(orphanTests, sectionName);
-  
-  // Итоговый тест
-  renderFinalTest(finalTest, sectionName);
+  const items = filterByGroup(manifestData.items || []);
+  renderItems(items, sectionName);
+  renderFinalTest(manifestData.finalTest, sectionName);
 }
 
-// ===== СОЗДАНИЕ ПАР =====
-function buildPairs(materials, tests, sectionName) {
-  const pairs = [];
-  const usedTests = new Set();
-  
-  materials.forEach(mat => {
-    const relatedTest = mat.relatedTest 
-      ? tests.find(t => t.file === mat.relatedTest)
-      : null;
-    
-    if (relatedTest) usedTests.add(relatedTest.file);
-    
-    pairs.push({ material: mat, test: relatedTest, sectionName });
-  });
-  
-  return pairs;
-}
-
-// ===== РЕНДЕР ПАР =====
-function renderPairs(pairs, sectionName) {
+// ===== РЕНДЕР ПАР (материал + тест) =====
+function renderItems(items, sectionName) {
   const container = document.getElementById('materialsList');
-  
-  if (pairs.length === 0) {
+
+  if (items.length === 0) {
     container.innerHTML = `<div class="empty">📭 Для группы "${currentGroup}" материалов пока нет</div>`;
     return;
   }
-  
-  container.innerHTML = pairs.map(pair => {
-    const mat = pair.material;
-    const test = pair.test;
-    
-    // Определяем ссылку на материал
-    const isHtml = mat.file.toLowerCase().endsWith('.html');
-    
-    // ⚠️ ВОТ ЗДЕСЬ ДОБАВЛЕНО &section=${sectionName}
-    const matHref = isHtml 
-      ? `materials/${mat.file}`
-      : `../lesson.html?file=${sectionName}/materials/${mat.file}&section=${sectionName}&back=${sectionName}/${sectionName}.html`;
-      
-    const formatBadge = isHtml 
-      ? '<span class="hub-tag format-badge html">HTML</span>'
-      : '<span class="hub-tag format-badge md">MD</span>';
-    
-    // Кнопка теста (если есть связанный)
-    const testButton = test 
-      ? `<a href="../quiz.html?test=${sectionName}/tests/${test.file}" target="_blank" class="pair-test-btn">
-           🎯 Тест: ${test.title}
-           <span class="pair-test-meta">${test.questions || '?'} вопр. · ${test.time || 15} мин</span>
-         </a>`
-      : `<div class="pair-no-test">📝 Тест пока не добавлен</div>`;
-    
-    return `
-      <div class="pair-card">
-        <div class="pair-material">
-          <a href="${matHref}" class="pair-material-link">
-            <div class="pair-num">${mat.num || '📄'}</div>
-            <div class="pair-content">
-              <div class="pair-type">📚 Материал</div>
-              <h3>${mat.title}</h3>
-              <p>${mat.description}</p>
-              <div class="hub-card-meta">
-                <span class="hub-tag">${mat.type || 'Материал'}</span>
-                ${formatBadge}
-                ${renderGroupBadges(mat.groups)}
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="pair-arrow">→</div>
-        <div class="pair-test">
-          ${testButton}
-        </div>
-      </div>
-    `;
-  }).join('');
+
+  container.innerHTML = items.map(item => renderItem(item, sectionName)).join('');
 }
 
-// ===== ОДИНОКИЕ ТЕСТЫ =====
-function renderOrphanTests(tests, sectionName) {
-  const container = document.getElementById('testsList');
-  
-  if (tests.length === 0) {
-    container.innerHTML = '';
-    return;
+function renderItem(item, sectionName) {
+  const mat = item.material;
+  const test = item.test;
+
+  // Если материала нет — рисуем только тест
+  if (!mat) {
+    return renderTestOnly(item, sectionName);
   }
-  
-  container.innerHTML = `
-    <div class="section-subtitle">🎯 Дополнительные тесты</div>
-    ${tests.map(test => `
-      <a href="../quiz.html?test=${sectionName}/tests/${test.file}" target="_blank" class="hub-card">
-        <div class="hub-card-num">${test.num || '★'}</div>
-        <div class="hub-card-content">
-          <h3>${test.title}</h3>
-          <p>${test.description}</p>
-          <div class="hub-card-meta">
-            <span class="hub-tag">${test.questions || '?'} вопросов</span>
-            <span class="hub-tag">${test.time || 15} минут</span>
-            ${renderGroupBadges(test.groups)}
+
+  const isHtml = mat.file.toLowerCase().endsWith('.html');
+  const matHref = isHtml
+    ? `${mat.file}`
+    : `../lesson.html?file=${sectionName}/${mat.file}&section=${sectionName}&back=${sectionName}/${sectionName}.html`;
+
+  const formatBadge = isHtml
+    ? '<span class="hub-tag format-badge html">HTML</span>'
+    : '<span class="hub-tag format-badge md">MD</span>';
+
+  const testButton = test
+    ? `<a href="../quiz.html?test=${sectionName}/${test.file}" target="_blank" class="pair-test-btn">
+         🎯 Тест: ${test.title}
+         <span class="pair-test-meta">${test.questions || '?'} вопр. · ${test.time || 15} мин</span>
+       </a>`
+    : `<div class="pair-no-test">📝 Тест пока не добавлен</div>`;
+
+  return `
+    <div class="pair-card">
+      <div class="pair-material">
+        <a href="${matHref}" class="pair-material-link">
+          <div class="pair-num">📄</div>
+          <div class="pair-content">
+            <div class="pair-type">📚 Материал</div>
+            <h3>${mat.title}</h3>
+            <p>${mat.description || ''}</p>
+            <div class="hub-card-meta">
+              <span class="hub-tag">${mat.type || 'Материал'}</span>
+              ${formatBadge}
+              ${renderGroupBadges(item.groups)}
+            </div>
           </div>
+        </a>
+      </div>
+      <div class="pair-arrow">→</div>
+      <div class="pair-test">
+        ${testButton}
+      </div>
+    </div>
+  `;
+}
+
+function renderTestOnly(item, sectionName) {
+  const test = item.test;
+  return `
+    <a href="../quiz.html?test=${sectionName}/${test.file}" target="_blank" class="hub-card">
+      <div class="hub-card-num">★</div>
+      <div class="hub-card-content">
+        <h3>${test.title}</h3>
+        <p>${test.description || ''}</p>
+        <div class="hub-card-meta">
+          <span class="hub-tag">${test.questions || '?'} вопросов</span>
+          <span class="hub-tag">${test.time || 15} минут</span>
+          ${renderGroupBadges(item.groups)}
         </div>
-        <div class="hub-card-arrow">Пройти →</div>
-      </a>
-    `).join('')}
+      </div>
+      <div class="hub-card-arrow">Пройти →</div>
+    </a>
   `;
 }
 
@@ -205,20 +162,19 @@ function renderOrphanTests(tests, sectionName) {
 function renderFinalTest(finalTest, sectionName) {
   const container = document.getElementById('finalTestList');
   if (!container) return;
-  
+
   if (!finalTest) {
     container.innerHTML = '';
     return;
   }
-  
-  // Проверяем группу
+
   if (currentGroup !== 'all' && finalTest.groups && !finalTest.groups.includes(currentGroup)) {
     container.innerHTML = '';
     return;
   }
-  
+
   container.innerHTML = `
-    <a href="../quiz.html?test=${sectionName}/tests/${finalTest.file}" target="_blank" class="final-test-card">
+    <a href="../quiz.html?test=${sectionName}/${finalTest.file}" target="_blank" class="final-test-card">
       <div class="final-test-icon">🏆</div>
       <div class="final-test-content">
         <div class="final-test-label">ИТОГОВЫЙ ТЕСТ</div>
@@ -249,7 +205,10 @@ function showError(message) {
       <small>${message}</small>
     </div>
   `;
-  document.getElementById('materialsList').innerHTML = errorMsg;
-  document.getElementById('testsList').innerHTML = '';
-  document.getElementById('finalTestList').innerHTML = '';
+  const ml = document.getElementById('materialsList');
+  const tl = document.getElementById('testsList');
+  const fl = document.getElementById('finalTestList');
+  if (ml) ml.innerHTML = errorMsg;
+  if (tl) tl.innerHTML = '';
+  if (fl) fl.innerHTML = '';
 }

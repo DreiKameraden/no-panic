@@ -1,873 +1,526 @@
 /* ============================================================
-   TAG2.JS — Sophie + Lukas, погода
-   Логика 1:1 из tag2.html. Общие функции — в utils.js.
+   TAG2.JS — Лиза + Марк; день 2 «Лес». Один NPC duo.
    ============================================================ */
 
-/* ---------- ДАННЫЕ ДНЯ ---------- */
-const sophie = {
-    key: 'sophie', name: 'Sophie', emoji: '🌿',
-    fullName: 'Sophie Bauer', city: 'München', age: '28',
-    job: 'Gärtnerin', hobby: 'Kräutertee trinken und im Garten arbeiten',
-    greeting: 'Hallo! Ich bin Sophie aus München. Bei uns regnet es heute stark!'
+const duo = {
+    name: 'Duo',
+    emoji: '👥',
+    intro: {
+        firstMessage: 'Bist du hier?',
+        firstMessage_tr: 'Ты здесь?'
+    },
+    steps: [
+        /* ---------- 1. ЛИЗА ОДНА ---------- */
+        {
+            id: 'intro',
+            keywords: ['was ist passiert', 'was ist los', 'alles okay', 'was ist mit dir', 'was hast du'],
+            context: '📝 Спроси, что случилось',
+            hint: 'Was ist passiert? / Alles okay?',
+            messages: [
+                { type: 'lisa', text: 'Nichts… alles gut.', text_tr: 'Ничего… всё хорошо.', sender: 'Lisa' },
+                { type: 'lisa', text: 'Nein. Eigentlich… ich wollte mich entschuldigen. Gestern war ich ziemlich unhöflich. Ich sollte so nicht mit dir reden. Kannst du mir verzeihen?', text_tr: 'Нет. Вообще-то… я хотела извиниться. Вчера я была довольно невежлива. Мне не следовало так с тобой разговаривать. Ты можешь меня простить?', sender: 'Lisa' }
+            ],
+            next: 'where'
+        },
+        {
+            id: 'where',
+            keywords: ['wo', 'bist', 'helfen', 'kann'],
+            context: '📝 Спроси, где она / можешь ли помочь',
+            hint: 'Wo bist du? / Kann ich helfen?',
+            messages: [
+                { type: 'lisa', text: 'Ich gehe durch die Stadt. Ich überlege, ob ich in den Wald gehen soll. Es gibt einen Weg dort. Wir sind oft mit Jonas gegangen. Aber ich bin so traurig…', text_tr: 'Я гуляю по городу. Думаю, стоит ли пойти в лес. Там есть тропинка. Мы часто гуляли по ней с Йонасом. Но мне так грустно…', sender: 'Lisa' }
+            ],
+            next: 'modal_answer'
+        },
+        {
+            id: 'modal_answer',
+            keywords: ['kann', 'helfen', 'möchte', 'will'],
+            context: '📝 Спросите, можете ли вы помочь',
+            hint: 'Kann ich helfen? / Ich möchte helfen.',
+            messages: [
+                { type: 'lisa', text: 'Danke...', text_tr: 'Спасибо...', sender: 'Lisa' },
+                { type: 'lisa', text: 'Ich muss jetzt entscheiden. Ich kann nicht allein gehen. Aber ich will nicht warten.', text_tr: 'Мне нужно решить. Я не могу идти одна. Но я не хочу ждать.', sender: 'Lisa' }
+            ],
+            next: 'trigger_lesson_1'
+        },
+
+        /* ---------- 2. УРОК 1 ---------- */
+        {
+            id: 'trigger_lesson_1',
+            lesson: 1,
+            keywords: ['ja', 'okay', 'gut', 'weiter'],
+            context: '📝 Продолжай',
+            hint: 'Ja / Okay',
+            messages: [],
+            next: 'mark_scene_start'
+        },
+
+        /* ---------- 3. СЦЕНА С МАРКОМ ---------- */
+        {
+            id: 'mark_scene_start',
+            keywords: ['ja', 'okay', 'gut', 'mark', 'was', 'wer', 'hallo'],
+            context: '📝 Ответь Марку',
+            hint: 'Hallo Mark!',
+            messages: [
+                { type: 'system', text: '⚠ ПОДКЛЮЧЕНИЕ: MARK' },
+                { type: 'mark', text: 'Hallo.', text_tr: 'Привет.', sender: 'Mark' },
+                { type: 'mark', text: 'Lisa, bist du auch hier? Wie geht es dir? Was machst du?', text_tr: 'Лиза, ты тоже тут? Как у тебя дела? Что делаешь?', sender: 'Mark' }
+            ],
+            next: 'mark_scene_mid'
+        },
+        {
+            id: 'mark_scene_mid',
+            keywords: ['ja', 'okay', 'gut', 'weiter'],
+            context: '📝 Продолжай',
+            hint: 'Ja / Okay',
+            messages: [
+                { type: 'system', text: '⚠ СВЯЗЬ С LISA ВОССТАНОВЛЕНА' },
+                { type: 'lisa', text: 'Ich gehe durch die Stadt. Mark, wo bist du?', text_tr: 'Гуляю по городу. Марк, а ты где?', sender: 'Lisa' },
+                { type: 'mark', text: 'Ich bin in der Werkstatt. Ich sortiere alte Sachen. Übrigens, hier ist etwas Interessantes.', text_tr: 'Я в мастерской. Разбираю старые вещи. Кстати, тут есть кое-что интересное.', sender: 'Mark' },
+                { type: 'lisa', text: 'Was denn?', text_tr: 'Что именно?', sender: 'Lisa' },
+                { type: 'mark', text: 'Nicht am Telefon. *(пауза)* Erinnerst du dich, wie wir zu dritt in diesem Wald waren? Jonas, du und ich.', text_tr: 'Не по телефону. *(пауза)* Ты помнишь, как мы втроём ходили в тот лес? Йонас, ты и я.', sender: 'Mark' }
+            ],
+            next: 'mark_scene_lemory'
+        },
+        {
+            id: 'mark_scene_lemory',
+            keywords: ['ja', 'erinnere', 'erinnere mich', 'was', 'jonas'],
+            context: '📝 Ответь про воспоминание',
+            hint: 'Ich erinnere mich.',
+            messages: [
+                { type: 'lisa', text: 'Ich erinnere mich. Es hat geregnet. Stark. Wir waren nass, aber Jonas hat gelacht.', text_tr: 'Помню. Шёл дождь. Сильный. Мы промокли, а Йонас смеялся.', sender: 'Lisa' },
+                { type: 'mark', text: 'Er hat immer gelacht, wenn es schlimm war. *(пауза)* Ich habe etwas gefunden. Es gehörte ihm.', text_tr: 'Он всегда смеялся, когда было плохо. *(пауза)* Я нашёл одну вещь. Она принадлежала ему.', sender: 'Mark' },
+                { type: 'lisa', text: 'Was für eine Sache?', text_tr: 'Что за вещь?', sender: 'Lisa' },
+                { type: 'mark', text: 'Ein alter USB-Stick. Ich weiß nicht, was drauf ist. Vielleicht nichts. Vielleicht etwas Wichtiges.', text_tr: 'Старая флешка. Я не знаю, что на ней. Может, ничего. Может, что-то важное.', sender: 'Mark' },
+                { type: 'lisa', text: 'Öffne ihn.', text_tr: 'Открой её.', sender: 'Lisa' },
+                { type: 'mark', text: 'Ich kann nicht. Er ist beschädigt. *(пауза)* Ich muss gehen. Ich schreibe später.', text_tr: 'Не могу. Она повреждена. *(пауза)* Мне нужно идти. Позже напишу.', sender: 'Mark' },
+                { type: 'system', text: '⚠ MARK ОТКЛЮЧИЛСЯ' }
+            ],
+            next: 'mark_scene_end'
+        },
+        {
+            id: 'mark_scene_end',
+            keywords: ['ja', 'okay', 'gut', 'weiter'],
+            context: '📝 Продолжай',
+            hint: 'Ja / Okay',
+            messages: [
+                { type: 'system', text: '⚠ СВЯЗЬ С LISA ВОССТАНОВЛЕНА' },
+                { type: 'lisa', text: 'Er ist immer so. Er findet etwas — und schweigt. Als ob er Angst hätte. *(пауза)* Egal. Ich gehe in den Wald. Kommst du mit?', text_tr: 'Он всегда так. Находит что-то — и молчит. Как будто боится. *(пауза)* Ладно. Я иду в лес. Ты со мной?', sender: 'Lisa' }
+            ],
+            next: 'forest_entry'
+        },
+
+        /* ---------- 4. ЛЕС ---------- */
+        {
+            id: 'forest_entry',
+            keywords: ['ja', 'komme', 'mit', 'gehe', 'nein', 'wald'],
+            context: '📝 Ответь: пойдёшь в лес?',
+            hint: 'Ja, ich komme mit.',
+            messages: [
+                { type: 'lisa', text: 'Danke. *(пауза)* Dann gehen wir zusammen. Der Weg ist nicht weit.', text_tr: 'Спасибо. *(пауза)* Тогда идём вместе. Тропинка недалеко.', sender: 'Lisa' }
+            ],
+            next: 'forest_weg'
+        },
+        {
+            id: 'forest_weg',
+            keywords: ['wetter', 'kalt', 'wind', 'regen', 'sonne', 'herbst', 'wie', 'ist'],
+            context: '📝 Спроси о погоде / опиши, что видишь',
+            hint: 'Wie ist das Wetter? / Es ist kalt.',
+            messages: [
+                { type: 'lisa', text: 'Ja, es ist kalt. Der Wind weht stark. Aber der Wald ist schön. Besonders im Herbst. Die Blätter sind rot und gelb.', text_tr: 'Да, холодно. Ветер дует сильно. Но лес красивый. Особенно осенью. Листья красные и жёлтые.', sender: 'Lisa' }
+            ],
+            next: 'forest_baum'
+        },
+        {
+            id: 'forest_baum',
+            keywords: ['weg', 'wald', 'jonas', 'oft', 'gegangen', 'was', 'passiert'],
+            context: '📝 Спроси про тропинку / Йонаса',
+            hint: 'Was ist mit Jonas? / Seid ihr oft hier?',
+            messages: [
+                { type: 'lisa', text: 'Wir sind hier oft gegangen. Jeden Sonntag. Jonas und ich. *(пауза)* Er sagte, der Wald ist wie ein Buch. Man muss nur lesen lernen.', text_tr: 'Мы часто здесь ходили. Каждое воскресенье. Йонас и я. *(пауза)* Он говорил, лес — как книга. Просто надо научиться читать.', sender: 'Lisa' },
+                { type: 'lisa', text: 'Schau. Am Baum. Die Initialen. J. und L. *(пауза)* Er hat sie geschnitzt. Vor drei Jahren. Kurz bevor er verschwunden ist.', text_tr: 'Смотри. На дереве. Инициалы. J. и L. *(пауза)* Он их вырезал. Три года назад. Незадолго до того, как исчез.', sender: 'Lisa' }
+            ],
+            next: 'forest_initialen'
+        },
+        {
+            id: 'forest_initialen',
+            keywords: ['verschwunden', 'was', 'passiert', 'warum', 'wo', 'ist'],
+            context: '📝 Спроси: что случилось? Почему он исчез?',
+            hint: 'Was ist passiert? / Warum ist er verschwunden?',
+            messages: [
+                { type: 'lisa', text: 'Ich weiß nicht. *(пауза)* Er sagte immer: «Ich komme zurück». Und ich warte. Ich warte immer noch. *(тихо)* Ich kann das nicht vergessen. Ich will es nicht vergessen.', text_tr: 'Я не знаю. *(пауза)* Он всегда говорил: «Я вернусь». И я жду. Я всё ещё жду. *(тихо)* Я не могу это забыть. Я не хочу это забывать.', sender: 'Lisa' }
+            ],
+            next: 'trigger_lesson_2'
+        },
+
+        /* ---------- 5. УРОК 2 ---------- */
+        {
+            id: 'trigger_lesson_2',
+            lesson: 2,
+            keywords: ['ja', 'okay', 'gut', 'weiter'],
+            context: '📝 Продолжай',
+            hint: 'Ja / Okay',
+            messages: [],
+            next: 'forest_allein'
+        },
+
+        {
+            id: 'forest_allein',
+            keywords: ['nicht allein', 'bleiben', 'kann', 'bin da', 'du bist', 'verstehe'],
+            context: '📝 Ответь Лизе: она не одна',
+            hint: 'Du bist nicht allein. / Ich kann bleiben.',
+            messages: [
+                { type: 'lisa', text: 'Danke. *(пауза)* Es wird kalt. Der Wind weht stärker. Ich muss jetzt gehen. *(тихо)* Ich will nicht allein sein. Aber ich bin allein.', text_tr: 'Спасибо. *(пауза)* Становится холодно. Ветер дует сильнее. Мне нужно идти. *(тихо)* Я не хочу быть одна. Но я одна.', sender: 'Lisa' }
+            ],
+            next: 'forest_ende'
+        },
+        {
+            id: 'forest_ende',
+            keywords: ['kann', 'bleiben', 'bin da', 'nicht allein', 'du bist nicht', 'ja'],
+            context: '📝 Ответь Лизе',
+            hint: 'Du bist nicht allein. / Ich kann bleiben.',
+            messages: [
+                { type: 'lisa', text: 'Danke. *(пауза)* Vielleicht können wir morgen wieder hierher kommen. *(тихо)* Tschüss.', text_tr: 'Спасибо. *(пауза)* Может, завтра мы сможем снова прийти сюда. *(тихо)* Пока.', sender: 'Lisa' },
+                { type: 'system', text: '⚠ LISA ОТКЛЮЧИЛАСЬ' }
+            ],
+            next: 'trigger_lesson_3'
+        },
+
+        /* ---------- 6. УРОК 3 ---------- */
+        {
+            id: 'trigger_lesson_3',
+            lesson: 3,
+            keywords: ['ja', 'okay', 'gut', 'weiter'],
+            context: '📝 Продолжай',
+            hint: 'Ja / Okay',
+            messages: [],
+            next: 'finale_question'
+        },
+
+        /* ---------- 7. ФИНАЛ ---------- */
+        {
+            id: 'finale_question',
+            keywords: ['ja', 'nein', 'okay', 'gut'],
+            context: '📝 Ответь VERTER',
+            hint: 'Ja / Nein',
+            messages: [],
+            next: null
+        }
+    ]
 };
 
-const lukas = {
-    key: 'lukas', name: 'Lukas', emoji: '🏔',
-    fullName: 'Lukas Fischer', city: 'Hamburg', age: '25',
-    job: 'Koch', hobby: 'Fahrrad fahren und Bücher lesen',
-    greeting: 'Servus! Ich bin Lukas aus Hamburg. Hier ist es heute windig!',
-    g_tr: 'Привет, это тестт'
-};
+const npcs = { duo };
 
-const dialogueSteps = [
-    {
-        askKeywords: ['heißt ihr', 'heisst ihr', 'heißen sie', 'heissen sie', 'namen', 'heißt du', 'heisst du', 'name'],
-        askContext: '📝 Спроси имена у обоих (во множественном числе)',
-        askHint: 'Wie heißt ihr?',
-        sophie: {
-            response: 'Ich heiße Sophie Bauer.',
-            responseRu: 'Меня зовут Sophie Bauer.',
-            counter: 'Und du? Wie heißt du?',
-            counterRu: 'А ты? Как тебя зовут?',
-            reaction: 'Schön, dich kennenzulernen!',
-            reactionRu: 'Приятно познакомиться!'
-        },
-        lukas: {
-            response: 'Und ich bin Lukas Fischer.',
-            responseRu: 'А я — Lukas Fischer.',
-            counter: 'Und wie heißt du?',
-            counterRu: 'А как тебя зовут?',
-            reaction: 'Freut mich!',
-            reactionRu: 'Рад знакомству!'
-        },
-        counterKeywords: ['heiße', 'heisse', 'heißt', 'heisst', 'bin', 'name'],
-        counterHint: 'Ich heiße [имя].',
-        infoKey: 'name'
-    },
-    {
-        askKeywords: ['kommt ihr', 'woher', 'stadt', 'wohnst', 'wohnt', 'kommst du'],
-        askContext: '📝 Спроси, откуда они',
-        askHint: 'Woher kommt ihr?',
-        sophie: {
-            response: 'Ich komme aus München. Ich wohne hier seit meiner Kindheit.',
-            responseRu: 'Я из Мюнхена. Живу здесь с детства.',
-            counter: 'Und du? Woher kommst du?',
-            counterRu: 'А ты? Откуда ты?',
-            reaction: 'Interessant!',
-            reactionRu: 'Интересно!'
-        },
-        lukas: {
-            response: 'Ich komme aus Hamburg, aus dem Norden Deutschlands.',
-            responseRu: 'Я из Гамбурга, с севера Германии.',
-            counter: 'Und woher kommst du?',
-            counterRu: 'А ты откуда?',
-            reaction: 'Cool!',
-            reactionRu: 'Круто!'
-        },
-        counterKeywords: ['komme', 'aus', 'wohne'],
-        counterHint: 'Ich komme aus [город].',
-        infoKey: 'city'
-    },
-    {
-        askKeywords: ['seid ihr', 'alt', 'jahre', 'bist du'],
-        askContext: '📝 Спроси возраст обоих',
-        askHint: 'Wie alt seid ihr?',
-        sophie: {
-            response: 'Ich bin achtundzwanzig Jahre alt.',
-            responseRu: 'Мне двадцать восемь лет.',
-            counter: 'Und du? Wie alt bist du?',
-            counterRu: 'А ты? Сколько тебе лет?',
-            reaction: 'Ah, verstehe!',
-            reactionRu: 'Ах, понятно!'
-        },
-        lukas: {
-            response: 'Ich bin fünfundzwanzig Jahre alt.',
-            responseRu: 'Мне двадцать пять лет.',
-            counter: 'Und wie alt bist du?',
-            counterRu: 'А сколько тебе лет?',
-            reaction: 'Das klingt gut!',
-            reactionRu: 'Звучит хорошо!'
-        },
-        counterKeywords: ['alt', 'jahre', 'bin'],
-        counterHint: 'Ich bin [число] Jahre alt.',
-        infoKey: 'age'
-    },
-    {
-        askKeywords: ['macht ihr', 'beruf', 'arbeit', 'studier', 'job', 'machst du'],
-        askContext: '📝 Спроси, чем они занимаются',
-        askHint: 'Was macht ihr? или Was seid ihr von Beruf?',
-        sophie: {
-            response: 'Ich bin Gärtnerin. Ich arbeite im Stadtpark und kümmere mich um die Blumen und Bäume.',
-            responseRu: 'Я садовница. Работаю в городском парке и ухаживаю за цветами и деревьями.',
-            counter: 'Und du? Was machst du?',
-            counterRu: 'А ты? Чем занимаешься?',
-            reaction: 'Super!',
-            reactionRu: 'Супер!'
-        },
-        lukas: {
-            response: 'Ich bin Koch. Ich arbeite in einem kleinen Restaurant nahe dem Hafen.',
-            responseRu: 'Я повар. Работаю в маленьком ресторане near гавани.',
-            counter: 'Und was machst du von Beruf?',
-            counterRu: 'А ты кем работаешь?',
-            reaction: 'Interessant!',
-            reactionRu: 'Интересно!'
-        },
-        counterKeywords: ['bin', 'arbeite', 'studier', 'mach'],
-        counterHint: 'Ich bin [профессия]. / Ich studiere...',
-        infoKey: 'job'
-    },
-    {
-        askKeywords: ['eure hobbys', 'hobbys', 'freizeit', 'hobby'],
-        askContext: '📝 Спроси об их хобби',
-        askHint: 'Was sind eure Hobbys?',
-        sophie: {
-            response: 'In meiner Freizeit trinke ich gern Kräutertee und arbeite in meinem kleinen Garten.',
-            responseRu: 'В свободное время я люблю пить травяной чай и работать в своём маленьком саду.',
-            counter: 'Und du? Was sind deine Hobbys?',
-            counterRu: 'А ты? Какие у тебя хобби?',
-            reaction: 'Das klingt gut!',
-            reactionRu: 'Звучит хорошо!'
-        },
-        lukas: {
-            response: 'In meiner Freizeit fahre ich gern Fahrrad und lese Bücher.',
-            responseRu: 'В свободное время я люблю кататься на велосипеде и читать книги.',
-            counter: 'Und was sind deine Hobbys?',
-            counterRu: 'А какие у тебя хобби?',
-            reaction: 'Cool!',
-            reactionRu: 'Круто!'
-        },
-        counterKeywords: ['hobby', 'hobbys', 'spiele', 'höre', 'lese', 'koche', 'mache', 'gern'],
-        counterHint: 'Ich spiele/höre/lese gern...',
-        infoKey: 'hobby'
-    },
-    {
-        askKeywords: ['wetter', 'euch', 'bei euch', 'sonne', 'regen', 'kalt', 'warm', 'wind'],
-        askContext: '📝 Спроси о погоде у обоих',
-        askHint: 'Wie ist das Wetter bei euch?',
-        sophie: {
-            response: 'Heute ist das Wetter sehr regnerisch und kühl. Es gibt viele graue Wolken und der Wind weht stark.',
-            responseRu: 'Сегодня погода очень дождливая и прохладная. Много серых облаков, и ветер дует сильно.',
-            counter: 'Und wie ist das Wetter bei dir?',
-            counterRu: 'А какая у тебя погода?',
-            reaction: 'Oh, das ist schade!',
-            reactionRu: 'О, жаль!'
-        },
-        lukas: {
-            response: 'Bei uns in Hamburg ist es heute windig und bewölkt, aber zum Glück regnet es nicht.',
-            responseRu: 'У нас в Гамбурге сегодня ветрено и облачно, но, к счастью, не идёт дождь.',
-            counter: 'Und wie ist das Wetter bei dir?',
-            counterRu: 'А какая у тебя погода?',
-            reaction: 'Verstehe!',
-            reactionRu: 'Понятно!'
-        },
-        counterKeywords: ['wetter', 'sonne', 'regen', 'kalt', 'warm', 'wind', 'schnee'],
-        counterHint: 'Das Wetter ist ... / Es regnet / Es ist sonnig...',
-        infoKey: 'weather'
-    }
-];
-
-const MAX_SCORE = 530;
-const THRESHOLD = Math.floor(MAX_SCORE * 0.7);
-
-/* ---------- ИНТРО ---------- */
 async function tag2Intro() {
     state.phase = 'intro';
-    state.dialogueStep = 0;
-    state.subPhase = 'ask_both';
-    state.collectedInfo = {
-        sophie: { name: null, city: null, age: null, job: null, hobby: null, weather: null },
-        lukas:  { name: null, city: null, age: null, job: null, hobby: null, weather: null }
-    };
-    state.robotExplained = false;
+    state.collectedInfo = { duo: {} };
+    state.robotExplained = { 1: false, 2: false, 3: false };
+    state.currentNPC = 'duo';
+    state.currentStepId = 'intro';
 
     await sleep(500);
-    addMainMessage('system', '⚠ ВТОРОЙ ДЕНЬ. ПОДКЛЮЧЕНИЕ К WERTHER...');
-
+    addMainMessage('system', '⚠ СИСТЕМА НЕСТАБИЛЬНА. ОЖИДАНИЕ...');
+    await sleep(1500);
+    addRobotMessage('Здравствуй, игрок. Пока система нестабильна, я не могу подключиться. Нажми кнопку «Спросить робота», чтобы получить правила.');
     await sleep(1000);
-    addMainMessage('verter', 'С возвращением. Петля продолжается.', 'WERTHER');
 
-    await sleep(1500);
-    addMainMessage('user', 'Кто ты? Почему я в этой петле?', 'ВЫ');
+    state.phase = 'await_robot';
+    state.pendingLesson = 1;
+    disableInput();
+    enableAskRobot(true, 'НАЖМИТЕ ДЛЯ ОБУЧЕНИЯ');
+    await waitForRobotButton();
 
-    await sleep(1500);
-    addMainMessage('verter', '...Это не имеет значения. Важно задание.', 'WERTHER');
-
-    await sleep(1500);
-    addMainMessage('verter',
-        'Сегодня тебе нужно <strong>познакомиться с двумя людьми</strong>. Они из разных городов. Обсудите <strong>погоду</strong>.',
-        'WERTHER');
-
-    await sleep(1500);
-    addMainMessage('verter',
-        'Узнай о каждом:<br>' +
-        '• <strong>Имя</strong> (Name)<br>' +
-        '• <strong>Город</strong> (Stadt)<br>' +
-        '• <strong>Возраст</strong> (Alter)<br>' +
-        '• <strong>Профессия</strong> (Beruf)<br>' +
-        '• <strong>Хобби</strong> (Hobby)<br>' +
-        '• <strong>Погода</strong> (Wetter)',
-        'WERTHER');
-
-    await sleep(1500);
-    addMainMessage('verter',
-        '💡 <strong>СОВЕТ:</strong> Задавай вопросы <strong>сразу обоим</strong> во множественном числе: "Wie heißt <em>ihr</em>?", "Woher kommt <em>ihr</em>?". Они оба ответят и зададут тебе встречный вопрос.',
-        'WERTHER');
-
-    await sleep(1500);
-    addMainMessage('verter',
-        'Помощник объяснит новые темы: <strong>местоимения, безличные предложения, "es gibt"</strong>.',
-        'WERTHER');
-
+    addMainMessage('system', '⚠ СВЯЗЬ ВОССТАНОВЛЕНА');
     await sleep(1000);
-    addMainMessage('verter', 'Связь устанавливается...', 'WERTHER');
-
-    await sleep(2000);
-    startBothMeeting();
+    startNPCMeeting(0);
 }
 
-/* ---------- ВСТРЕЧА ---------- */
-async function startBothMeeting() {
-    state.dialogueStep = 0;
-    state.subPhase = 'ask_both';
+function waitForRobotButton() {
+    return new Promise(resolve => {
+        state._robotResolver = resolve;
+    });
+}
 
-    addMainMessage('system', '⚠ ПОДКЛЮЧЕНИЕ К СУБЪЕКТАМ: SOPHIE + LUKAS');
+async function startNPCMeeting(npcIdx) {
+    currentNPCIndex = npcIdx;
+    state.currentNPC = 'duo';
+    state.currentStepId = 'intro';
+    state.phase = `npc${npcIdx + 1}_meeting`;
 
+    addMainMessage('system', `⚠ ПОДКЛЮЧЕНИЕ К СУБЪЕКТУ #${npcIdx + 1}: LISA`);
     await sleep(1500);
-    addMainMessage('sophie', sophie.greeting, 'Sophie',
-        'Привет! Я Sophie из Мюнхена. У нас сегодня сильный дождь!');
-
-    await sleep(1500);
-    addMainMessage('lukas', lukas.greeting, 'Lukas', lukas.g_tr);
-
-    await sleep(1500);
-    addMainMessage('verter',
-        'Оба собеседника в чате. Задавай вопросы <strong>сразу обоим</strong> во множественном числе. Они ответят по очереди и зададут тебе встречный вопрос.',
-        'WERTHER');
-
+    addMainMessage('lisa', duo.intro.firstMessage, 'Lisa', duo.intro.firstMessage_tr);
     await sleep(1000);
-    addMainMessage('verter',
-        'Нажми <strong>🤖 СПРОСИТЬ РОБОТА</strong> — он объяснит новые темы и проведёт тесты. Только после этого сможешь общаться.',
-        'WERTHER');
 
-    enableAskRobot(true, 'НАЖМИТЕ ДЛЯ ОБУЧЕНИЯ');
-    disableInput();
+    enableAskRobot(false, 'ОБЩАЙТЕСЬ');
+    setTimeout(() => startDialogue(), 800);
 
     if (window.innerWidth <= 900) switchTab('chat');
 }
 
-/* ---------- РОБОТ: УРОК ---------- */
 function tag2AskRobot() {
-    if (state.robotExplained) {
-        addRobotMessage('Я уже объяснил все темы. Общайся! Если забудешь — нажми 💡 ПОДСКАЗКА.');
+    if (state.phase === 'await_robot' && state.pendingLesson) {
+        const lesson = state.pendingLesson;
+        state.pendingLesson = null;
+        enableAskRobot(false, 'ОБУЧЕНИЕ В ПРОЦЕССЕ...');
+        if (lesson === 1) robotLesson1_Modal();
+        else if (lesson === 2) robotLesson2_WordOrder();
+        else if (lesson === 3) robotLesson3_Questions();
+        const resolve = state._robotResolver;
+        state._robotResolver = null;
+        if (resolve) resolve();
         return;
     }
-    enableAskRobot(false, 'ОБУЧЕНИЕ В ПРОЦЕССЕ...');
-    robotFullLesson();
 }
 
-async function robotFullLesson() {
-    addRobotMessage('🔍 Анализирую собеседников: <strong>Sophie</strong> (Мюнхен) и <strong>Lukas</strong> (Гамбург). <strong>Темы урока:</strong>');
+async function robotLesson1_Modal() {
+    addRobotMessage('🔍 Анализирую собеседника: <strong>Lisa</strong>. <strong>Тема:</strong> модальные глаголы.');
     await sleep(600);
-
     addRobotMessage(`
         <div class="grammar-block">
-            <h4>🌦 СЛОВАРЬ: ПОГОДА И ПРИРОДА</h4>
-            <div class="vocab-grid">
-                <div class="vocab-item"><strong>die Sonne</strong><em>солнце</em></div>
-                <div class="vocab-item"><strong>der Regen</strong><em>дождь</em></div>
-                <div class="vocab-item"><strong>der Schnee</strong><em>снег</em></div>
-                <div class="vocab-item"><strong>der Wind</strong><em>ветер</em></div>
-                <div class="vocab-item"><strong>die Wolke</strong><em>облако</em></div>
-                <div class="vocab-item"><strong>der Nebel</strong><em>туман</em></div>
-                <div class="vocab-item"><strong>sonnig</strong><em>солнечно</em></div>
-                <div class="vocab-item"><strong>regnerisch</strong><em>дождливо</em></div>
-                <div class="vocab-item"><strong>bewölkt</strong><em>облачно</em></div>
-                <div class="vocab-item"><strong>windig</strong><em>ветрено</em></div>
-                <div class="vocab-item"><strong>kalt / kühl</strong><em>холодно / прохладно</em></div>
-                <div class="vocab-item"><strong>warm / heiß</strong><em>тепло / жарко</em></div>
-            </div>
-        </div>
-    `);
-
-    await sleep(500);
-
-    addRobotMessage(`
-        <div class="grammar-block">
-            <h4>📖 ТЕМА 1: ЛИЧНЫЕ МЕСТОИМЕНИЯ</h4>
+            <h4>📖 МОДАЛЬНЫЕ ГЛАГОЛЫ</h4>
+            <p class="rule">Модальный глагол на 2-м месте, инфинитив — в конце.</p>
             <ul>
-                <li><strong>ich</strong> — я</li>
-                <li><strong>du</strong> — ты</li>
-                <li><strong>er</strong> — он</li>
-                <li><strong>sie</strong> — она</li>
-                <li><strong>es</strong> — оно</li>
-                <li><strong>wir</strong> — мы</li>
-                <li><strong>ihr</strong> — вы</li>
-                <li><strong>sie / Sie</strong> — они / Вы</li>
+                <li><strong>können</strong> — мочь: ich kann, du kannst, er kann, wir können, ihr könnt, sie können</li>
+                <li><strong>wollen</strong> — хотеть: ich will, du willst, er will, wir wollen, ihr wollt, sie wollen</li>
+                <li><strong>müssen</strong> — быть должным: ich muss, du musst, er muss, wir müssen, ihr müsst, sie müssen</li>
+                <li><strong>möchten</strong> — хотел бы: ich möchte, du möchtest, er möchte, wir möchten, ihr möchtet, sie möchten</li>
             </ul>
-            <div class="example"><strong>Sie</strong> ist Gärtnerin. — <em>Она</em> садовница.</div>
-            <div class="example"><strong>Er</strong> ist Koch. — <em>Он</em> повар.</div>
+            <div class="example">Ich <strong>kann</strong> nicht <strong>kommen</strong>.</div>
+            <div class="example">Ich <strong>will</strong> <strong>gehen</strong>.</div>
+            <div class="example">Wir <strong>müssen</strong> ihn <strong>erinnern</strong>.</div>
         </div>
     `);
 
     await sleep(500);
-    addRobotMessage('📝 Тест 1 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Sophie — женщина. Какое местоимение?',
-            [{ text: 'er', correct: false }, { text: 'es', correct: false },
-             { text: 'sie', correct: true }, { text: 'wir', correct: false }],
-            resolve, 1, 14);
-    });
-
+    await new Promise(resolve => addTestToRobot('«Ich ___ nicht kommen.»', [{ text: 'kann', correct: true }, { text: 'kannst', correct: false }, { text: 'können', correct: false }, { text: 'willst', correct: false }], resolve, 1, 4));
     await sleep(400);
-    addRobotMessage('📝 Тест 2 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Lukas — мужчина. Какое местоимение?',
-            [{ text: 'sie', correct: false }, { text: 'er', correct: true },
-             { text: 'es', correct: false }, { text: 'ihr', correct: false }],
-            resolve, 2, 14);
-    });
-
+    await new Promise(resolve => addTestToRobot('«Du ___ gehen.»', [{ text: 'will', correct: false }, { text: 'willst', correct: true }, { text: 'wollen', correct: false }, { text: 'kann', correct: false }], resolve, 2, 4));
     await sleep(400);
-    addRobotMessage('📝 Тест 3 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('"___ kommen aus verschiedenen Städten." (Мы из разных городов)',
-            [{ text: 'Ich', correct: false }, { text: 'Ihr', correct: false },
-             { text: 'Wir', correct: true }, { text: 'Er', correct: false }],
-            resolve, 3, 14);
-    });
-
+    await new Promise(resolve => addTestToRobot('«Wir ___ ihn erinnern.»', [{ text: 'muss', correct: false }, { text: 'müssen', correct: true }, { text: 'müsst', correct: false }, { text: 'möchte', correct: false }], resolve, 3, 4));
     await sleep(400);
-
-    addRobotMessage(`
-        <div class="grammar-block">
-            <h4>📖 ТЕМА 2: БЕЗЛИЧНЫЕ ПРЕДЛОЖЕНИЯ С "es"</h4>
-            <p class="rule">Погодные явления описываются через "es" + глагол:</p>
-            <div class="example"><strong>Es regnet.</strong> — Идёт дождь.</div>
-            <div class="example"><strong>Es schneit.</strong> — Идёт снег.</div>
-            <div class="example"><strong>Es ist sonnig / bewölkt.</strong> — Солнечно / облачно.</div>
-            <div class="example"><strong>Es gibt viele Wolken.</strong> — Много облаков.</div>
-            <div class="warning">⚠ НЕ говори "Ich bin kalt".<br>Правильно: <strong>Mir ist kalt.</strong> — Мне холодно.</div>
-        </div>
-    `);
+    await new Promise(resolve => addTestToRobot('«Ich ___ helfen.»', [{ text: 'möchte', correct: true }, { text: 'möchtest', correct: false }, { text: 'möchten', correct: false }, { text: 'muss', correct: false }], resolve, 4, 4));
 
     await sleep(500);
-    addRobotMessage('📝 Тест 4 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Как сказать "Идёт дождь"?',
-            [{ text: 'Der Regen ist.', correct: false }, { text: 'Es regnet.', correct: true },
-             { text: 'Ich regne.', correct: false }, { text: 'Man regnet.', correct: false }],
-            resolve, 4, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 5 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Как правильно сказать "Мне холодно"?',
-            [{ text: 'Ich bin kalt.', correct: false }, { text: 'Es ist mich kalt.', correct: false },
-             { text: 'Mir ist kalt.', correct: true }, { text: 'Ich habe kalt.', correct: false }],
-            resolve, 5, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 6 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Выбери правильный перевод: "Сегодня ветрено"',
-            [{ text: 'Heute ist der Wind.', correct: false }, { text: 'Heute es windet.', correct: false },
-             { text: 'Heute windet es.', correct: true }, { text: 'Heute ich winde.', correct: false }],
-            resolve, 6, 14);
-    });
-
-    await sleep(400);
-
-    addRobotMessage(`
-        <div class="grammar-block">
-            <h4>📖 ТЕМА 3: "man" — безличное "говорят / кто-то"</h4>
-            <p class="rule">"man" используется, когда неважно, КТО делает действие:</p>
-            <div class="example"><strong>Man</strong> sagt: "Morgen wird es sonnig." — <em>Говорят</em>: завтра будет солнечно.</div>
-            <div class="example"><strong>Man</strong> braucht einen Regenschirm. — <em>Нужен</em> зонт.</div>
-            <p style="margin-top:6px;color:#ff99ff;">💡 Глагол после "man" всегда в форме 3-го лица ед.ч. (-t)</p>
-        </div>
-    `);
-
-    await sleep(500);
-    addRobotMessage('📝 Тест 7 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('"___ sagt, dass Hamburg windig ist." (Говорят, что в Гамбурге ветрено)',
-            [{ text: 'Es', correct: false }, { text: 'Ich', correct: false },
-             { text: 'Man', correct: true }, { text: 'Wir', correct: false }],
-            resolve, 7, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 8 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Выбери ПРАВИЛЬНОЕ предложение:',
-            [{ text: 'Man braucht bei Regen eine Jacke.', correct: true },
-             { text: 'Man brauchen bei Regen eine Jacke.', correct: false },
-             { text: 'Man braucht bei Regen Jacken.', correct: false },
-             { text: 'Man brauchen bei Regen Jacken.', correct: false }],
-            resolve, 8, 14);
-    });
-
-    await sleep(400);
-
-    addRobotMessage(`
-        <div class="grammar-block">
-            <h4>📖 ТЕМА 4: "es gibt" + AKKUSATIV</h4>
-            <p class="rule">"es gibt" = "есть / существует" (требует Akkusativ!)</p>
-            <div class="example"><strong>Es gibt</strong> <strong>einen</strong> Regenschirm. — Есть зонт.</div>
-            <div class="example"><strong>Es gibt</strong> <strong>viele</strong> Wolken. — Много облаков.</div>
-            <div class="example"><strong>Es gibt</strong> <strong>keinen</strong> Schnee. — Нет снега.</div>
-        </div>
-    `);
-
-    await sleep(500);
-    addRobotMessage('📝 Тест 9 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('"Heute ___ es viele Wolken."',
-            [{ text: 'gibt', correct: true }, { text: 'hat', correct: false },
-             { text: 'ist', correct: false }, { text: 'sind', correct: false }],
-            resolve, 9, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 10 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Выбери ПРАВИЛЬНОЕ предложение:',
-            [{ text: 'Es gibt einen starken Wind.', correct: true },
-             { text: 'Es gibt ein starken Wind.', correct: false },
-             { text: 'Es gibt einen starke Wind.', correct: false },
-             { text: 'Es ist einen starken Wind.', correct: false }],
-            resolve, 10, 14);
-    });
-
-    await sleep(400);
-
-    addRobotMessage(`
-        <div class="grammar-block">
-            <h4>📖 ТЕМА 5: ПОЛЕЗНЫЕ ФРАЗЫ О ПОГОДЕ</h4>
-            <div class="example"><strong>Wie ist das Wetter heute?</strong> — Какая сегодня погода?</div>
-            <div class="example"><strong>Wie ist das Wetter bei dir?</strong> — Какая у тебя погода?</div>
-            <div class="example"><strong>Wie ist das Wetter bei euch?</strong> — Какая у вас погода?</div>
-            <div class="example"><strong>Die Sonne scheint.</strong> — Солнце светит.</div>
-            <div class="example"><strong>Der Wind weht stark.</strong> — Ветер дует сильно.</div>
-        </div>
-    `);
-
-    await sleep(500);
-    addRobotMessage('📝 Тест 11 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Как спросить "Какая у вас (двух) погода?"',
-            [{ text: 'Was ist Wetter bei dir?', correct: false },
-             { text: 'Wie ist das Wetter bei euch?', correct: true },
-             { text: 'Wie ist Wetter bei du?', correct: false },
-             { text: 'Was für Wetter hast du?', correct: false }],
-            resolve, 11, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 12 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Как сказать "Ветер дует сильно"?',
-            [{ text: 'Der Wind ist stark.', correct: false },
-             { text: 'Der Wind weht stark.', correct: true },
-             { text: 'Es windet stark.', correct: false },
-             { text: 'Der Wind bläst stark.', correct: false }],
-            resolve, 12, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 13 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Что означает "bewölkt"?',
-            [{ text: 'солнечно', correct: false }, { text: 'дождливо', correct: false },
-             { text: 'облачно', correct: true }, { text: 'ветрено', correct: false }],
-            resolve, 13, 14);
-    });
-
-    await sleep(400);
-    addRobotMessage('📝 Тест 14 из 14:');
-    await new Promise(resolve => {
-        addTestToRobot('Выбери правильный перевод: "Der Nebel"',
-            [{ text: 'снег', correct: false }, { text: 'облако', correct: false },
-             { text: 'туман', correct: true }, { text: 'ветер', correct: false }],
-            resolve, 14, 14);
-    });
-
-    await sleep(500);
-    tag2FinishLesson();
+    finishLesson(1, 'МОДАЛЬНЫЕ ГЛАГОЛЫ');
 }
 
-function tag2FinishLesson() {
-    state.robotExplained = true;
+async function robotLesson2_WordOrder() {
+    addRobotMessage('🔍 Сбой системы. <strong>Тема:</strong> порядок слов.');
+    await sleep(600);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📖 ПОРЯДОК СЛОВ</h4>
+            <p class="rule">Глагол на 2-м месте.</p>
+            <ul>
+                <li><strong>Прямой:</strong> Ich <strong>gehe</strong> in den Wald.</li>
+                <li><strong>Обратный:</strong> Heute <strong>gehe</strong> ich in den Wald.</li>
+            </ul>
+            <h4>🌲 ЛЕКСИКА</h4>
+            <ul>
+                <li><strong>der Wald</strong> — лес</li>
+                <li><strong>der Baum</strong> — дерево</li>
+                <li><strong>der Weg</strong> — тропинка</li>
+                <li><strong>der Regen</strong> — дождь</li>
+                <li><strong>der Wind</strong> — ветер</li>
+                <li><strong>die Sonne</strong> — солнце</li>
+                <li><strong>der Herbst</strong> — осень</li>
+            </ul>
+        </div>
+    `);
 
-    addRobotMessage('✅ <strong>Все темы изучены!</strong><br><br>📌 Ты знаешь:<br>• Личные местоимения<br>• Безличные "es" (es regnet, es schneit)<br>• Безличное "man"<br>• "es gibt" + Akkusativ<br>• Словарь погоды<br><br>💡 Переходи в чат. Задавай вопросы <strong>сразу обоим</strong> во множественном числе: "Wie heißt <em>ihr</em>?", "Woher kommt <em>ihr</em>?". Они ответят по очереди и зададут тебе встречный вопрос.');
+    await sleep(500);
+    await new Promise(resolve => addTestToRobot('«Heute ___ ich in den Wald.»', [{ text: 'gehe', correct: true }, { text: 'gehen', correct: false }, { text: 'gehst', correct: false }, { text: 'geht', correct: false }], resolve, 1, 4));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('«Ich ___ heute in den Wald.»', [{ text: 'gehe', correct: true }, { text: 'gehen', correct: false }, { text: 'gehst', correct: false }, { text: 'geht', correct: false }], resolve, 2, 4));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('«___ ist der Weg?»', [{ text: 'Wo', correct: true }, { text: 'Was', correct: false }, { text: 'Wie', correct: false }, { text: 'Wer', correct: false }], resolve, 3, 4));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('«___ Wetter ist heute?»', [{ text: 'Wie', correct: true }, { text: 'Was', correct: false }, { text: 'Wo', correct: false }, { text: 'Wer', correct: false }], resolve, 4, 4));
 
-    enableAskRobot(true, 'МОЖЕТЕ ОБЩАТЬСЯ');
-
-    if (window.innerWidth <= 900) switchTab('chat');
-
-    setTimeout(() => startDialogueStep(), 800);
+    await sleep(500);
+    finishLesson(2, 'ПОРЯДОК СЛОВ И ЛЕКСИКА');
 }
 
-/* ---------- ДИАЛОГ ---------- */
-function startDialogueStep() {
+async function robotLesson3_Questions() {
+    addRobotMessage('🔍 Сбой системы. <strong>Тема:</strong> вопросы.');
+    await sleep(600);
+    addRobotMessage(`
+        <div class="grammar-block">
+            <h4>📖 ВОПРОСЫ</h4>
+            <p class="rule">Общий: глагол на 1-м месте.</p>
+            <div class="example">Gehst du in den Wald?</div>
+            <p class="rule">Специальный: W-слово + глагол + подлежащее.</p>
+            <div class="example">Wohin gehst du?</div>
+        </div>
+    `);
+
+    await sleep(500);
+    await new Promise(resolve => addTestToRobot('«___ du in den Wald?»', [{ text: 'Gehst', correct: true }, { text: 'Gehe', correct: false }, { text: 'Gehen', correct: false }, { text: 'Geht', correct: false }], resolve, 1, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('«___ gehst du?»', [{ text: 'Wohin', correct: true }, { text: 'Wo', correct: false }, { text: 'Was', correct: false }, { text: 'Wer', correct: false }], resolve, 2, 3));
+    await sleep(400);
+    await new Promise(resolve => addTestToRobot('«Heute ___ ich in den Wald.»', [{ text: 'gehe', correct: true }, { text: 'gehst', correct: false }, { text: 'gehen', correct: false }, { text: 'geht', correct: false }], resolve, 3, 3));
+
+    await sleep(500);
+    finishLesson(3, 'ВОПРОСЫ');
+}
+
+function startDialogue() {
     state.phase = 'dialogue';
-    state.subPhase = 'ask_both';
-    const step = dialogueSteps[state.dialogueStep];
-    enableInput(step.askContext);
-}
-
-function tag2SubmitInput() {
-    const input = document.getElementById('user-input');
-    const text = input.value.trim();
-    if (!text) return;
-    if (state.phase === 'dialogue') handleDialogueInput(text);
+    const step = duo.steps.find(s => s.id === state.currentStepId);
+    if (step) enableInput(step.context);
 }
 
 async function handleDialogueInput(text) {
-    addMainMessage('user', text, 'ВЫ');
-    document.getElementById('user-input').value = '';
+    const step = duo.steps.find(s => s.id === state.currentStepId);
 
-    const step = dialogueSteps[state.dialogueStep];
-
-    if (state.subPhase === 'ask_both') {
-        const matched = matchesKeywords(text, step.askKeywords);
-
-        if (!matched) {
-            setTimeout(() => {
-                addMainMessage('sophie', '??? Entschuldigung, ich habe dich nicht verstanden. Kannst du das wiederholen?', 'Sophie');
-                addRobotMessage('💬 Sophie не поняла. Нажми 💡 для подсказки.');
-            }, 500);
-            return;
-        }
-
+    if (step && step.lesson) {
+        addMainMessage('user', text, 'ВЫ');
+        document.getElementById('user-input').value = '';
         disableInput();
 
+        addMainMessage('verter', 'Сбой системы. Обратиться к ассистенту.', 'VERTER [неизвестный]');
         await sleep(800);
-        addMainMessage('sophie', step.sophie.response, 'Sophie', step.sophie.responseRu);
 
-        await sleep(1200);
-        addMainMessage('sophie', step.sophie.counter, 'Sophie', step.sophie.counterRu);
+        state.phase = 'await_robot';
+        state.pendingLesson = step.lesson;
+        enableAskRobot(true, 'НАЖМИТЕ ДЛЯ ОБУЧЕНИЯ');
+        await waitForRobotButton();
 
-        await sleep(1200);
-        addMainMessage('lukas', step.lukas.response, 'Lukas', step.lukas.responseRu);
+        await sleep(1000);
+        addMainMessage('system', '⚠ СВЯЗЬ ВОССТАНОВЛЕНА');
+        await sleep(1000);
 
-        await sleep(1200);
-        addMainMessage('lukas', step.lukas.counter, 'Lukas', step.lukas.counterRu);
+        state.currentStepId = step.next;
+        state.phase = 'dialogue';
+        const nextStep = duo.steps.find(s => s.id === state.currentStepId);
+        enableInput(nextStep.context);
+        return;
+    }
 
-        const info = state.collectedInfo;
-        if (step.infoKey === 'name') {
-            info.sophie.name = sophie.fullName;
-            info.lukas.name = lukas.fullName;
-        } else if (step.infoKey === 'city') {
-            info.sophie.city = sophie.city;
-            info.lukas.city = lukas.city;
-        } else if (step.infoKey === 'age') {
-            info.sophie.age = sophie.age;
-            info.lukas.age = lukas.age;
-        } else if (step.infoKey === 'job') {
-            info.sophie.job = sophie.job;
-            info.lukas.job = lukas.job;
-        } else if (step.infoKey === 'hobby') {
-            info.sophie.hobby = sophie.hobby;
-            info.lukas.hobby = lukas.hobby;
-        } else if (step.infoKey === 'weather') {
-            info.sophie.weather = step.sophie.response;
-            info.lukas.weather = step.lukas.response;
-        }
-
-        state.subPhase = 'answer_both';
-        state.currentInputFirstTry = true;
-
-        await sleep(800);
-        enableInput(`📝 Ответь на вопросы Sophie и Lukas: <strong>"${step.sophie.counterRu}"</strong>`);
-
-    } else if (state.subPhase === 'answer_both') {
-        const matched = matchesKeywords(text, step.counterKeywords);
-
-        if (!matched) {
-            setTimeout(() => {
-                addMainMessage('sophie', '??? Ich habe nicht verstanden. Was meinst du?', 'Sophie');
-                addRobotMessage('💬 Sophie не поняла. Нажми 💡 для подсказки.');
-            }, 500);
-            return;
-        }
-
+    if (step && step.id === 'finale_question') {
+        addMainMessage('user', text, 'ВЫ');
+        document.getElementById('user-input').value = '';
         disableInput();
-
         await sleep(800);
-        addMainMessage('sophie', step.sophie.reaction, 'Sophie', step.sophie.reactionRu);
-
-        await sleep(1000);
-        addMainMessage('lukas', step.lukas.reaction, 'Lukas', step.lukas.reactionRu);
-
-        await sleep(1000);
-
-        state.dialogueStep++;
-
-        if (state.dialogueStep >= dialogueSteps.length) {
-            await sleep(1000);
-            startNpcDialogue();
-        } else {
-            state.subPhase = 'ask_both';
-            startDialogueStep();
-        }
-    }
-}
-
-function tag2ShowHint() {
-    if (state.phase !== 'dialogue') return;
-
-    const step = dialogueSteps[state.dialogueStep];
-
-    if (state.subPhase === 'ask_both') {
-        addRobotMessage(`💡 Подсказка (вопрос обоим): <strong>${step.askHint}</strong>`);
-    } else {
-        addRobotMessage(`💡 Подсказка (ответ Sophie и Lukas): <strong>${step.counterHint}</strong>`);
+        await dayTwoFinal();
+        return;
     }
 
-    state.hintUsed = true;
-    state.currentInputFirstTry = false;
-
-    if (window.innerWidth <= 900) {
-        switchTab('robot');
-        setTimeout(() => switchTab('chat'), 3000);
-    }
-}
-
-/* ---------- ДИАЛОГ МЕЖДУ NPC ---------- */
-async function startNpcDialogue() {
-    state.phase = 'npc_chat';
-
-    addMainMessage('system', '⚠ SOPHIE И LUKAS ОБЩАЮТСЯ МЕЖДУ СОБОЙ');
-
-    await sleep(1500);
-    addMainMessage('sophie', 'Lukas, wie ist das Wetter bei dir in Hamburg?', 'Sophie',
-        'Lukas, какая у тебя погода в Гамбурге?');
-
-    await sleep(2000);
-    addMainMessage('lukas', 'Hallo Sophie! Bei uns ist es heute windig und bewölkt, aber zum Glück regnet es nicht. Und bei dir in München?', 'Lukas',
-        'Привет Sophie! У нас сегодня ветрено и облачно, но, к счастью, не идёт дождь. А у тебя в Мюнхене?');
-
-    await sleep(2000);
-    addMainMessage('sophie', 'Oh, bei uns regnet es stark! Es gibt viele graue Wolken und es ist kühl. Man braucht einen Regenschirm!', 'Sophie',
-        'О, у нас сильный дождь! Много серых облаков и прохладно. Нужен зонт!');
-
-    await sleep(2000);
-    addMainMessage('lukas', 'Das klingt nicht gut! Man sagt, im Süden regnet es öfter. Bei uns in Hamburg ist es windig, aber wir sind das gewohnt.', 'Lukas',
-        'Звучит не очень! Говорят, на юге чаще идёт дождь. У нас в Гамбурге ветрено, но мы привыкли.');
-
-        await sleep(2000);
-    addMainMessage('sophie', 'Haha, ja! Es gibt in München auch schöne Tage. Morgen soll es sonnig werden!', 'Sophie',
-        'Хаха, да! В Мюнхене тоже бывают красивые дни. Завтра обещают солнце!');
-
-    await sleep(2000);
-    addMainMessage('lukas', 'Super! Dann können wir uns vielleicht treffen, wenn du mal in Hamburg bist!', 'Lukas',
-        'Супер! Тогда, может, встретимся, если ты будешь в Гамбурге!');
-
-    await sleep(2000);
-    startFinalTest();
-}
-
-/* ---------- ФИНАЛЬНЫЙ ТЕСТ ---------- */
-async function startFinalTest() {
-    state.phase = 'final_test';
-
-    addMainMessage('system', '⚠ ВХОДЯЩЕЕ СООБЩЕНИЕ ОТ WERTHER');
-
-    await sleep(1000);
-    addMainMessage('verter',
-        'Ты поговорил с <strong>Sophie</strong> и <strong>Lukas</strong>. Теперь проверю, что ты запомнил. <strong>5 вопросов на немецком.</strong>',
-        'WERTHER');
-
-    await sleep(1500);
-
-    const finalTests = [
-        {
-            question: 'Wie heißt die Gärtnerin mit Nachnamen?',
-            options: [
-                { text: 'Sophie Fischer', correct: false },
-                { text: 'Sophie Bauer', correct: true },
-                { text: 'Lisa Bauer', correct: false },
-                { text: 'Sophie Müller', correct: false }
-            ]
-        },
-        {
-            question: 'Woher kommt Lukas?',
-            options: [
-                { text: 'Aus München', correct: false },
-                { text: 'Aus Berlin', correct: false },
-                { text: 'Aus Hamburg', correct: true },
-                { text: 'Aus Wien', correct: false }
-            ]
-        },
-        {
-            question: 'Wie alt ist Sophie?',
-            options: [
-                { text: 'Fünfundzwanzig', correct: false },
-                { text: 'Achtundzwanzig', correct: true },
-                { text: 'Dreißig', correct: false },
-                { text: 'Fünfunddreißig', correct: false }
-            ]
-        },
-        {
-            question: 'Was ist Lukas von Beruf?',
-            options: [
-                { text: 'Er ist Gärtner.', correct: false },
-                { text: 'Er ist Student.', correct: false },
-                { text: 'Er ist Koch.', correct: true },
-                { text: 'Er ist Lehrer.', correct: false }
-            ]
-        },
-        {
-            question: 'Was ist das Hobby von Sophie?',
-            options: [
-                { text: 'Fahrrad fahren', correct: false },
-                { text: 'Kräutertee trinken und im Garten arbeiten', correct: true },
-                { text: 'Bücher lesen', correct: false },
-                { text: 'Fußball spielen', correct: false }
-            ]
-        }
-    ];
-
-    let currentTestIdx = 0;
-
-    async function askNextTest() {
-        if (currentTestIdx >= finalTests.length) {
-            await tag2Finale();
-            return;
-        }
-
-        const test = finalTests[currentTestIdx];
-        const allOptions = shuffle(test.options);
-
-        addMainMessage('verter', `Frage ${currentTestIdx + 1} von 5:`, 'WERTHER');
-
-        const container = document.getElementById('main-messages');
-        const block = document.createElement('div');
-        block.className = 'msg system';
-        block.innerHTML = `
-            <div class="msg-avatar">⚠</div>
-            <div class="msg-body">
-                <div class="test-block">
-                    <div class="test-q">${test.question}</div>
-                    <div class="test-opts">
-                        ${allOptions.map((opt, i) => `<button class="test-opt" data-idx="${i}">${opt.text}</button>`).join('')}
-                    </div>
-                </div>
-            </div>
-        `;
-        container.appendChild(block);
-        container.scrollTop = container.scrollHeight;
-
-        state.currentTestFirstTry = true;
-
-        await new Promise(resolve => {
-            block.querySelectorAll('.test-opt').forEach(btn => {
-                btn.onclick = () => {
-                    const idx = parseInt(btn.dataset.idx);
-                    handleFinalAnswer(idx, allOptions, block, resolve);
-                };
-            });
-        });
-
-        currentTestIdx++;
+    await handleDialogueInputBase(text, npcs, async (step, npc) => {
         await sleep(800);
-        askNextTest();
-    }
-
-    askNextTest();
+        await dayTwoFinal();
+    });
 }
 
-async function handleFinalAnswer(idx, options, block, resolve) {
-    state.totalAttempts++;
-    const buttons = block.querySelectorAll('.test-opt');
-
-    if (options[idx].correct) {
-        buttons[idx].classList.add('correct');
-        buttons.forEach(b => b.classList.add('locked'));
-        state.testsPassed++;
-
-        if (state.currentTestFirstTry) {
-            state.score += 50;
-            addMainMessage('verter', '✅ Richtig! <strong>+50 очков</strong>', 'WERTHER');
-        } else {
-            addMainMessage('verter', '✅ Richtig! (Очки не начислены)', 'WERTHER');
-        }
-
-        updateStats();
-        resolve();
-    } else {
-        buttons[idx].classList.add('wrong');
-        buttons[idx].classList.add('locked');
-        state.errors++;
-        state.currentTestFirstTry = false;
-        updateStats();
-
-        freezeTime();
-
-        await sleep(3000);
-        addMainMessage('verter', '❌ Falsch! Zeit eingefroren. Versuch es nochmal.', 'WERTHER');
-    }
-}
-
-/* ---------- ФИНАЛ ---------- */
-async function tag2Finale() {
+async function dayTwoFinal() {
     state.phase = 'finale';
 
-    addMainMessage('system', '⚠ КРИТИЧЕСКОЕ СООБЩЕНИЕ ОТ WERTHER');
-
+    addMainMessage('system', '⚠ КРИТИЧЕСКОЕ СООБЩЕНИЕ ОТ VERTER');
     await sleep(1000);
-    addMainMessage('verter',
-        'Задание выполнено. Ты научился говорить о погоде и знакомиться с людьми из разных городов.',
-        'WERTHER');
-
+    addMainMessage('verter', 'День завершён. Фрагмент 2 из 3 восстановлен.', 'VERTER [неизвестный]');
     await sleep(1500);
-    addMainMessage('user', 'Почему это важно? Что будет дальше?', 'ВЫ');
+    addMainMessage('verter', 'Ответь на вопрос: как ты провёл день? Нравится ли тебе Лиза?', 'VERTER [неизвестный]');
+    await sleep(1000);
 
-    await sleep(1500);
-    addMainMessage('verter', '...Узнаешь в Tag 3. А пока — отдыхай. Петля ждёт.', 'WERTHER');
+    const container = document.getElementById('main-messages');
+    const block = document.createElement('div');
+    block.className = 'msg system';
+    block.innerHTML = `
+        <div class="msg-avatar">⚠</div>
+        <div class="msg-body">
+            <div class="test-block">
+                <div class="test-q">Нравится ли тебе Лиза?</div>
+                <div class="test-opts">
+                    <button class="test-opt" data-answer="yes">Да, мне понравилось. Лиза — хороший человек.</button>
+                    <button class="test-opt" data-answer="no">Нет, мне не понравилось.</button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.appendChild(block);
+    container.scrollTop = container.scrollHeight;
 
-    await sleep(1500);
-    addMainMessage('verter', 'До встречи...', 'WERTHER');
+    block.querySelectorAll('.test-opt').forEach(btn => {
+        btn.onclick = async () => {
+            const answer = btn.dataset.answer;
+            block.querySelectorAll('.test-opt').forEach(b => b.classList.add('locked'));
 
-    await sleep(2000);
-    showFinalStats();
+            if (answer === 'yes') {
+                btn.classList.add('correct');
+                addMainMessage('user', 'Да, мне понравилось. Лиза — хороший человек.', 'ВЫ');
+                await sleep(1000);
+
+                document.getElementById('main-container').classList.add('screen-cracked');
+                document.body.classList.add('screen-cracked');
+
+                addMainMessage('system', '⚠ НЕСТАБИЛЬНОСТЬ СИСТЕМЫ.');
+                await sleep(5000);
+                addMainMessage('verter', '...', 'VERTER [неизвестный]');
+                await sleep(3000);
+
+                document.getElementById('main-container').classList.remove('screen-cracked');
+                document.body.classList.remove('screen-cracked');
+
+                await sleep(800);
+
+                const overlay = document.getElementById('freeze-overlay');
+                overlay.classList.add('active');
+                document.getElementById('freeze-text').innerText = '⏳ ЗАГРУЗКА...';
+                document.getElementById('freeze-sub').innerText = 'ВОССТАНОВЛЕНИЕ ФРАГМЕНТА';
+                await sleep(3000);
+                overlay.classList.remove('active');
+                document.getElementById('freeze-text').innerText = '⏸ ZEIT EINGEFROREN ⏸';
+                document.getElementById('freeze-sub').innerText = 'ВРЕМЯ ОСТАНОВИЛОСЬ';
+
+                await sleep(800);
+                showFinalStats();
+            } else {
+                btn.classList.add('wrong');
+                addMainMessage('user', 'Нет, мне не понравилось.', 'ВЫ');
+                await sleep(1000);
+
+                addMainMessage('system', '⚠ VERTER НЕ ОТВЕЧАЕТ');
+                await sleep(2000);
+
+                showFinalStats();
+            }
+        };
+    });
 }
 
-/* ---------- КОНФИГ ДНЯ ---------- */
 initGame({
-    dayTag: 'TAG 2',
-    chatHeader: '◈ КАНАЛ СВЯЗИ // TAG 2',
-    bootMessages: [
-        'TAG 2 // RECONNECTION...',
-        'ВРЕМЕННАЯ ПЕТЛЯ СТАБИЛЬНА',
-        'ПОДКЛЮЧЕНИЕ К КАНАЛУ WERTHER...',
-        'CONNECTION ESTABLISHED'
-    ],
-    avatars: {
-        verter: '🎭',
-        sophie: '🌿',
-        lukas:  '🏔'
+    npcs: npcs,
+    npcColors: {
+        lisa: { color: '#ff66ff', bg: 'rgba(255, 102, 255, 0.2)', bgLight: 'rgba(255, 102, 255, 0.08)' },
+        mark: { color: '#00c8ff', bg: 'rgba(0, 200, 255, 0.2)', bgLight: 'rgba(0, 200, 255, 0.08)' }
     },
-    maxScore: MAX_SCORE,
+    dayTag: 'TAG 2',
+    chatHeader: '◈ КАНАЛ СВЯЗИ // ФРАГМЕНТ 2: ЛЕС',
+    bootMessages: [
+        'СИСТЕМА СПИТ...',
+        'ПОПЫТКА ПОДКЛЮЧЕНИЯ...',
+        'СВЯЗЬ НЕСТАБИЛЬНА...'
+    ],
+    avatars: { verter: '🎭' },
+    npcAvatar: () => '👥',
+    maxScore: 220,
     nextUrl: 'tags.html?tag=3',
     nextLabel: '▶ ПЕРЕХОД К TAG 3',
     pointsPerTest: 20,
-    finalTitle: '◢ TAG 2 ABGESCHLOSSEN ◣',
+    awardAlways: false,
+    finalTitle: '◢ ФРАГМЕНТ 2 ВОССТАНОВЛЕН ◣',
     finalRows: () => [
-        { label: 'Познакомился с:',  value: 'Sophie & Lukas' },
-        { label: 'Новых тем:',       value: '5' },
         { label: 'Тестов пройдено:', value: state.testsPassed },
+        { label: 'Всего попыток:',   value: state.totalAttempts },
         { label: 'Ошибок:',          value: state.errors },
         { label: 'Заморозок:',       value: state.freezes },
         { label: 'Счёт:',            value: state.score },
-        { label: 'Макс. счёт:',      value: MAX_SCORE },
-        { label: 'Процент:',         value: Math.round((state.score / MAX_SCORE) * 100) + '%' }
+        { label: 'Макс. счёт:',      value: 220 },
+        { label: 'Процент:',         value: Math.round((state.score / 220) * 100) + '%' }
     ],
     onBoot: tag2Intro,
     onAskRobot: tag2AskRobot,
-    onSubmitInput: tag2SubmitInput,
-    onShowHint: tag2ShowHint
+    onSubmitInput: handleDialogueInput
 });

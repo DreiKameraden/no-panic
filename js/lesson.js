@@ -19,9 +19,9 @@ if (!filePath || !section) {
     })
     .then(manifest => {
       // 2. Находим нужный материал в manifest по имени файла
-      const fileName = filePath.split('/').pop(); // получаем "lesson-01-routine.md"
-      const material = manifest.materials.find(m => m.file === fileName);
-
+      const material = manifest.items
+        .map(i => i.material)
+        .find(m => m && m.file === filePath.replace(`${section}/`, ''));
       if (!material) {
         throw new Error(`Материал "${fileName}" не найден в manifest.json`);
       }

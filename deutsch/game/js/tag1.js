@@ -13,22 +13,25 @@ const npcs = {
         steps: [
             {
                 id: 'intro',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Ответьте на вопрос',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Oh. Entschuldigung. Ich habe dich mit jemandem verwechselt.',
-                npcSays_tr: 'О. Извини. Я тебя с кем-то перепутал.',
-                npcThen: 'Wie heißt du?',
-                npcThen_tr: 'Как тебя зовут?',
+                messages: [
+                    { type: 'npc', text: 'Oh. Entschuldigung. Ich habe dich mit jemandem verwechselt.', text_tr: 'О. Извини. Я тебя с кем-то перепутал.', sender: 'Mark' },
+                    { type: 'npc', text: 'Wie heißt du?', text_tr: 'Как тебя зовут?', sender: 'Mark' }
+                ],
                 next: 'after_name'
             },
             {
                 id: 'after_name',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Назови своё имя',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Freut mich. Ich bin Mark.',
-                npcSays_tr: 'Приятно познакомиться. Я Марк.',
+                messages: [
+                    { type: 'npc', text: 'Freut mich. Ich bin Mark.', text_tr: 'Приятно познакомиться. Я Марк.', sender: 'Mark' }
+                ],
                 next: 'ask_from'
             },
             {
@@ -36,8 +39,9 @@ const npcs = {
                 keywords: ['woher', 'kommst'],
                 context: '📝 Спроси, откуда он',
                 hint: 'Woher kommst du?',
-                npcSays: 'Ich komme aus Leipzig. Aber jetzt wohne ich in Berlin. Schon seit zehn Jahren.',
-                npcSays_tr: 'Я из Лейпцига. Но сейчас живу в Берлине. Уже десять лет.',
+                messages: [
+                    { type: 'npc', text: 'Ich komme aus Leipzig. Aber jetzt wohne ich in Berlin. Schon seit zehn Jahren.', text_tr: 'Я из Лейпцига. Но сейчас живу в Берлине. Уже десять лет.', sender: 'Mark' }
+                ],
                 next: 'ask_job'
             },
             {
@@ -45,8 +49,9 @@ const npcs = {
                 keywords: ['arbeit', 'beruf', 'machst', 'studier'],
                 context: '📝 Спроси, чем он занимается',
                 hint: 'Was machst du? или Was bist du von Beruf?',
-                npcSays: 'Ich arbeite als Programmierer. Ich repariere alte Computer. Klingt langweilig, oder?',
-                npcSays_tr: 'Я работаю программистом. Ремонтирую старые компьютеры. Звучит скучно, да?',
+                messages: [
+                    { type: 'npc', text: 'Ich arbeite als Programmierer. Ich repariere alte Computer. Klingt langweilig, oder?', text_tr: 'Я работаю программистом. Ремонтирую старые компьютеры. Звучит скучно, да?', sender: 'Mark' }
+                ],
                 next: 'ask_hobby'
             },
             {
@@ -54,8 +59,9 @@ const npcs = {
                 keywords: ['hobby', 'hobbys', 'freizeit', 'gern', 'kaffee'],
                 context: '📝 Спроси о хобби',
                 hint: 'Was machst du gern? или Was ist dein Hobby?',
-                npcSays: 'Ich repariere gern alte Computer. Und ich trinke gern Kaffee. Viel Kaffee. Ohne Kaffee kein Code.',
-                npcSays_tr: 'Люблю ремонтировать старые компьютеры. И люблю кофе. Много кофе. Без кофе нет кода.',
+                messages: [
+                    { type: 'npc', text: 'Ich repariere gern alte Computer. Und ich trinke gern Kaffee. Viel Kaffee. Ohne Kaffee kein Code.', text_tr: 'Люблю ремонтировать старые компьютеры. И люблю кофе. Много кофе. Без кофе нет кода.', sender: 'Mark' }
+                ],
                 next: 'ask_jonas'
             },
             {
@@ -63,14 +69,15 @@ const npcs = {
                 keywords: ['jonas', 'wer', 'kennst'],
                 context: '📝 Спроси: «Кто такой Йонас?»',
                 hint: 'Wer ist Jonas?',
-                npcSays: 'Jonas… Er war mein Freund. Wir haben zusammen gearbeitet. Er wollte immer alles reparieren. Auch wenn es kaputt war. Er sagte: «Ich gebe nicht auf». Und dann…',
-                npcSays_tr: 'Йонас… Он был моим другом. Мы вместе работали. Он всегда хотел всё починить. Даже когда это было сломано. Он говорил: «Я не сдаюсь». А потом…',
-                npcThen: 'Ich muss jetzt gehen. Tschüss.',
-                npcThen_tr: 'Мне пора идти. Пока.',
+                messages: [
+                    { type: 'npc', text: 'Jonas… Er war mein Freund. Wir haben zusammen gearbeitet. Er wollte immer alles reparieren. Auch wenn es kaputt war. Er sagte: «Ich gebe nicht auf». Und dann…', text_tr: 'Йонас… Он был моим другом. Мы вместе работали. Он всегда хотел всё починить. Даже когда это было сломано. Он говорил: «Я не сдаюсь». А потом…', sender: 'Mark' },
+                    { type: 'npc', text: 'Ich muss jetzt gehen. Tschüss.', text_tr: 'Мне пора идти. Пока.', sender: 'Mark' }
+                ],
                 next: null
             }
         ]
     },
+
     lisa: {
         name: 'Lisa',
         emoji: '👩',
@@ -81,22 +88,25 @@ const npcs = {
         steps: [
             {
                 id: 'intro',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Ответьте на вопрос',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Oh… Entschuldigung. Ich habe dich verwechselt. Du siehst ihm ähnlich.',
-                npcSays_tr: 'О… Извини. Я тебя перепутала. Ты похож на него.',
-                npcThen: 'Wie heißt du?',
-                npcThen_tr: 'Как тебя зовут?',
+                messages: [
+                    { type: 'npc', text: 'Oh… Entschuldigung. Ich habe dich verwechselt. Du siehst ihm ähnlich.', text_tr: 'О… Извини. Я тебя перепутала. Ты похож на него.', sender: 'Lisa' },
+                    { type: 'npc', text: 'Wie heißt du?', text_tr: 'Как тебя зовут?', sender: 'Lisa' }
+                ],
                 next: 'after_name'
             },
             {
                 id: 'after_name',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Назови своё имя',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Freut mich. Ich bin Lisa.',
-                npcSays_tr: 'Приятно познакомиться. Я Лиза.',
+                messages: [
+                    { type: 'npc', text: 'Freut mich. Ich bin Lisa.', text_tr: 'Приятно познакомиться. Я Лиза.', sender: 'Lisa' }
+                ],
                 next: 'ask_from'
             },
             {
@@ -104,8 +114,9 @@ const npcs = {
                 keywords: ['woher', 'kommst'],
                 context: '📝 Спроси, откуда она',
                 hint: 'Woher kommst du?',
-                npcSays: 'Ich komme aus München...',
-                npcSays_tr: 'Я из Мюнхена...',
+                messages: [
+                    { type: 'npc', text: 'Ich komme aus München...', text_tr: 'Я из Мюнхена...', sender: 'Lisa' }
+                ],
                 next: 'ask_job'
             },
             {
@@ -113,8 +124,9 @@ const npcs = {
                 keywords: ['arbeit', 'beruf', 'machst', 'studier'],
                 context: '📝 Спроси, чем она занимается',
                 hint: 'Was machst du? или Was bist du von Beruf?',
-                npcSays: 'Ich arbeite als Architektin. Ich zeichne Häuser. Alte Häuser, neue Häuser. Ich zeichne fast immer.',
-                npcSays_tr: 'Я работаю архитектором. Рисую дома. Старые, новые. Я рисую почти всегда.',
+                messages: [
+                    { type: 'npc', text: 'Ich arbeite als Architektin. Ich zeichne Häuser. Alte Häuser, neue Häuser. Ich zeichne fast immer.', text_tr: 'Я работаю архитектором. Рисую дома. Старые, новые. Я рисую почти всегда.', sender: 'Lisa' }
+                ],
                 next: 'ask_home'
             },
             {
@@ -122,8 +134,9 @@ const npcs = {
                 keywords: ['wohnst', 'wohn', 'lebst'],
                 context: '📝 Спроси, где она живёт',
                 hint: 'Wo wohnst du?',
-                npcSays: 'Hier, in Berlin...',
-                npcSays_tr: 'Здесь, в Берлине...',
+                messages: [
+                    { type: 'npc', text: 'Hier, in Berlin...', text_tr: 'Здесь, в Берлине...', sender: 'Lisa' }
+                ],
                 next: 'ask_hobby'
             },
             {
@@ -131,8 +144,9 @@ const npcs = {
                 keywords: ['hobby', 'hobbys', 'freizeit', 'gern', 'wartest', 'warte'],
                 context: '📝 Спроси о хобби',
                 hint: 'Was machst du gern? или Was ist dein Hobby?',
-                npcSays: 'Ich zeichne gern. Und ich gehe gern spazieren. Er ging auch gern hier. Wir waren oft hier zusammen.',
-                npcSays_tr: 'Люблю рисовать. И люблю гулять. Он тоже любил здесь гулять. Мы часто были здесь вместе.',
+                messages: [
+                    { type: 'npc', text: 'Ich zeichne gern. Und ich gehe gern spazieren. Er ging auch gern hier. Wir waren oft hier zusammen.', text_tr: 'Люблю рисовать. И люблю гулять. Он тоже любил здесь гулять. Мы часто были здесь вместе.', sender: 'Lisa' }
+                ],
                 next: 'ask_jonas'
             },
             {
@@ -140,14 +154,15 @@ const npcs = {
                 keywords: ['jonas', 'wer', 'kennst'],
                 context: '📝 Спроси: «Кто такой Йонас?»',
                 hint: 'Wer ist Jonas?',
-                npcSays: 'Jonas… Er war… ich erinnere mich an seine Stimme. Er sagte immer: «Ich komme zurück». Und ich warte. Ich warte immer noch.',
-                npcSays_tr: 'Йонас… Он был… я помню его голос. Он всегда говорил: «Я вернусь». И я жду. Я всё ещё жду.',
-                npcThen: 'Ich muss jetzt gehen. Tschüss.',
-                npcThen_tr: 'Мне пора идти. Пока.',
+                messages: [
+                    { type: 'npc', text: 'Jonas… Er war… ich erinnere mich an seine Stimme. Er sagte immer: «Ich komme zurück». Und ich warte. Ich warte immer noch.', text_tr: 'Йонас… Он был… я помню его голос. Он всегда говорил: «Я вернусь». И я жду. Я всё ещё жду.', sender: 'Lisa' },
+                    { type: 'npc', text: 'Ich muss jetzt gehen. Tschüss.', text_tr: 'Мне пора идти. Пока.', sender: 'Lisa' }
+                ],
                 next: null
             }
         ]
     },
+
     mia: {
         name: 'Mia',
         emoji: '👧',
@@ -158,22 +173,25 @@ const npcs = {
         steps: [
             {
                 id: 'intro',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Ответьте на вопрос',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Oh. Du bist nicht Onkel Jonas? Schade. Du siehst ein bisschen wie er aus.',
-                npcSays_tr: 'О. Ты не дядя Йонас? Жалко. Ты немного похож на него.',
-                npcThen: 'Wie heißt du?',
-                npcThen_tr: 'Как тебя зовут?',
+                messages: [
+                    { type: 'npc', text: 'Oh. Du bist nicht Onkel Jonas? Schade. Du siehst ein bisschen wie er aus.', text_tr: 'О. Ты не дядя Йонас? Жалко. Ты немного похож на него.', sender: 'Mia' },
+                    { type: 'npc', text: 'Wie heißt du?', text_tr: 'Как тебя зовут?', sender: 'Mia' }
+                ],
                 next: 'after_name'
             },
             {
                 id: 'after_name',
+                allowAny: true,
                 keywords: ['bin', 'heiße', 'heisse', 'name'],
                 context: '📝 Назови своё имя',
                 hint: 'Ich bin [имя]. или Ich heiße [имя].',
-                npcSays: 'Freut mich. Ich bin Mia. Ich bin zwölf. Fast dreizehn!',
-                npcSays_tr: 'Приятно познакомиться. Я Мия. Мне двенадцать. Почти тринадцать!',
+                messages: [
+                    { type: 'npc', text: 'Freut mich. Ich bin Mia. Ich bin zwölf. Fast dreizehn!', text_tr: 'Приятно познакомиться. Я Мия. Мне двенадцать. Почти тринадцать!', sender: 'Mia' }
+                ],
                 next: 'ask_from'
             },
             {
@@ -181,10 +199,10 @@ const npcs = {
                 keywords: ['woher', 'kommst'],
                 context: '📝 Спроси, откуда она',
                 hint: 'Woher kommst du?',
-                npcSays: 'Ich komme aus Hamburg. Aber ich wohne jetzt bei meiner Mama in Berlin. Papa wohnt noch in Hamburg.',
-                npcSays_tr: 'Я из Гамбурга. Но сейчас живу у мамы в Берлине. Папа всё ещё в Гамбурге.',
-                npcThen: 'Und du? Woher kommst du?',
-                npcThen_tr: 'А ты? Откуда ты?',
+                messages: [
+                    { type: 'npc', text: 'Ich komme aus Hamburg. Aber ich wohne jetzt bei meiner Mama in Berlin. Papa wohnt noch in Hamburg.', text_tr: 'Я из Гамбурга. Но сейчас живу у мамы в Берлине. Папа всё ещё в Гамбурге.', sender: 'Mia' },
+                    { type: 'npc', text: 'Und du? Woher kommst du?', text_tr: 'А ты? Откуда ты?', sender: 'Mia' }
+                ],
                 next: 'answer_from'
             },
             {
@@ -192,8 +210,9 @@ const npcs = {
                 keywords: ['ich', 'komme'],
                 context: '📝 Ответь из какого ты города',
                 hint: 'Ich komme aus',
-                npcSays: 'Oho... ich kenne diese Stadt nicht',
-                npcSays_tr: 'Ого... я не знаю этот город',
+                messages: [
+                    { type: 'npc', text: 'Oho... ich kenne diese Stadt nicht', text_tr: 'Ого... я не знаю этот город', sender: 'Mia' }
+                ],
                 next: 'ask_job'
             },
             {
@@ -201,10 +220,10 @@ const npcs = {
                 keywords: ['arbeit', 'beruf', 'machst', 'schule', 'lernst', 'gehst'],
                 context: '📝 Спроси, чем она занимается / про школу',
                 hint: 'Was machst du? / Wie ist es in der Schule?',
-                npcSays: 'Ich gehe in die Schule. Ich lerne gern Englisch. Mathe ist doof. Aber Englisch ist toll!',
-                npcSays_tr: 'Я хожу в школу. Люблю учить английский. Математика дурацкая. А английский классный!',
-                npcThen: 'Und du? Was bist du von Beruf?',
-                npcThen_tr: 'А ты? Кто ты по профессии?',
+                messages: [
+                    { type: 'npc', text: 'Ich gehe in die Schule. Ich lerne gern Englisch. Mathe ist doof. Aber Englisch ist toll!', text_tr: 'Я хожу в школу. Люблю учить английский. Математика дурацкая. А английский классный!', sender: 'Mia' },
+                    { type: 'npc', text: 'Und du? Was bist du von Beruf?', text_tr: 'А ты? Кто ты по профессии?', sender: 'Mia' }
+                ],
                 next: 'answer_job'
             },
             {
@@ -212,8 +231,9 @@ const npcs = {
                 keywords: ['arbeite', 'beruf', 'mache', 'schule', 'lerne', 'gehe', 'bin'],
                 context: '📝 Ответь, кто ты по профессии',
                 hint: 'Was machst du? / Wie ist es in der Schule?',
-                npcSays: 'Verstehe. Es klingt interessant...',
-                npcSays_tr: 'Понятно. Звучит интересно',
+                messages: [
+                    { type: 'npc', text: 'Verstehe. Es klingt interessant...', text_tr: 'Понятно. Звучит интересно', sender: 'Mia' }
+                ],
                 next: 'ask_home'
             },
             {
@@ -221,8 +241,9 @@ const npcs = {
                 keywords: ['wohnst', 'wohn', 'lebst'],
                 context: '📝 Спроси, где она живёт',
                 hint: 'Wo wohnst du?',
-                npcSays: 'Bei meiner Mama. Onkel Jonas wohnte auch hier. Im Haus nebenan. Aber er kommt nicht mehr. Er kommt nie mehr.',
-                npcSays_tr: 'У мамы. Дядя Йонас тоже жил здесь. В соседнем доме. Но он больше не приходит. Он никогда не приходит.',
+                messages: [
+                    { type: 'npc', text: 'Bei meiner Mama. Onkel Jonas wohnte auch hier. Im Haus nebenan. Aber er kommt nicht mehr. Er kommt nie mehr.', text_tr: 'У мамы. Дядя Йонас тоже жил здесь. В соседнем доме. Но он больше не приходит. Он никогда не приходит.', sender: 'Mia' }
+                ],
                 next: 'ask_jonas'
             },
             {
@@ -230,8 +251,9 @@ const npcs = {
                 keywords: ['jonas', 'wer', 'kennst'],
                 context: '📝 Спроси: «Кто такой Йонас?»',
                 hint: 'Wer ist Jonas?',
-                npcSays: 'Onkel Jonas? Er war lustig. Er hat immer Steine für mich gefunden. Aber dann ist er einfach verschwunden.',
-                npcSays_tr: 'Дядя Йонас? Он был веселым. Он всегда находил для меня камни. А потом он просто исчез.',
+                messages: [
+                    { type: 'npc', text: 'Onkel Jonas? Er war lustig. Er hat immer Steine für mich gefunden. Aber dann ist er einfach verschwunden.', text_tr: 'Дядя Йонас? Он был веселым. Он всегда находил для меня камни. А потом он просто исчез.', sender: 'Mia' }
+                ],
                 next: 'ask_why_jonas'
             },
             {
@@ -239,13 +261,12 @@ const npcs = {
                 keywords: ['jonas', 'warum', 'worum', 'kommt nicht', 'nicht kommt', 'krank'],
                 context: '📝 Спроси: «Почему Йонас не приходит?»',
                 hint: 'Warum kommt Jonas nicht?',
-                npcSays: 'Warum? Ich weiß nicht. Mama sagt, er ist krank. Aber das glaube ich nicht. Er kommt einfach nicht. Vielleicht will er nicht. Vielleicht hat er uns vergessen.',
-                npcSays_tr: 'Почему? Я не знаю. Мама говорит, он болен. Но я в это не верю. Он просто не приходит. Может, он не хочет. Может, он нас забыл.',
-                npcThen: 'Ich muss jetzt gehen. Tschüss.',
-                npcThen_tr: 'Мне пора идти. Пока.',
+                messages: [
+                    { type: 'npc', text: 'Warum? Ich weiß nicht. Mama sagt, er ist krank. Aber das glaube ich nicht. Er kommt einfach nicht. Vielleicht will er nicht. Vielleicht hat er uns vergessen.', text_tr: 'Почему? Я не знаю. Мама говорит, он болен. Но я в это не верю. Он просто не приходит. Может, он не хочет. Может, он нас забыл.', sender: 'Mia' },
+                    { type: 'npc', text: 'Ich muss jetzt gehen. Tschüss.', text_tr: 'Мне пора идти. Пока.', sender: 'Mia' }
+                ],
                 next: null
             }
-
         ]
     }
 };
@@ -430,53 +451,10 @@ function startDialogue() {
 }
 
 async function handleDialogueInput(text) {
-    addMainMessage('user', text, 'ВЫ');
-    document.getElementById('user-input').value = '';
-
-    const npc = npcs[state.currentNPC];
-    const step = npc.steps.find(s => s.id === state.currentStepId);
-    if (!step) return;
-
-    const matched = (step.id === 'intro' || step.id === 'after_name') || matchesKeywords(text, step.keywords);
-    if (!matched) {
-        setTimeout(() => {
-            addMainMessage('npc', '??? Ich verstehe nicht. Kannst du das wiederholen?', npc.name);
-            addRobotMessage(`💬 ${npc.name} не понял(а). Нажми 💡 для подсказки.`);
-        }, 500);
-        return;
-    }
-
-    disableInput();
-    await sleep(800);
-
-    addMainMessage('npc', step.npcSays, npc.name, step.npcSays_tr);
-    await sleep(1200);
-
-    if (step.npcThen) {
-        addMainMessage('npc', step.npcThen, npc.name, step.npcThen_tr);
-        await sleep(1000);
-    }
-
-    if (step.id === 'after_name') state.collectedInfo[state.currentNPC].name = npc.name;
-    if (step.id === 'ask_from') {
-        const m = step.npcSays.match(/aus ([A-Za-zÄÖÜäöüß]+)/);
-        if (m) state.collectedInfo[state.currentNPC].from = m[1];
-    }
-    if (step.id === 'ask_job') state.collectedInfo[state.currentNPC].job = step.npcSays;
-    if (step.id === 'ask_home') state.collectedInfo[state.currentNPC].home = step.npcSays;
-    if (step.id === 'ask_hobby') state.collectedInfo[state.currentNPC].hobby = step.npcSays;
-    if (step.id === 'ask_jonas') state.collectedInfo[state.currentNPC].jonas = step.npcSays;
-
-    if (step.next === null) {
+    await handleDialogueInputBase(text, npcs, async (step, npc) => {
         await sleep(800);
         verterCheck();
-        return;
-    }
-
-    state.currentStepId = step.next;
-    const nextStep = npc.steps.find(s => s.id === step.next);
-    await sleep(800);
-    enableInput(nextStep.context);
+    });
 }
 
 async function verterCheck() {
