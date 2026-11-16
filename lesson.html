@@ -4,9 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Урок — Digital College</title>
+<script src="js/theme.js"></script>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/lesson.css">
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
+</script>
+
 <body>
 
 <nav class="nav-top">
@@ -15,6 +21,7 @@
   </div>
   <div class="nav-links">
     <a href="#" id="backLink">← К разделу</a>
+    <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
   </div>
 </nav>
 
@@ -44,6 +51,83 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="js/lesson.js"></script>
+
+
+<script>
+  // Ждём, пока страница загрузится и Markdown отрендерится
+  window.addEventListener('load', function() {
+    // Ищем заголовок "Текст: Пропавший шедевр" (или любой другой)
+    const headings = document.querySelectorAll('h2');
+    let textBlock = null;
+
+    for (let h of headings) {
+      if (h.textContent.includes('Текст:')) {
+        // Берём все элементы после этого заголовка до следующего H2
+        textBlock = h.nextElementSibling;
+        break;
+      }
+    }
+
+    if (!textBlock) {
+      console.warn('TTS: не найден блок с текстом');
+      return;
+    }
+
+    // Собираем текст из абзацев (p) внутри блока
+    let fullText = '';
+    let current = textBlock;
+    while (current && current.tagName !== 'H2') {
+      if (current.tagName === 'P') {
+        fullText += current.innerText + ' ';
+      }
+      current = current.nextElementSibling;
+    }
+
+    // Создаём кнопку
+    const btn = document.createElement('button');
+    btn.textContent = '🔊 Прослушать текст';
+    btn.style.cssText = `
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    `;
+
+    // Вставляем кнопку перед текстом
+    textBlock.parentNode.insertBefore(btn, textBlock);
+
+    // Обработчик клика
+    btn.addEventListener('click', function() {
+      // Останавливаем предыдущее воспроизведение, если было
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(fullText);
+      utterance.lang = 'de-DE'; // Немецкий язык
+      utterance.rate = 0.9;     // Чуть медленнее для учебных целей
+
+      // Ищем немецкий голос (если доступен)
+      const voices = window.speechSynthesis.getVoices();
+      const germanVoice = voices.find(v => v.lang === 'de-DE' || v.lang.startsWith('de'));
+      if (germanVoice) {
+        utterance.voice = germanVoice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+      btn.textContent = '⏹️ Остановить';
+    });
+
+    // Возвращаем кнопку в исходное состояние после окончания
+    window.speechSynthesis.onend = function() {
+      btn.textContent = '🔊 Прослушать текст';
+    };
+  });
+</script>
+
 
 </body>
 </html>
