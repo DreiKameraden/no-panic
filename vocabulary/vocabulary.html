@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexicon</title>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="vocabulary.css">
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Lexicon</h1>
+  <p class="subtitle">«Verba volant, scripta manent — слова улетают, написанное остаётся»</p>
+
+  <div class="toolbar">
+    <label>Активный словарь:</label>
+    <select id="langSelect" onchange="changeLanguage(this.value)">
+      <option value="de">🇩🇪 Немецкий</option>
+      <option value="en">🇬🇧 Английский</option>
+      <option value="it">🇮🇹 Итальянский</option>
+      <option value="fr">🇫🇷 Французский</option>
+      <option value="es">🇪🇸 Испанский</option>
+      <option value="ru">🇷🇺 Русский</option>
+    </select>
+    <div style="flex:1"></div>
+    <button class="btn btn-show" onclick="exportCSV()">📥 CSV</button>
+    <button class="btn btn-show" onclick="exportJSON()">💾 JSON</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="dict">Словарь</button>
+    <button class="tab" data-tab="cards">Карточки</button>
+    <button class="tab" data-tab="games">Игры</button>
+    <button class="tab" data-tab="graph">Граф</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box"><div class="stat-num" id="totalWords">0</div><div class="stat-label">Слов</div></div>
+    <div class="stat-box"><div class="stat-num" id="learnedCount">0</div><div class="stat-label">Выучено</div></div>
+    <div class="stat-box"><div class="stat-num" id="streakCount">0</div><div class="stat-label">🔥 Серия</div></div>
+    <div class="stat-box"><div class="stat-num" id="accuracy">0%</div><div class="stat-label">Точность</div></div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <!-- 1. СЛОВАРЬ -->
+  <div id="dict" class="tab-content">
+    <div class="card">
+      <div class="dict-header">
+        <input type="text" id="searchLib" class="input-field search-box" placeholder="🔍 Поиск по слову или переводу…">
+        <select id="sectionFilter" class="input-field section-filter" onchange="renderLibrary()">
+          <option value="">Все темы</option>
+        </select>
+        <button class="btn btn-speak" onclick="openAddModal()">➕ Добавить слово</button>
+        <button class="btn btn-mode" onclick="openImportModal()">📊 Импорт</button>
+      </div>
+      <div class="word-list" id="wordList"></div>
+    </div>
+  </div>
+
+  <!-- 2. КАРТОЧКИ -->
+  <div id="cards" class="tab-content hidden">
+    <div class="card">
+      <div class="word-display">
+        <div>
+          <span class="badge" id="secBadge"></span>
+          <span class="badge" id="subBadge"></span>
+          <span class="badge" id="lvlBadge"></span>
+        </div>
+        <div class="word" id="wordDisplay"></div>
+        <div class="transcription" id="transcriptionDisplay"></div>
+        <div class="definition" id="defDisplay"></div>
+        <div class="example" id="exampleDisplay"></div>
+        <div class="conjugation" id="conjugationDisplay"></div>
+        <div class="declension" id="declensionDisplay"></div>
+        <div class="translation" id="translationDisplay"></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-speak" onclick="speakCurrent()">🔊 Произнести</button>
+        <button class="btn btn-show" onclick="showTranslation()">Перевод</button>
+        <button class="btn btn-next" onclick="nextCard()">Далее</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ИГРЫ -->
+  <div id="games" class="tab-content hidden">
+    <div class="card">
+      <div class="btn-group" style="margin-bottom:15px;">
+        <button class="btn btn-mode active" data-mode="findTranslation">Найди перевод</button>
+        <button class="btn btn-mode" data-mode="findWord">Найди слово</button>
+        <button class="btn btn-mode" data-mode="typeByTranslation">⌨Напиши слово</button>
+        <button class="btn btn-mode" data-mode="listenType">Услышь и напиши</button>
+        <button class="btn btn-mode" data-mode="listenChoose">Услышь и выбери</button>
+      </div>
+      <div class="word-display">
+        <div class="word" id="gamePrompt" style="font-size:1.8em;"></div>
+        <div class="btn-group" id="gameListenBtn" style="display:none;">
+          <button class="btn btn-speak" onclick="speakGame()">🔊 Повторить</button>
+        </div>
+      </div>
+      <div id="gameOptions"></div>
+      <div id="gameInputArea" class="hidden">
+        <input type="text" id="gameInput" class="input-field" placeholder="Введи ответ..." autocomplete="off">
+        <div class="btn-group"><button class="btn btn-show" onclick="checkGameInput()">✓ Проверить</button></div>
+      </div>
+      <div id="gameFeedback" style="text-align:center;margin-top:15px;font-size:1.2em;min-height:24px;"></div>
+      <div class="btn-group"><button class="btn btn-next" onclick="nextGame()">Следующий вопрос</button></div>
+    </div>
+  </div>
+
+  <!-- 4. ГРАФ -->
+  <div id="graph" class="tab-content hidden">
+    <div class="card">
+      <div class="graph-filters">
+        <b>Показать:</b>
+        <label><input type="checkbox" id="chkSyn" checked onchange="renderGraph()"> синонимы</label>
+        <label><input type="checkbox" id="chkAnt" checked onchange="renderGraph()"> антонимы</label>
+        <label><input type="checkbox" id="chkRel" checked onchange="renderGraph()"> связанные</label>
+        <label><input type="checkbox" id="chkSec" checked onchange="renderGraph()"> темы</label>
+      </div>
+      <div id="graphContainer"></div>
+      <div class="legend"><span class="lg-syn">синонимы</span><span class="lg-ant">антонимы</span><span class="lg-rel">связанные</span><span class="lg-sec">принадлежность к теме</span></div>
+      <div class="graph-info" id="graphInfo">Кликните на слово в графе — здесь появится его карточка.</div>
+    </div>
+  </div>
+</div>
+
+<!-- МОДАЛКА: Добавить / редактировать слово -->
+<div class="modal" id="addModal">
+  <div class="modal-content">
+    <h2 id="addModalTitle">➕ Добавить новое слово</h2>
+    <div class="form-grid">
+      <div><label>Слово *</label><input id="f_word" class="input-field" placeholder="die Reise"></div>
+      <div><label>Перевод *</label><input id="f_tr" class="input-field" placeholder="путешествие"></div>
+
+      <div><label>Тема</label><input id="f_section" class="input-field" placeholder="Путешествия"></div>
+      <div><label>Подтема</label><input id="f_subtheme" class="input-field" placeholder="Транспорт"></div>
+
+      <div><label>Тег (уровень)</label><input id="f_level" class="input-field" placeholder="A1, B2, beginner"></div>
+      <div><label>Транскрипция</label><input id="f_transcription" class="input-field" placeholder="[ˈʁaɪ̯zə]"></div>
+
+      <div class="full"><label>Определение</label><input id="f_def" class="input-field" placeholder="Поездка куда-либо с целью отдыха или по делам"></div>
+
+      <div class="full"><label>Примеры</label><input id="f_ex" class="input-field" placeholder="Unsere Reise war schön."></div>
+
+      <div class="full"><label>Спряжение</label><input id="f_conjugation" class="input-field" placeholder="ich buche, du buchst, er bucht…"></div>
+      <div class="full"><label>Склонение</label><input id="f_declension" class="input-field" placeholder="die Reise, der Reise, die Reise…"></div>
+
+      <div class="full"><label>Синонимы (через запятую)</label><input id="f_syn" class="input-field" placeholder="die Fahrt"></div>
+      <div class="full"><label>Антонимы (через запятую)</label><input id="f_ant" class="input-field"></div>
+      <div class="full"><label>Связанные (через запятую)</label><input id="f_rel" class="input-field" placeholder="der Urlaub, buchen"></div>
+    </div>
+    <div class="hint">💡 Если слово из синонимов/связей уже есть в этом словаре — на графе автоматически появится стрелка.</div>
+    <div class="btn-group">
+      <button class="btn btn-speak" onclick="speakField('f_word')">🔊 Прослушать</button>
+      <button class="btn btn-next" onclick="saveNewWord()">💾 Сохранить</button>
+      <button class="btn btn-mode" onclick="closeAddModal()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- МОДАЛКА: Импорт -->
+<div class="modal" id="importModal">
+  <div class="modal-content">
+    <h2>📊 Импорт из Google Таблиц / CSV</h2>
+    <p class="hint">Выделите диапазон в Google Таблицах (включая заголовки) → Ctrl+C → вставьте сюда ↓.
+      Колонки: word, tr, section, subtheme, level, transcription, def, ex, conjugation, declension, syn, ant, rel.</p>
+    <textarea id="csvPaste" class="input-field" placeholder="word,tr,section,subtheme,level,transcription,def,ex,conjugation,declension,syn,ant,rel&#10;die Reise,путешествие,Путешествия,Транспорт,A1,[ˈʁaɪ̯zə],Поездка куда-либо,Unsere Reise war schön.,,die Reise der Reise,die Fahrt,,der Urlaub"></textarea>
+    <div class="btn-group">
+      <button class="btn btn-next" onclick="importPasted()">📥 Импортировать</button>
+      <button class="btn btn-show" onclick="document.getElementById('csvFile').click()">📂 Загрузить файл</button>
+      <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="importFile(event)">
+      <button class="btn btn-mode" onclick="closeImportModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script src="vocabulary.js"></script>
+</body>
+</html>
