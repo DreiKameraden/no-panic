@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Hub — Немецкий язык</title>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/hub.css">
+</head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
+</script>
+
+<body>
+
+
+<nav class="nav-top">
+  <div class="brand">
+    <span class="brand-dot"></span>
+    <span>Deutsch Hub</span>
+  </div>
+  <div class="nav-links">
+    <a href="../index.html">Главная</a>
+    <a href="#map">Карта</a>          <!-- ← добавить -->
+    <a href="#materials">Материалы</a> <!-- ← добавить -->
+    <a href="../vocabulary/vocabulary.html">Словарь</a> <!-- ← добавить -->
+    <a href="game/menu.html">Игры</a>
+    <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
+  </div>
+</nav>
+
+
+<div class="hub-container">
+  <div class="hub-header">
+    <div class="hub-flag">DE</div>
+    <h1>Deutsch <span class="grad">Hub</span></h1>
+    <p class="section-lead">Lernen ist wie Rudern gegen den Strom. Sobald man aufhört, treibt man zurück." — Benjamin Britten </p>
+  </div>
+
+
+  <!-- === НОВОЕ: КАРТА КУРСА === -->
+  <section id="map" class="hub-section">
+    <h2>Карта курса</h2>
+    <div class="map-snake" id="courseMap">
+    </div>
+  </section>
+
+
+  <!-- MATERIALS SECTION (теперь это пары материал+тест) -->
+  <section id="materials" class="hub-section">
+    <h2>Учебные материалы</h2>
+    <div class="hub-search">
+      <input type="search" id="searchInput" placeholder="Поиск по материалам и тестам..." autocomplete="off">
+    </div>
+    <div class="pairs-list" id="materialsList">
+      <div class="loading">Загрузка...</div>
+    </div>
+  </section>
+</div>
+
+
+
+<script src="../js/hub.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initHub('deutsch');
+  });
+</script>
+
+</body>
+</html>
