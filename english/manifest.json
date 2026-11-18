@@ -1,6 +1,42 @@
 {
   "items": [
     {
+      "id": "theme-b1-1",
+      "level": "B1",
+      "unit": 1,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/b1_1.md",
+        "title": "Lesson 1. New email",
+        "description": "",
+        "type": ""
+      },
+      "test": {
+        "file": "tests/grammar/passive.json",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 40,
+        "time": 30
+      },
+      "groups": ["B1-B2"],
+      "branches": [
+        {
+          "title": "Passive",
+          "file": "materials/grammar/passive.md",
+          "icon": ""
+        },
+        {
+          "title": "",
+          "file": "",
+          "icon": ""
+        }
+      ]
+    },
+
+    {
       "id": "9.1",
       "material": {
         "file": "materials/09/01.md",

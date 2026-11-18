@@ -1,0 +1,446 @@
+{
+  "name": "Grammar: Passive Voice (All Tenses)",
+  "subtitle": "Полный тест по пассивному залогу: от Present Simple до Mixed Transformations",
+  "timeLimit": 1200,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "Блок 1: Present & Past Simple. The curriculum ___ by the AI every year.",
+      "opts": [
+        "is updated",
+        "was updated",
+        "has been updated",
+        "will be updated"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Paper books ___ in the academy last century.",
+      "opts": [
+        "are banned",
+        "were banned",
+        "have been banned",
+        "had been banned"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "How many languages ___ at your school?",
+      "opts": [
+        "is taught",
+        "was taught",
+        "are taught",
+        "were taught"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The decision ___ yesterday without any discussion.",
+      "opts": [
+        "is made",
+        "are made",
+        "has been made",
+        "was made"
+      ],
+      "c": 3
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Knowledge ___ directly into the neural layer while we sleep.",
+      "opts": [
+        "is uploaded",
+        "was uploaded",
+        "has been uploaded",
+        "will be uploaded"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The archive of 20th-century schools ___ by someone last night.",
+      "opts": [
+        "is deleted",
+        "was deleted",
+        "has been deleted",
+        "will be deleted"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "These modules ___ automatically while students sleep.",
+      "opts": [
+        "is installed",
+        "was installed",
+        "are installed",
+        "were installed"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The rules ___ to us clearly by the new mentor.",
+      "opts": [
+        "aren't explained",
+        "wasn't explained",
+        "haven't been explained",
+        "weren't explained"
+      ],
+      "c": 3
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Блок 2: Present & Past Continuous. Right now, the main server ___ by hackers.",
+      "opts": [
+        "is being attacked",
+        "was being attacked",
+        "has been attacked",
+        "will be attacked"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "At 9 PM yesterday, the confidential data ___.",
+      "opts": [
+        "is being transferred",
+        "was being transferred",
+        "has been transferred",
+        "will be transferred"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Why ___ the system ___ right now?",
+      "opts": [
+        "is / updated",
+        "was / being updated",
+        "is / being updated",
+        "has / been updated"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "We couldn't enter the lab because the floor ___.",
+      "opts": [
+        "is being cleaned",
+        "was being cleaned",
+        "has been cleaned",
+        "had been cleaned"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "New algorithms ___ at the moment to improve efficiency.",
+      "opts": [
+        "are being developed",
+        "were being developed",
+        "have been developed",
+        "will be developed"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The mentor ___ to Kai when the power suddenly went out.",
+      "opts": [
+        "is being assigned",
+        "was being assigned",
+        "has been assigned",
+        "will be assigned"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Look! The old files ___ right now to free up space.",
+      "opts": [
+        "are being erased",
+        "were being erased",
+        "have been erased",
+        "will be erased"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Kai's question ___ as 'unproductive' at that exact moment.",
+      "opts": [
+        "is being logged",
+        "was being logged",
+        "has been logged",
+        "will be logged"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Блок 3: Present & Past Perfect. The problem ___ already, so don't worry.",
+      "opts": [
+        "has been solved",
+        "had been solved",
+        "is being solved",
+        "was solved"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "By the time we arrived at the academy, the truth ___.",
+      "opts": [
+        "has been revealed",
+        "had been revealed",
+        "was revealed",
+        "is revealed"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "___ the final report ___ yet?",
+      "opts": [
+        "Has / been written",
+        "Had / been written",
+        "Is / being written",
+        "Was / written"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The files ___ before the system crashed, so we are safe.",
+      "opts": [
+        "have been saved",
+        "had been saved",
+        "were being saved",
+        "are saved"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "A new method of language learning ___ recently by scientists.",
+      "opts": [
+        "has been discovered",
+        "had been discovered",
+        "was being discovered",
+        "is discovered"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The exam ___ by an algorithm before the teacher even saw it.",
+      "opts": [
+        "has been graded",
+        "had been graded",
+        "was being graded",
+        "is graded"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "How many tests ___ so far this month?",
+      "opts": [
+        "was taken",
+        "were taken",
+        "have been taken",
+        "had been taken"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The mistake ___ before anyone noticed it.",
+      "opts": [
+        "has been corrected",
+        "had been corrected",
+        "was being corrected",
+        "is corrected"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Блок 4: Future & Modals. The final results ___ tomorrow morning.",
+      "opts": [
+        "will announce",
+        "will be announced",
+        "are announced",
+        "have been announced"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "This safety rule ___ by everyone in the laboratory.",
+      "opts": [
+        "must follow",
+        "must be followed",
+        "must have been followed",
+        "must be following"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The project ___ by next Friday, I promise.",
+      "opts": [
+        "will finish",
+        "will be finishing",
+        "will have been finished",
+        "is finished"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Homework ___ by an app, not by a human teacher.",
+      "opts": [
+        "should check",
+        "should be checked",
+        "should have checked",
+        "should be checking"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "A personal mentor ___ to you soon.",
+      "opts": [
+        "will assign",
+        "will be assigned",
+        "is assigned",
+        "has been assigned"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Private data ___ without the user's explicit permission.",
+      "opts": [
+        "cannot share",
+        "cannot be shared",
+        "cannot have been shared",
+        "cannot be sharing"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "It is expected that the new education system ___ next year.",
+      "opts": [
+        "will implement",
+        "will be implemented",
+        "is implementing",
+        "has been implemented"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "The archive ___ yesterday, but the IT department forgot.",
+      "opts": [
+        "was supposed to delete",
+        "was supposed to be deleted",
+        "is supposed to be deleted",
+        "has been supposed to be deleted"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Блок 5: Transformations (Active → Passive). Active: 'They build new schools every year.' Passive: 'New schools ___ every year.'",
+      "opts": [
+        "are built",
+        "were built",
+        "have been built",
+        "are building"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'Someone stole my laptop.' Passive: 'My laptop ___.",
+      "opts": [
+        "is stolen",
+        "was stolen",
+        "has been stealing",
+        "had stolen"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'They are translating the book now.' Passive: 'The book ___ now.'",
+      "opts": [
+        "is translated",
+        "was being translated",
+        "is being translated",
+        "has been translated"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'The company has launched a new product.' Passive: 'A new product ___.",
+      "opts": [
+        "is launched",
+        "was launched",
+        "has been launched",
+        "had been launched"
+      ],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'They will send the package tomorrow.' Passive: 'The package ___ tomorrow.'",
+      "opts": [
+        "will send",
+        "will be sent",
+        "is sent",
+        "has been sent"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'You must wear a uniform.' Passive: 'A uniform ___.",
+      "opts": [
+        "must wear",
+        "must be worn",
+        "must have been worn",
+        "must be wearing"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'They gave Kai a mentor.' Passive: 'Kai ___ a mentor.'",
+      "opts": [
+        "is given",
+        "was given",
+        "has been given",
+        "had been given"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Active: 'People believe that AI is dangerous.' Passive: 'It ___ that AI is dangerous.'",
+      "opts": [
+        "is believing",
+        "was believed",
+        "is believed",
+        "has been believed"
+      ],
+      "c": 2
+    }
+]}

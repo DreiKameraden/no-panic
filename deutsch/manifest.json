@@ -1,8 +1,8 @@
 {
   "items": [
     {
-      "id": "theme-a1-1",
-      "level": "A1",
+      "id": "theme-b1-1",
+      "level": "B1",
       "unit": 1,
       "canDo": "Представиться, спросить «Как дела?», назвать страну и профессию.",
       "grammar": "sein, haben, W-вопросы, порядок слов",
@@ -81,20 +81,13 @@
         "type": ""
       },
       "test": {
-        "file": "tests/themes/a1-2-family.json",
-        "title": "Тест: Семья",
-        "description": "Проверка лексики",
-        "questions": 10,
-        "time": 10
+        "file": "",
+        "title": "",
+        "description": "",
+        "questions": 0,
+        "time": 0
       },
-      "groups": ["MK"],
-      "branches": [
-        {
-          "title": "Спряжение глаголов",
-          "file": "materials/grammar/verben.md",
-          "icon": ""
-        }
-      ]
+      "groups": ["MK"]
     }
 
   ],

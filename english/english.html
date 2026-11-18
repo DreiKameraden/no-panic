@@ -21,7 +21,10 @@
     <span>Education is the most powerful weapon which you can use to change the world</span>
   </div>
   <div class="nav-links">
-    <a href="../index.html">Главная</a>
+      <a href="../index.html">Главная</a>
+      <a href="#map">Карта</a>          <!-- ← добавить -->
+      <a href="#materials">Материалы</a> <!-- ← добавить -->
+      <a href="../vocabulary/vocabulary.html">Словарь</a> <!-- ← добавить -->
     <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
   </div>
 </nav>
@@ -34,8 +37,15 @@
   </div>
 
 
+  <!-- === НОВОЕ: КАРТА КУРСА === -->
+  <section id="map" class="hub-section">
+    <h2>Карта курса</h2>
+    <div class="map-snake" id="courseMap">
+    </div>
+  </section>
+
   <!-- MATERIALS SECTION (теперь это пары материал+тест) -->
-  <section class="hub-section">
+  <section id="materials" class="hub-section">
     <h2>Учебные материалы</h2>
     <div class="hub-search">
       <input type="search" id="searchInput" placeholder="Поиск по материалам и тестам..." autocomplete="off">
@@ -61,8 +71,9 @@
 
 <script src="../js/hub.js"></script>
 <script>
-  // Инициализация хаба для английского
-  initHub('english');
+  document.addEventListener('DOMContentLoaded', () => {
+    initHub('english');
+  });
 </script>
 
 </body>
