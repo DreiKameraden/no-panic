@@ -131,6 +131,7 @@
   gap: 10px;
 }
 .word-item:hover { background: var(--btn-bg); border-color: var(--accent-border); }
+.word-item.core { border-left: 3px solid var(--accent); }
 .word-main { font-weight: 700; font-size: 1.05em; color: var(--heading); }
 .word-tr { opacity: .75; margin-left: 8px; }
 .word-meta { font-size: .8em; opacity: .55; margin-left: 8px; }
@@ -159,7 +160,7 @@
 .mini-btn.del { border-color: rgba(239,68,68,.3); }
 .mini-btn.del:hover { background: rgba(239,68,68,.15); border-color: var(--danger); }
 
-/* ---------- Бейджи (карточка / граф) ---------- */
+/* ---------- Бейджи ---------- */
 .badge {
   display: inline-block;
   padding: 4px 12px;
@@ -198,7 +199,6 @@
   font-style: italic;
 }
 
-/* Новые поля карточки */
 .transcription { font-size: .95em; opacity: .7; margin-top: 6px; font-family: monospace; color: var(--accent-2); }
 .conjugation, .declension { font-size: .9em; opacity: .8; margin-top: 6px; color: var(--accent-3); }
 
@@ -224,9 +224,7 @@
 
 .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
 
-/* ---------- Игры: варианты ответа ---------- */
-/* .opt есть в base.css, но в HTML игры генерируются JS с классом .quiz-option.
-   Поэтому дублируем стиль под .quiz-option, чтобы работало как есть. */
+/* ---------- Игры ---------- */
 .quiz-option {
   display: block;
   width: 100%;
@@ -254,7 +252,7 @@
   color: #fca5a5;
 }
 
-/* ---------- Форма (модалка) ---------- */
+/* ---------- Форма ---------- */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .form-grid label { font-size: .8em; opacity: .7; display: block; margin-bottom: 2px; }
 .full { grid-column: 1 / -1; }
@@ -294,8 +292,6 @@
 }
 .graph-info h3 { color: var(--accent); margin-bottom: 6px; }
 
-/* Чипы графа — используем .badge-совместимые имена .tag из script.js */
-/* В script.js showGraphCard использует class="tag syn" и т.п. */
 .tag {
   display: inline-block;
   padding: 3px 10px;
@@ -305,6 +301,8 @@
 }
 .tag.syn { background: rgba(52,211,153,.2); color: var(--accent-4); }
 .tag.ant { background: rgba(239,68,68,.2); color: var(--danger); }
+.tag.hypo { background: rgba(245,158,11,.2); color: #f59e0b; }
+.tag.deriv { background: rgba(167,139,250,.2); color: #a78bfa; }
 .tag.rel { background: rgba(96,165,250,.2); color: var(--accent-2); }
 .tag.phr { background: var(--accent-soft); color: var(--accent); }
 
@@ -312,12 +310,12 @@
 .legend span::before { content: '—'; margin-right: 4px; }
 .lg-syn::before { color: var(--accent-4); }
 .lg-ant::before { color: var(--danger); }
+.lg-hypo::before { color: #f59e0b; }
+.lg-deriv::before { color: #a78bfa; }
 .lg-rel::before { color: var(--accent-2); }
 .lg-sec::before { color: var(--accent); }
 
-/* ---------- Модалки (если base.css не подключён) ----------
-   В base.css .modal и .modal-content уже есть.
-   Здесь только подстраховка на случай отсутствия base.css. */
+/* ---------- Модалки (подстраховка) ---------- */
 .modal {
   display: none;
   position: fixed; inset: 0;

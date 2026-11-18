@@ -62,11 +62,7 @@
   <div id="cards" class="tab-content hidden">
     <div class="card">
       <div class="word-display">
-        <div>
-          <span class="badge" id="secBadge"></span>
-          <span class="badge" id="subBadge"></span>
-          <span class="badge" id="lvlBadge"></span>
-        </div>
+        <div id="cardBadges"></div>
         <div class="word" id="wordDisplay"></div>
         <div class="transcription" id="transcriptionDisplay"></div>
         <div class="definition" id="defDisplay"></div>
@@ -116,11 +112,27 @@
         <b>Показать:</b>
         <label><input type="checkbox" id="chkSyn" checked onchange="renderGraph()"> синонимы</label>
         <label><input type="checkbox" id="chkAnt" checked onchange="renderGraph()"> антонимы</label>
+        <label><input type="checkbox" id="chkHypo" checked onchange="renderGraph()"> род–вид</label>
+        <label><input type="checkbox" id="chkDeriv" checked onchange="renderGraph()"> словообразование</label>
         <label><input type="checkbox" id="chkRel" checked onchange="renderGraph()"> связанные</label>
         <label><input type="checkbox" id="chkSec" checked onchange="renderGraph()"> темы</label>
+
+        <select id="fieldSectionSelect" class="input-field" onchange="renderFieldGraph()" style="max-width:200px">
+          <option value="">🎯 Все темы</option>
+        </select>
+
+        <button class="btn btn-mode" onclick="renderFieldGraph()">🎯 Тематическое поле</button>
+        <button class="btn btn-mode" onclick="renderGraph()">🕸 Обычный граф</button>
       </div>
       <div id="graphContainer"></div>
-      <div class="legend"><span class="lg-syn">синонимы</span><span class="lg-ant">антонимы</span><span class="lg-rel">связанные</span><span class="lg-sec">принадлежность к теме</span></div>
+      <div class="legend">
+        <span class="lg-syn">синонимы</span>
+        <span class="lg-ant">антонимы</span>
+        <span class="lg-hypo">род–вид</span>
+        <span class="lg-deriv">словообразование</span>
+        <span class="lg-rel">связанные</span>
+        <span class="lg-sec">принадлежность к теме</span>
+      </div>
       <div class="graph-info" id="graphInfo">Кликните на слово в графе — здесь появится его карточка.</div>
     </div>
   </div>
@@ -134,12 +146,18 @@
       <div><label>Слово *</label><input id="f_word" class="input-field" placeholder="die Reise"></div>
       <div><label>Перевод *</label><input id="f_tr" class="input-field" placeholder="путешествие"></div>
 
-      <div><label>Тема</label><input id="f_section" class="input-field" placeholder="Путешествия"></div>
+      <div><label>Темы (через запятую)</label><input id="f_sections" class="input-field" placeholder="Путешествия, Работа"></div>
       <div><label>Подтема</label><input id="f_subtheme" class="input-field" placeholder="Транспорт"></div>
 
+      <div><label>Роль в теме</label>
+        <select id="f_role" class="input-field">
+          <option value="core">⭐ Ядро</option>
+          <option value="periphery" selected>🔹 Периферия</option>
+        </select>
+      </div>
       <div><label>Тег (уровень)</label><input id="f_level" class="input-field" placeholder="A1, B2, beginner"></div>
-      <div><label>Транскрипция</label><input id="f_transcription" class="input-field" placeholder="[ˈʁaɪ̯zə]"></div>
 
+      <div><label>Транскрипция</label><input id="f_transcription" class="input-field" placeholder="[ˈʁaɪ̯zə]"></div>
       <div class="full"><label>Определение</label><input id="f_def" class="input-field" placeholder="Поездка куда-либо с целью отдыха или по делам"></div>
 
       <div class="full"><label>Примеры</label><input id="f_ex" class="input-field" placeholder="Unsere Reise war schön."></div>
@@ -149,9 +167,11 @@
 
       <div class="full"><label>Синонимы (через запятую)</label><input id="f_syn" class="input-field" placeholder="die Fahrt"></div>
       <div class="full"><label>Антонимы (через запятую)</label><input id="f_ant" class="input-field"></div>
+      <div class="full"><label>Род–вид (общее → это слово)</label><input id="f_hypo" class="input-field" placeholder="das Verkehrsmittel"></div>
+      <div class="full"><label>Словообразование (однокоренные)</label><input id="f_deriv" class="input-field" placeholder="reisen, der Reisende"></div>
       <div class="full"><label>Связанные (через запятую)</label><input id="f_rel" class="input-field" placeholder="der Urlaub, buchen"></div>
     </div>
-    <div class="hint">💡 Если слово из синонимов/связей уже есть в этом словаре — на графе автоматически появится стрелка.</div>
+    <div class="hint">💡 Темы можно перечислять через запятую. Если слово есть в другой теме, оно появится в обеих.</div>
     <div class="btn-group">
       <button class="btn btn-speak" onclick="speakField('f_word')">🔊 Прослушать</button>
       <button class="btn btn-next" onclick="saveNewWord()">💾 Сохранить</button>
@@ -165,8 +185,8 @@
   <div class="modal-content">
     <h2>📊 Импорт из Google Таблиц / CSV</h2>
     <p class="hint">Выделите диапазон в Google Таблицах (включая заголовки) → Ctrl+C → вставьте сюда ↓.
-      Колонки: word, tr, section, subtheme, level, transcription, def, ex, conjugation, declension, syn, ant, rel.</p>
-    <textarea id="csvPaste" class="input-field" placeholder="word,tr,section,subtheme,level,transcription,def,ex,conjugation,declension,syn,ant,rel&#10;die Reise,путешествие,Путешествия,Транспорт,A1,[ˈʁaɪ̯zə],Поездка куда-либо,Unsere Reise war schön.,,die Reise der Reise,die Fahrt,,der Urlaub"></textarea>
+      Колонки: word, tr, sections (через |), subtheme, role, level, transcription, def, ex, conjugation, declension, syn, ant, hypo, deriv, rel.</p>
+    <textarea id="csvPaste" class="input-field" placeholder="word,tr,sections,subtheme,role,level,transcription,def,ex,conjugation,declension,syn,ant,hypo,deriv,rel&#10;die Reise,путешествие,Путешествия|Отдых,Транспорт,core,A1,[ˈʁaɪ̯zə],Поездка куда-либо,Unsere Reise war schön.,,,die Fahrt,,,reisen,der Urlaub"></textarea>
     <div class="btn-group">
       <button class="btn btn-next" onclick="importPasted()">📥 Импортировать</button>
       <button class="btn btn-show" onclick="document.getElementById('csvFile').click()">📂 Загрузить файл</button>
@@ -176,6 +196,7 @@
   </div>
 </div>
 
+<script src="demo-data.js"></script>
 <script src="vocabulary.js"></script>
 </body>
 </html>
