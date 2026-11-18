@@ -291,12 +291,14 @@ function renderMap(manifest) {
     const leftLineClass = isFirst ? 'line-hidden' : `line-color-${level.toLowerCase()}`;
     const rightLineClass = isLast ? 'line-hidden' : (nextLevel === level ? `line-color-${level.toLowerCase()}` : `line-color-${level.toLowerCase()}-to-${nextLevel.toLowerCase()}`);
 
+    // ✅ ИСПРАВЛЕНО: используем currentSection вместо 'deutsch'
     const href = item.material?.file 
-      ? `../lesson.html?file=deutsch/${item.material.file}&section=deutsch&back=deutsch/deutsch.html` 
+      ? `../lesson.html?file=${currentSection}/${item.material.file}&section=${currentSection}&back=${currentSection}/${currentSection}.html` 
       : '#';
 
+    // ✅ ИСПРАВЛЕНО: используем currentSection вместо 'deutsch'
     const branchesHtml = (item.branches || []).map(b => {
-      const branchHref = `../lesson.html?file=deutsch/${b.file}&section=deutsch`;
+      const branchHref = `../lesson.html?file=${currentSection}/${b.file}&section=${currentSection}`;
       return `
         <div class="branch-node">
           <div class="branch-line"></div>
@@ -305,7 +307,6 @@ function renderMap(manifest) {
       `;
     }).join('');
 
-    // Формируем HTML для тултипа
     const tooltipContent = `
       <div class="tooltip-title">${level}.${item.unit || '?'} — ${item.material?.title || ''}</div>
       ${item.canDo ? `<div class="tooltip-section"><h4>🎯 Can-Do</h4><p>${item.canDo}</p></div>` : ''}
@@ -314,7 +315,6 @@ function renderMap(manifest) {
       ${item.product ? `<div class="tooltip-section"><h4>🏆 Продукт</h4><p>${item.product}</p></div>` : ''}
     `;
 
-    // Экранируем кавычки для атрибута data-tooltip-html
     const encodedTooltip = encodeURIComponent(tooltipContent);
 
     html += `
@@ -336,10 +336,12 @@ function renderMap(manifest) {
       <div class="tooltip-title">Итоговый контроль</div>
       <div class="tooltip-section"><h4>📝 Формат</h4><p>${manifest.finalTest.questions} вопросов · ${manifest.finalTest.time} мин</p></div>
     `;
+    
+    // ✅ ИСПРАВЛЕНО: используем currentSection вместо 'deutsch'
     html += `
       <div class="timeline-node timeline-checkpoint" style="--node-color: #94a3b8">
         <div class="timeline-line-left line-color-checkpoint"></div>
-        <a href="../quiz.html?test=deutsch/${manifest.finalTest.file}" class="timeline-dot" data-tooltip-html="${encodeURIComponent(cpTooltip)}" title="Итоговый тест"></a>
+        <a href="../quiz.html?test=${currentSection}/${manifest.finalTest.file}" class="timeline-dot" data-tooltip-html="${encodeURIComponent(cpTooltip)}" title="Итоговый тест"></a>
         <div class="timeline-label">🏁 Финал</div>
       </div>
     `;
@@ -348,7 +350,6 @@ function renderMap(manifest) {
   html += '</div>';
   container.innerHTML = html;
 
-  // Инициализируем обработчики для всплывающих окон
   initMapTooltips();
 }
 
@@ -412,7 +413,9 @@ function positionTooltip(target) {
 
 function renderMapNode(item, level, color) {
   const mat = item.material || {};
-  const href = mat.file ? `../lesson.html?file=deutsch/${mat.file}&section=deutsch&back=deutsch/deutsch.html` : '#';
+  
+  // ✅ ИСПРАВЛЕНО: используем currentSection вместо 'deutsch'
+  const href = mat.file ? `../lesson.html?file=${currentSection}/${mat.file}&section=${currentSection}&back=${currentSection}/${currentSection}.html` : '#';
 
   const canDo = item.canDo ? `<div class="tooltip-section"><h4>🎯 Can-Do</h4><p>${item.canDo}</p></div>` : '';
   const grammar = item.grammar ? `<div class="tooltip-section"><h4>🧩 Грамматика</h4><p>${item.grammar}</p></div>` : '';
