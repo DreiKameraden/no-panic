@@ -1,0 +1,110 @@
+{
+  "items": [
+    {
+      "id": "theme-a1-1",
+      "level": "A1",
+      "unit": 1,
+      "canDo": "Представиться, спросить «Как дела?», назвать страну и профессию.",
+      "grammar": "sein, haben, W-вопросы, порядок слов",
+      "vocabulary": "Приветствия, страны, профессии, числа 1–20",
+      "product": "Аудио 30 сек. «О себе»",
+      "material": {
+        "file": "materials/themes/a1-1-museum.md",
+        "title": "Знакомство",
+        "description": "Представиться, назвать профессию",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "materials/themes/a1-1.json",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1", "Темы"],
+      "branches": [
+        {
+          "title": "Видео: Freunde 1/1",
+          "file": "materials/Freunde/1.1.md",
+          "icon": "🎬"
+        },
+        {
+          "title": "Грамматика: sein/haben",
+          "file": "materials/grammar/sein_haben.md",
+          "icon": "📘"
+        }
+      ]
+    },
+    {
+      "id": "theme-a1-2",
+      "level": "A1",
+      "unit": 2,
+      "canDo": "Рассказать о семье, возрасте, хобби.",
+      "grammar": "Притяжательные местоимения, Akkusativ (введение)",
+      "vocabulary": "Семья, хобби, числа до 100",
+      "product": "Дерево семьи + описание",
+      "material": {
+        "file": "materials/themes/a1-2-family.md",
+        "title": "Я и другие",
+        "description": "Семья, возраст, хобби",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests/themes/a1-2-family.json",
+        "title": "Тест: Семья",
+        "description": "Проверка лексики",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["A1", "Темы"],
+      "branches": [
+        {
+          "title": "Спряжение глаголов",
+          "file": "materials/grammar/verben.md",
+          "icon": ""
+        }
+      ]
+    },
+    {
+      "id": "mk-1",
+      "level": "B2",
+      "unit": 1,
+      "hidden": true,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/mk/1.md",
+        "title": "MK",
+        "description": "",
+        "type": ""
+      },
+      "test": {
+        "file": "tests/themes/a1-2-family.json",
+        "title": "Тест: Семья",
+        "description": "Проверка лексики",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["MK"],
+      "branches": [
+        {
+          "title": "Спряжение глаголов",
+          "file": "materials/grammar/verben.md",
+          "icon": ""
+        }
+      ]
+    }
+
+  ],
+
+  "finalTest": {
+    "file": "tests/test-final.json",
+    "title": "⭐ Final Assessment",
+    "description": "Итоговый тест по всем материалам курса",
+    "questions": 20,
+    "time": 20,
+    "groups": ["A1", "Итоговый"]
+  }
+}
