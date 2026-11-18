@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грамматика: Future Tenses</title>
+<script src="../../../js/theme.js"></script>
+<link rel="stylesheet" href="../../../css/base.css">
+<link rel="stylesheet" href="../../../css/hub.css">
+<link rel="stylesheet" href="../../../css/lesson.css">
+<style>
+    :root {
+        --accent: #fbbf24;
+        --accent-2: #f59e0b;
+        --accent-3: #d97706;
+        --border: rgba(255,255,255,0.1);
+        --muted: #9ca3af;
+        --danger: #ef4444;
+    }
+    
+    .slide-nav { display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+    .slide-btn { padding: 8px 16px; background: rgba(255,255,255,0.1); border: none; color: white; cursor: pointer; border-radius: 6px; transition: all 0.3s; }
+    .slide-btn:hover { background: rgba(255,255,255,0.2); }
+    .slide-btn.active { background: var(--accent); color: black; font-weight: bold; }
+    .slide-content { display: none; animation: fadeIn 0.5s; }
+    .slide-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
+</script>
+
+<body>
+
+<nav class="nav-top">
+  <div class="brand"><span class="brand-dot"></span><span>English Hub</span></div>
+  <div class="nav-links"><a href="../index.html">Главная</a></div>
+  <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
+</nav>
+
+<div class="lesson-container">
+  
+  <div class="lesson-header">
+    <a href="#" class="back-link">← Назад к материалам</a>
+    <h1 id="lessonTitle">Будущие времена: Future Tenses</h1>
+    <div class="lesson-meta" id="lessonMeta">
+      <span class="meta-tag">⏱️ 10 мин</span>
+      <span class="meta-tag">📂 Грамматика</span>
+    </div>
+    <p class="lead" style="color: var(--muted)">Разбираем отличия Simple, Continuous и Perfect в будущем</p>
+  </div>
+
+  <div class="lesson-content" id="lessonContent">
+    
+    <div class="slide-nav">
+      <button class="slide-btn active" onclick="showSlide(1)">1. Future Simple</button>
+      <button class="slide-btn" onclick="showSlide(2)">2. Future Continuous</button>
+      <button class="slide-btn" onclick="showSlide(3)">3. Future Perfect</button>
+    </div>
+
+    <!-- СЛАЙД 1: FUTURE SIMPLE -->
+    <div id="slide-1" class="slide-content active">
+      <h2>1. Future Simple (Простое будущее)</h2>
+      <p>Используется для <strong>спонтанных решений</strong>, предсказаний, обещаний и фактов о будущем.</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> tomorrow, next week, soon, in the future, later, in 2030.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Формула</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>Подлежащее + <strong>will</strong> + V1</td>
+            <td>I <strong>will call</strong> you tomorrow.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td>Подлежащее + <strong>won't</strong> + V1</td>
+            <td>She <strong>won't come</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Will</strong> + подлежащее + V1?</td>
+            <td><strong>Will</strong> you <strong>help</strong> me?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>⚡ Will vs Be Going To</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Конструкция</th>
+            <th>Когда используем</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Will</strong></td>
+            <td>Спонтанные решения, предсказания, обещания</td>
+            <td>I think it <strong>will rain</strong>. (предсказание)<br>I <strong>will help</strong> you. (обещание)</td>
+          </tr>
+          <tr>
+            <td><strong>Be Going To</strong></td>
+            <td>Планы, намерения, очевидные предсказания</td>
+            <td>I <strong>am going to visit</strong> Paris next year. (план)<br>Look at those clouds! It <strong>is going to rain</strong>. (очевидно)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⚠️ Важно: Глагол To Be</h4>
+      <p>С глаголом <code>to be</code> используем <strong>will be</strong>:</p>
+      <ul>
+        <li>I <strong>will be</strong> at home tomorrow.</li>
+        <li>She <strong>will be</strong> 25 next month.</li>
+        <li><strong>Will</strong> you <strong>be</strong> free on Friday?</li>
+      </ul>
+    </div>
+
+    <!-- СЛАЙД 2: FUTURE CONTINUOUS -->
+    <div id="slide-2" class="slide-content">
+      <h2>2. Future Continuous (Будущее длительное)</h2>
+      <p>Используется для действий, которые <strong>будут находиться в процессе в определённый момент будущего</strong>.</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> at this time tomorrow, at 5 PM tomorrow, all day tomorrow, this time next week.
+      </blockquote>
+
+      <h3>Схема построения</h3>
+      <p>Формула: <code>will be + V-ing</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Формула</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>will <strong>be</strong> + V-ing</td>
+            <td>I <strong>will be working</strong> at 9 AM tomorrow.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td>won't <strong>be</strong> + V-ing</td>
+            <td>She <strong>won't be sleeping</strong> at that time.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Will</strong> ... <strong>be</strong> + V-ing?</td>
+            <td><strong>Will</strong> you <strong>be using</strong> the car tomorrow?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Типичные ситуации</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Ситуация</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Действие в процессе</strong> в конкретный момент будущего</td>
+            <td>At 8 PM tonight, I <strong>will be watching</strong> a movie.</td>
+          </tr>
+          <tr>
+            <td><strong>Два действия одновременно</strong> в будущем</td>
+            <td>While you <strong>are studying</strong>, I <strong>will be cooking</strong> dinner.</td>
+          </tr>
+          <tr>
+            <td><strong>Вежливые вопросы</strong> о планах</td>
+            <td><strong>Will</strong> you <strong>be using</strong> the conference room tomorrow?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⏰ Сравнение с Future Simple</h4>
+      <ul>
+        <li><strong>Future Simple:</strong> I <strong>will read</strong> a book tomorrow. (Факт: я прочитаю книгу)</li>
+        <li><strong>Future Continuous:</strong> I <strong>will be reading</strong> a book at 7 PM tomorrow. (Процесс: в 7 вечера я буду в процессе чтения)</li>
+      </ul>
+    </div>
+
+    <!-- СЛАЙД 3: FUTURE PERFECT -->
+    <div id="slide-3" class="slide-content">
+      <h2>3. Future Perfect (Будущее совершенное)</h2>
+      <p>Используется для действия, которое <strong>завершится к определённому моменту в будущем</strong>. Нам важен результат.</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> by tomorrow, by the time, by 5 PM, before, by next week, in two hours.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <p>Формула: <code>will have + V3 (Past Participle)</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Формула</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>will <strong>have</strong> + V3</td>
+            <td>I <strong>will have finished</strong> by 6 PM.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td>won't <strong>have</strong> + V3</td>
+            <td>She <strong>won't have arrived</strong> by then.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Will</strong> ... <strong>have</strong> + V3?</td>
+            <td><strong>Will</strong> you <strong>have eaten</strong> before I come?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Когда используем Future Perfect?</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Ситуация</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Действие завершится до определённого момента</strong></td>
+            <td>I <strong>will have finished</strong> the report by Friday.<br><em>(К пятнице отчёт будет готов)</em></td>
+          </tr>
+          <tr>
+            <td><strong>Действие завершится до другого действия в будущем</strong></td>
+            <td>By the time you arrive, I <strong>will have cooked</strong> dinner.</td>
+          </tr>
+          <tr>
+            <td><strong>Опыт/результат к моменту в будущем</strong></td>
+            <td>By 2030, she <strong>will have graduated</strong> from university.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⏰ Временная шкала</h4>
+      <p>Представьте линию времени:</p>
+      <ol>
+        <li><strong>Present</strong> (сейчас) → <em>now</em></li>
+        <li><strong>Future Perfect</strong> (действие завершится) → <em>I will have finished</em></li>
+        <li><strong>Future moment</strong> (определённый момент в будущем) → <em>by 5 PM tomorrow</em></li>
+      </ol>
+      <p><em>Пример:</em> By the time you read this, I <strong>will have left</strong>.</p>
+
+      <h4>⚡ Future Perfect vs Future Simple</h4>
+      <ul>
+        <li><strong>Future Simple:</strong> I <strong>will finish</strong> the work tomorrow. (Факт: я закончу работу завтра)</li>
+        <li><strong>Future Perfect:</strong> I <strong>will have finished</strong> the work by 5 PM tomorrow. (Результат: к 5 вечера работа будет готова)</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="lesson-footer">
+    <p>Проверьте свои знания:</p>
+    <a href="../../../quiz.html?test=english/tests/grammar/future.json" class="btn btn-secondary" style="background: var(--accent); color: #000; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+      Пройти тест по теме →
+    </a>
+  </div>
+</div>
+
+<script>
+  function showSlide(n) {
+    document.querySelectorAll('.slide-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.slide-btn').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById('slide-' + n).classList.add('active');
+    document.querySelectorAll('.slide-btn')[n-1].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

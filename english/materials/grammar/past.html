@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грамматика: Past Tenses</title>
+<script src="../../../js/theme.js"></script>
+<link rel="stylesheet" href="../../../css/base.css">
+<link rel="stylesheet" href="../../../css/hub.css">
+<link rel="stylesheet" href="../../../css/lesson.css">
+<style>
+    :root {
+        --accent: #fbbf24;
+        --accent-2: #f59e0b;
+        --accent-3: #d97706;
+        --border: rgba(255,255,255,0.1);
+        --muted: #9ca3af;
+        --danger: #ef4444;
+    }
+    
+    .slide-nav { display: flex; justify-content: center; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+    .slide-btn { padding: 8px 16px; background: rgba(255,255,255,0.1); border: none; color: white; cursor: pointer; border-radius: 6px; transition: all 0.3s; }
+    .slide-btn:hover { background: rgba(255,255,255,0.2); }
+    .slide-btn.active { background: var(--accent); color: black; font-weight: bold; }
+    .slide-content { display: none; animation: fadeIn 0.5s; }
+    .slide-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
+</script>
+
+<body>
+
+<nav class="nav-top">
+  <div class="brand"><span class="brand-dot"></span><span>English Hub</span></div>
+  <div class="nav-links"><a href="../index.html">Главная</a></div>
+  <button id="themeToggle" class="theme-btn" aria-label="Переключить тему">🌙</button>
+</nav>
+
+<div class="lesson-container">
+  
+  <div class="lesson-header">
+    <a href="#" class="back-link">← Назад к материалам</a>
+    <h1 id="lessonTitle">Прошедшие времена: Past Tenses</h1>
+    <div class="lesson-meta" id="lessonMeta">
+      <span class="meta-tag">⏱️ 12 мин</span>
+      <span class="meta-tag">📂 Грамматика</span>
+    </div>
+    <p class="lead" style="color: var(--muted)">Разбираем отличия Simple, Continuous и Perfect в прошлом</p>
+  </div>
+
+  <div class="lesson-content" id="lessonContent">
+    
+    <div class="slide-nav">
+      <button class="slide-btn active" onclick="showSlide(1)">1. Past Simple</button>
+      <button class="slide-btn" onclick="showSlide(2)">2. Past Continuous</button>
+      <button class="slide-btn" onclick="showSlide(3)">3. Past Perfect</button>
+    </div>
+
+    <!-- СЛАЙД 1: PAST SIMPLE -->
+    <div id="slide-1" class="slide-content active">
+      <h2>1. Past Simple (Простое прошедшее)</h2>
+      <p>Используется для <strong>завершённых действий в прошлом</strong>. Нам важно, КОГДА это произошло.</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> yesterday, last week, ago, in 2010, when I was young.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Правильные глаголы</th>
+            <th>Неправильные глаголы</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td>V2 + <strong>ed</strong></td>
+            <td>2-я форма (V2)</td>
+            <td>I <strong>worked</strong>. / I <strong>went</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td colspan="2"><strong>didn't</strong> + V1 (без изменений!)</td>
+            <td>I <strong>didn't work</strong>. / I <strong>didn't go</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td colspan="2"><strong>Did</strong> ... + V1?</td>
+            <td><strong>Did</strong> you <strong>work</strong>? / <strong>Did</strong> you <strong>go</strong>?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⚠️ Важно: Глагол To Be</h4>
+      <p>Глагол <code>to be</code> в прошедшем времени имеет две формы:</p>
+      <ul>
+        <li>I / He / She / It → <strong>was</strong></li>
+        <li>You / We / They → <strong>were</strong></li>
+      </ul>
+      <p><em>Примеры:</em></p>
+      <ul>
+        <li>I <strong>was</strong> at home yesterday.</li>
+        <li>They <strong>were</strong> happy.</li>
+        <li><strong>Was</strong> she at school? (Не: Did she be...)</li>
+      </ul>
+
+      <h4>📝 Правописание -ed</h4>
+      <ul>
+        <li>Стандарт: <strong>+ed</strong> (work → worked)</li>
+        <li>Заканчивается на <strong>e</strong>: <strong>+d</strong> (live → lived)</li>
+        <li>Короткий гласный + согласная: <strong>удвоение</strong> (stop → stopped)</li>
+        <li>Согласная + <strong>y</strong>: <strong>y → ied</strong> (study → studied)</li>
+      </ul>
+    </div>
+
+    <!-- СЛАЙД 2: PAST CONTINUOUS -->
+    <div id="slide-2" class="slide-content">
+      <h2>2. Past Continuous (Прошедшее длительное)</h2>
+      <p>Используется для действий, которые <strong>длились в определённый момент прошлого</strong> или были прерваны другим действием.</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> while, when, at 5 o'clock yesterday, all day yesterday, at that moment.
+      </blockquote>
+
+      <h3>Схема построения</h3>
+      <p>Формула: <code>was/were + V-ing</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Подлежащее</th>
+            <th>Вспомогательный</th>
+            <th>Основной глагол</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>I / He / She / It</td>
+            <td><strong>was</strong></td>
+            <td>V-ing (working)</td>
+          </tr>
+          <tr>
+            <td>You / We / They</td>
+            <td><strong>were</strong></td>
+            <td>V-ing (working)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Типичные ситуации</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Ситуация</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Действие в процессе</strong> в конкретный момент</td>
+            <td>At 7 PM yesterday I <strong>was watching</strong> TV.</td>
+          </tr>
+          <tr>
+            <td><strong>Два действия одновременно</strong></td>
+            <td>While I <strong>was cooking</strong>, he <strong>was reading</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>Длительное действие прервано</strong> коротким (Past Simple)</td>
+            <td>I <strong>was sleeping</strong> when the phone <strong>rang</strong>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⚡ Ключевая разница: When vs While</h4>
+      <ul>
+        <li><strong>When</strong> + Past Simple (короткое действие)</li>
+        <li><strong>While</strong> + Past Continuous (длительное действие)</li>
+      </ul>
+      <p><em>Пример:</em> <strong>While</strong> I <strong>was walking</strong> home, it <strong>started</strong> to rain.</p>
+    </div>
+
+    <!-- СЛАЙД 3: PAST PERFECT -->
+    <div id="slide-3" class="slide-content">
+      <h2>3. Past Perfect (Прошедшее совершенное)</h2>
+      <p>Используется для действия, которое <strong>завершилось ДО другого действия в прошлом</strong>. Это "прошлое в прошлом".</p>
+      
+      <blockquote>
+        🚩 <strong>Маркеры:</strong> by the time, before, after, already, just, never, when.
+      </blockquote>
+
+      <h3>Таблица форм</h3>
+      <p>Формула: <code>had + V3 (Past Participle)</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Тип</th>
+            <th>Форма</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>(+) Утверждение</strong></td>
+            <td><strong>had</strong> + V3</td>
+            <td>I <strong>had finished</strong> my work.</td>
+          </tr>
+          <tr>
+            <td><strong>(-) Отрицание</strong></td>
+            <td><strong>hadn't</strong> + V3</td>
+            <td>She <strong>hadn't seen</strong> him before.</td>
+          </tr>
+          <tr>
+            <td><strong>(?) Вопрос</strong></td>
+            <td><strong>Had</strong> ... + V3?</td>
+            <td><strong>Had</strong> you <strong>eaten</strong> before you came?</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Когда используем Past Perfect?</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Ситуация</th>
+            <th>Пример</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Действие завершилось до другого действия в прошлом</strong></td>
+            <td>When I arrived, the train <strong>had already left</strong>.<br><em>(Сначала ушёл поезд, потом я приехал)</em></td>
+          </tr>
+          <tr>
+            <td><strong>Опыт до определённого момента в прошлом</strong></td>
+            <td>She <strong>had never flown</strong> before 2020.</td>
+          </tr>
+          <tr>
+            <td><strong>Причина в прошлом</strong> (почему что-то произошло)</td>
+            <td>I was tired because I <strong>hadn't slept</strong> well.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>⏰ Временная шкала</h4>
+      <p>Представьте три точки на линии времени:</p>
+      <ol>
+        <li><strong>Past Perfect</strong> (самое раннее) → <em>I had eaten</em></li>
+        <li><strong>Past Simple</strong> (среднее) → <em>He arrived</em></li>
+        <li><strong>Present</strong> (сейчас) → <em>now</em></li>
+      </ol>
+      <p><em>Пример:</em> I <strong>had finished</strong> dinner before he <strong>arrived</strong>.</p>
+    </div>
+
+  </div>
+
+  <div class="lesson-footer">
+    <p>Проверьте свои знания:</p>
+        <a href="../quiz.html?test=english/tests/grammar/past.json" class="btn btn-secondary" style="background: var(--accent); color: #000; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+        Пройти тест по теме →
+    </a>
+  </div>
+</div>
+
+<script>
+  function showSlide(n) {
+    document.querySelectorAll('.slide-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.slide-btn').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById('slide-' + n).classList.add('active');
+    document.querySelectorAll('.slide-btn')[n-1].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

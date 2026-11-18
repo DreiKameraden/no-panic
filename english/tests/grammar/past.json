@@ -1,0 +1,51 @@
+{
+  "name": "Past Tenses: Проверка знаний",
+  "subtitle": "8 вопросов · 6 минут",
+  "timeLimit": 360,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "She _____ to the cinema yesterday evening.",
+      "opts": ["go", "went", "has gone", "was go"],
+      "c": 2
+    },
+    {
+      "type": "true_false",
+      "q": "В предложении 'We was at home last night' грамматическая ошибка.",
+      "answer": true
+    },
+    {
+      "type": "fill_blank",
+      "q": "At 8 PM yesterday, I _____ (read) a very interesting book. (Напишите глагол в правильной форме)",
+      "answer": "was reading"
+    },
+    {
+      "type": "multiple_choice",
+      "q": "While I _____ dinner, the phone rang.",
+      "opts": ["cooked", "was cooking", "had cooked", "am cooking"],
+      "c": 2
+    },
+    {
+      "type": "multiple_select",
+      "q": "Выберите ВСЕ слова-маркеры, которые часто используются с Past Perfect:",
+      "opts": ["by the time", "now", "before", "yesterday", "already"],
+      "correct": [0, 2, 4]
+    },
+    {
+      "type": "fill_blank",
+      "q": "When we arrived at the station, the train _____ (leave) already. (Напишите глагол в правильной форме)",
+      "answer": "had left"
+    },
+    {
+      "type": "true_false",
+      "q": "В отрицательных предложениях Past Simple основной глагол сохраняет окончание -ed (например: I didn't worked).",
+      "answer": false
+    },
+    {
+      "type": "multiple_choice",
+      "q": "He _____ in London for 5 years before he moved to Paris.",
+      "opts": ["lived", "was living", "had lived", "has lived"],
+      "c": 3
+    }
+  ]
+}

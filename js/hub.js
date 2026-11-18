@@ -267,6 +267,7 @@ function renderMap(manifest) {
 
   const levelOrder = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
   const items = (manifest.items || [])
+    .filter(item => !item.hidden) 
     .slice()
     .sort((a, b) => {
       if (levelOrder[a.level] !== levelOrder[b.level]) {

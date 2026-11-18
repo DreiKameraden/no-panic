@@ -1,0 +1,57 @@
+{
+  "name": "Future Tenses: Проверка знаний",
+  "subtitle": "8 вопросов · 6 минут",
+  "timeLimit": 360,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "I think people _____ on Mars in the future.",
+      "opts": ["live", "will live", "are living", "have lived"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Look at those dark clouds! It _____ rain.",
+      "opts": ["will", "is going to", "was going to", "has"],
+      "c": 2
+    },
+    {
+      "type": "fill_blank",
+      "q": "At 8 PM tomorrow, I _____ (watch) a movie. Напишите правильную форму глагола.",
+      "answer": "will be watching"
+    },
+    {
+      "type": "true_false",
+      "q": "Future Continuous образуется по формуле: will be + V-ing.",
+      "answer": true
+    },
+    {
+      "type": "multiple_choice",
+      "q": "By 6 PM tomorrow, she _____ the report.",
+      "opts": ["will finish", "will be finishing", "will have finished", "finishes"],
+      "c": 3
+    },
+    {
+      "type": "fill_blank",
+      "q": "By the time you arrive, we _____ (finish) dinner. Напишите правильную форму глагола.",
+      "answer": "will have finished"
+    },
+    {
+      "type": "multiple_select",
+      "q": "Выберите ВСЕ слова и выражения, которые часто используются с Future Perfect:",
+      "opts": ["by tomorrow", "yesterday", "by the time", "now", "by next week"],
+      "correct": [0, 2, 4]
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Выберите правильное предложение с глаголом TO BE в будущем времени:",
+      "opts": [
+        "She will is happy tomorrow.",
+        "She will be happy tomorrow.",
+        "She will been happy tomorrow.",
+        "She will being happy tomorrow."
+      ],
+      "c": 2
+    }
+  ]
+}

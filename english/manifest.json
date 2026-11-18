@@ -69,18 +69,54 @@
       },
       "groups": ["09"]
     },
-        {
+    {
       "id": "grammar-1",
       "material": {
-        "file": "materials/grammar/01.html",
-        "title": "",
+        "file": "materials/grammar/presence.html",
+        "title": "Настоящее время",
         "description": "Правила, схемы и примеры использования настоящего простого времени",
-        "type": "Лекция",
+        "type": "",
         "time": 5
       },
       "test": {
-        "file": "tests/grammar/01.json",
+        "file": "tests/grammar/presence.json",
         "title": "Test 1",
+        "description": "",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["gr"]
+    },
+    {
+      "id": "grammar-2",
+      "material": {
+        "file": "materials/grammar/past.html",
+        "title": "Прошедшее время",
+        "description": "Правила, схемы и примеры использования прошедшего времени",
+        "type": "",
+        "time": 5
+      },
+      "test": {
+        "file": "tests/grammar/past.json",
+        "title": "Test 2",
+        "description": "",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["gr"]
+    },
+    {
+      "id": "grammar-3",
+      "material": {
+        "file": "materials/grammar/future.html",
+        "title": "Будущее время",
+        "description": "Правила, схемы и примеры использования будущего времени",
+        "type": "",
+        "time": 5
+      },
+      "test": {
+        "file": "tests/grammar/future.json",
+        "title": "Test 3",
         "description": "",
         "questions": 10,
         "time": 10
@@ -95,6 +131,6 @@
     "description": "Итоговый тест по всем материалам курса",
     "questions": 20,
     "time": 20,
-    "groups": ["09", "ИТ-92"]
+    "groups": [""]
   }
 }
