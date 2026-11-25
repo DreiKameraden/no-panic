@@ -1,16 +1,15 @@
-
 # Артикль в немецком языке
 
 ## 1. Определённый и неопределённый артикль
 
 В каждой ячейке — **неопр. / опр.** артикль.
 
-| Падеж    | maskulin    | feminin     | neutrum     | Plural   |
+| Падеж    | maskulin    | neutrum     | feminin     | Plural   |
 | ------------- | ----------- | ----------- | ----------- | -------- |
-| **N**   | ein / der   | eine / die  | ein / das   | — / die |
-| **G**   | eines / des | einer / der | eines / des | — / der |
-| **D**   | einem / dem | einer / der | einem / dem | — / den |
-| **Akk** | einen / den | eine / die  | ein / das   | — / die |
+| **N**   | ein / der   | ein / das   | eine / die  | — / die |
+| **G**   | eines / des | eines / des | einer / der | — / der |
+| **D**   | einem / dem | einem / dem | einer / der | — / den |
+| **Akk** | einen / den | ein / das   | eine / die  | — / die |
 
 **Особенности:**
 

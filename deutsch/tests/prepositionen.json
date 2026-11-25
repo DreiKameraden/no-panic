@@ -1,0 +1,96 @@
+{
+  "name": "Deutsche Präpositionen und Kasus (Akkusativ & Dativ)",
+  "subtitle": "на пространственные и временные предлоги",
+  "timeLimit": 900,
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "q": "Выберите правильную форму (Wo?). Die Katze schläft ___ Sofa.",
+      "opts": [
+        "auf dem",
+        "auf den",
+        "in dem",
+        "an der"
+      ],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Выберите правильную форму (Wohin?). Wir fahren morgen ___ Meer.",
+      "opts": [
+        "in das",
+        "an das",
+        "auf dem",
+        "bei dem"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Выберите правильный предлог с падежом. Ich fahre immer ___ Bus zur Arbeit.",
+      "opts": [
+        "mit den",
+        "mit dem",
+        "durch den",
+        "für den"
+      ],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Выберите правильный предлог с падежом. Dieses Geschenk ist ___ meine Schwester.",
+      "opts": [
+        "für meine",
+        "für meiner",
+        "von meiner",
+        "bei meiner"
+      ],
+      "c": 0
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки (используйте слияние артикля, если возможно). Er geht ___ (in / das) Kino.",
+      "answer": "ins"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки (альтернативный полный вариант без слияния). Er geht ___ (in / das) Kino.",
+      "answer": "in das"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки. ___ (an / der) Wochenende fahre ich zu meinen Großeltern.",
+      "answer": "Am"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки (альтернативный вариант со строчной буквы). ___ (an / der) Wochenende fahre ich zu meinen Großeltern.",
+      "answer": "am"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки. Wir warten schon ___ (seit / zwei) Stunden auf den Bus.",
+      "answer": "seit zwei"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки. Ich komme gerade ___ (aus / das) Büro.",
+      "answer": "aus dem"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки. Der Wanderer geht ___ (gegen / der) Wind.",
+      "answer": "gegen den"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки. Wir gehen ___ (ohne / der) Regenschirm spazieren, obwohl es regnet.",
+      "answer": "ohne den"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Раскройте скобки (отрицание). Ich habe ___ (kein) Zeit, ich muss ___ (zu / die) Arbeit gehen.",
+      "answer": "keine, zur"
+    }
+  ]
+}

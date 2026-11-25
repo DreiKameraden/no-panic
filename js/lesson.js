@@ -63,6 +63,9 @@ if (!filePath || !section) {
       // Строим оглавление!
       buildTocTree();
 
+      // Инициализируем интерактивный квиз!
+      initInteractiveQuiz();
+
       const backLink = document.getElementById('backLink');
       const backBtn2 = document.getElementById('backBtn2');
       if (backLink) backLink.href = backUrl;
@@ -150,3 +153,50 @@ function slugifyHeading(s) {
     .replace(/[\s-]+/g, '-')
     .replace(/^-|-$/g, '');
 }
+
+
+
+
+/* ===== ИНТЕРАКТИВНЫЙ КВИЗ (добавить в конец lesson.js) ===== */
+function initInteractiveQuiz() {
+  // Функция проверки отдельного блока
+  window.checkQuizBlock = function(btn) {
+    const block = btn.closest('.quiz-block');
+    const inputs = block.querySelectorAll('.quiz-input, .quiz-select');
+    let correct = 0;
+    let total = inputs.length;
+
+    inputs.forEach(input => {
+      // Очищаем значение: убираем пробелы, приводим к нижнему регистру
+      const userAnswer = input.value.trim().toLowerCase();
+      // Правильный ответ из data-атрибута тоже чистим
+      const correctAnswer = input.dataset.answer.trim().toLowerCase();
+
+      // Сбрасываем классы
+      input.classList.remove('correct', 'incorrect');
+
+      if (userAnswer === correctAnswer) {
+        input.classList.add('correct');
+        correct++;
+      } else if (userAnswer !== '') {
+        input.classList.add('incorrect');
+      }
+    });
+
+    // Обновляем статистику в блоке
+    const statsSpan = block.querySelector('.quiz-stats');
+    const wrong = total - correct;
+    statsSpan.innerHTML = `<span class="ok">✓ ${correct}</span> <span class="err">✗ ${wrong}</span>`;
+    
+    // Если всё верно, подсвечиваем весь блок
+    if (correct === total && total > 0) {
+      block.style.borderColor = 'rgba(34,197,94,0.5)';
+      block.style.background = 'rgba(34,197,94,0.03)';
+    }
+  };
+}
+
+// !!! ВАЖНО: Вызовите эту функцию ПОСЛЕ marked.parse и buildTocTree
+// Найдите в вашем коде место после: document.getElementById('lessonContent').innerHTML = marked.parse(cleanText);
+// И добавьте туда вызов:
+// initInteractiveQuiz();

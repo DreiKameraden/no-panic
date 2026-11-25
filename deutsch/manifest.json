@@ -1,84 +1,270 @@
 {
   "items": [
     {
-      "id": "theme-b1-1",
-      "level": "B1",
+      "id": "theme-a1.1",
+      "level": "A1",
       "unit": 1,
-      "canDo": "Представиться, спросить «Как дела?», назвать страну и профессию.",
-      "grammar": "sein, haben, W-вопросы, порядок слов",
-      "vocabulary": "Приветствия, страны, профессии, числа 1–20",
-      "product": "Аудио 30 сек. «О себе»",
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "Базовые вопросы и ответы, приветствия, прощания",
+      "product": "",
       "material": {
-        "file": "materials/themes/a1-1-museum.md",
-        "title": "Знакомство",
-        "description": "Представиться, назвать профессию",
+        "file": "materials/themes/a1/a1-1.md",
+        "title": "Die Ankunft",
+        "description": "",
         "type": "Тема"
       },
       "test": {
-        "file": "materials/themes/a1-1.json",
+        "file": "tests",
         "title": "Тест по теме",
         "description": "Проверка базовой грамматики",
         "questions": 15,
         "time": 10
       },
-      "groups": ["A1", "Темы"],
+      "groups": ["A1"],
       "branches": [
         {
-          "title": "Видео: Freunde 1/1",
-          "file": "materials/Freunde/1.1.md",
-          "icon": "🎬"
-        },
-        {
-          "title": "Грамматика: sein/haben",
-          "file": "materials/grammar/sein_haben.md",
+          "title": "",
+          "file": "",
           "icon": "📘"
         }
       ]
     },
     {
-      "id": "theme-a1-2",
+      "id": "theme-a1.2",
       "level": "A1",
       "unit": 2,
-      "canDo": "Рассказать о семье, возрасте, хобби.",
-      "grammar": "Притяжательные местоимения, Akkusativ (введение)",
-      "vocabulary": "Семья, хобби, числа до 100",
-      "product": "Дерево семьи + описание",
-      "material": {
-        "file": "materials/themes/a1-2-family.md",
-        "title": "Я и другие",
-        "description": "Семья, возраст, хобби",
-        "type": "Тема"
-      },
-      "test": {
-        "file": "tests/themes/a1-2-family.json",
-        "title": "Тест: Семья",
-        "description": "Проверка лексики",
-        "questions": 10,
-        "time": 10
-      },
-      "groups": ["A1", "Темы"],
-      "branches": [
-        {
-          "title": "Спряжение глаголов",
-          "file": "materials/grammar/verben.md",
-          "icon": ""
-        }
-      ]
-    },
-    {
-      "id": "mk-1",
-      "level": "B2",
-      "unit": 1,
-      "hidden": true,
       "canDo": "",
       "grammar": "",
       "vocabulary": "",
       "product": "",
       "material": {
-        "file": "materials/mk/1.md",
-        "title": "MK",
+        "file": "materials/themes/a1/a1-2.md",
+        "title": "Das Team und die Familie",
         "description": "",
-        "type": ""
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"],
+      "branches": [
+        {
+          "title": "",
+          "file": "",
+          "icon": "📘"
+        }
+      ]
+    },
+    {
+      "id": "theme-a1.3",
+      "level": "A1",
+      "unit": 3,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "Базовые вопросы и ответы, приветствия, прощания",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a1/a1-3.md",
+        "title": "Essen und Einkaufen",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"]
+    },
+    {
+      "id": "theme-a1.4",
+      "level": "A1",
+      "unit": 4,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a1/a1-4.md",
+        "title": "Mein Zimmer",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Тест по теме предлогов",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"],
+      "branches": [
+        {
+          "title": "",
+          "file": "materials/themes/a1/a1-4(1).md",
+          "icon": "📘"
+        }
+      ]
+    },
+    {
+      "id": "theme-a1.5",
+      "level": "A1",
+      "unit": 5,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a1/a1-5.md",
+        "title": "Mein Tag und meine Wege",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"]
+    },
+    {
+      "id": "theme-a1.6",
+      "level": "A1",
+      "unit": 6,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "Базовые вопросы и ответы, приветствия, прощания",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a1/a1-6.md",
+        "title": "Können, müssen, wollen",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"]
+    },
+    {
+      "id": "theme-a1.7",
+      "level": "A1",
+      "unit": 7,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a1/a1-7.md",
+        "title": "Ein Tag mit Leo",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A1"]
+    },
+
+
+
+
+    {
+      "id": "Grammatik-1",
+      "level": "A1",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/verben.md",
+        "title": "Спряжение глаголов"
+      },
+      "test": {
+        "file": "tests/grammar/verben.json",
+        "title": "Тест: Спряжение глаголов",
+        "description": "Проверка грамматики",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-2",
+      "level": "A1",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/pronomen.md",
+        "title": "Местоимения"
+      },
+      "test": {
+        "file": "tests/grammar/pronomen.json",
+        "title": "Тест: Местоимения",
+        "description": "Проверка грамматики",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["grammatik"]
+    },
+        {
+      "id": "Grammatik-3",
+      "level": "A1",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/artikel.md",
+        "title": "Артикли"
+      },
+      "test": {
+        "file": "tests/grammar/artikel.json",
+        "title": "Тест: Артикли",
+        "description": "Проверка грамматики",
+        "questions": 10,
+        "time": 10
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-4",
+      "level": "A1",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/prepositionen.md",
+        "title": "Предлоги"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Предлоги",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+
+
+
+
+    {
+      "id": "mk-1",
+      "level": "B2",
+      "hidden": true,
+      "material": {
+        "file": "materials/mk/1.md",
+        "title": "MK1"
       },
       "test": {
         "file": "",
