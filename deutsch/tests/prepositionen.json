@@ -1,51 +1,103 @@
 {
   "name": "Deutsche Präpositionen und Kasus (Akkusativ & Dativ)",
-  "subtitle": "на пространственные и временные предлоги",
+  "subtitle": "пространственные и временные предлоги",
   "timeLimit": 900,
   "questions": [
     {
       "type": "multiple_choice",
-      "q": "Выберите правильную форму (Wo?). Die Katze schläft ___ Sofa.",
-      "opts": [
-        "auf dem",
-        "auf den",
-        "in dem",
-        "an der"
-      ],
-      "c": 0
-    },
-    {
-      "type": "multiple_choice",
-      "q": "Выберите правильную форму (Wohin?). Wir fahren morgen ___ Meer.",
-      "opts": [
-        "in das",
-        "an das",
-        "auf dem",
-        "bei dem"
-      ],
+      "q": "(Wo?). Die Katze schläft ___ Sofa.",
+      "opts": ["an der", "auf dem", "in dem", "auf den"],
       "c": 1
     },
     {
       "type": "multiple_choice",
-      "q": "Выберите правильный предлог с падежом. Ich fahre immer ___ Bus zur Arbeit.",
-      "opts": [
-        "mit den",
-        "mit dem",
-        "durch den",
-        "für den"
-      ],
+      "q": "(Wohin?). Wir fahren morgen ___ Meer.",
+      "opts": ["an das", "auf dem", "bei dem", "in das"],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Ich fahre immer ___ Bus zur Arbeit.",
+      "opts": ["durch den", "mit den", "mit dem", "für den"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Dieses Geschenk ist ___ Schwester.",
+      "opts": ["von meiner", "bei meiner", "für meine", "für meiner"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Das Bild hängt ___ Wand. (Wo?)",
+      "opts": ["auf der", "an die", "an der", "in der"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Der Junge stellt die Flasche ___ Tisch. (Wohin?)",
+      "opts": ["auf den", "auf dem", "an dem", "unter dem"],
+      "c": 0
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Die Bibliothek liegt ___ Rathaus. (напротив)",
+      "opts": ["gegen dem", "neben dem", "gegenüber das", "gegenüber dem"],
+      "c": 3
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Wir gehen ___ Park spazieren. (через)",
+      "opts": ["um den", "durch dem", "durch den", "gegen den"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Er kommt ___ Arzt. (от врача)",
+      "opts": ["aus dem", "von den", "von dem", "bei dem"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": "Ich fahre ___ Berlin. (в город)",
+      "opts": ["zu", "nach", "in", "bei"],
       "c": 1
     },
     {
       "type": "multiple_choice",
-      "q": "Выберите правильный предлог с падежом. Dieses Geschenk ist ___ meine Schwester.",
-      "opts": [
-        "für meine",
-        "für meiner",
-        "von meiner",
-        "bei meiner"
-      ],
-      "c": 0
+      "q": " ___ Montag habe ich frei.",
+      "opts": ["Im", "Um", "Am", "An"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": " ___ Winter ist es hier sehr kalt.",
+      "opts": ["Am", "Im", "Um", "An"],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": " Der Kurs beginnt ___ 9 Uhr.",
+      "opts": ["am", "um", "im", "bis"],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": " Ich wohne ___ einem Jahr in Deutschland. (с)",
+      "opts": ["vor", "nach", "seit", "für"],
+      "c": 2
+    },
+    {
+      "type": "multiple_choice",
+      "q": " Wir treffen uns ___ der Arbeit. (после)",
+      "opts": ["seit", "nach", "vor", "bei"],
+      "c": 1
+    },
+    {
+      "type": "multiple_choice",
+      "q": " Das ist ___ zwei Jahren passiert. (тому назад)",
+      "opts": ["seit", "nach", "vor", "für"],
+      "c": 2
     },
     {
       "type": "fill_blank",
@@ -54,43 +106,83 @@
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки (альтернативный полный вариант без слияния). Er geht ___ (in / das) Kino.",
-      "answer": "in das"
-    },
-    {
-      "type": "fill_blank",
-      "q": "Раскройте скобки. ___ (an / der) Wochenende fahre ich zu meinen Großeltern.",
+      "q": " ___ (an / der) Wochenende fahre ich zu meinen Großeltern.",
       "answer": "Am"
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки (альтернативный вариант со строчной буквы). ___ (an / der) Wochenende fahre ich zu meinen Großeltern.",
-      "answer": "am"
-    },
-    {
-      "type": "fill_blank",
-      "q": "Раскройте скобки. Wir warten schon ___ (seit / zwei) Stunden auf den Bus.",
+      "q": "Wir warten schon ___ (seit / zwei) Stunden auf den Bus.",
       "answer": "seit zwei"
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки. Ich komme gerade ___ (aus / das) Büro.",
+      "q": "Ich komme gerade ___ (aus / das) Büro.",
       "answer": "aus dem"
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки. Der Wanderer geht ___ (gegen / der) Wind.",
+      "q": "Der Wanderer geht ___ (gegen / der) Wind.",
       "answer": "gegen den"
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки. Wir gehen ___ (ohne / der) Regenschirm spazieren, obwohl es regnet.",
+      "q": "Wir gehen ___ (ohne / der) Regenschirm spazieren, obwohl es regnet.",
       "answer": "ohne den"
     },
     {
       "type": "fill_blank",
-      "q": "Раскройте скобки (отрицание). Ich habe ___ (kein) Zeit, ich muss ___ (zu / die) Arbeit gehen.",
+      "q": " Ich habe ___ (kein) Zeit, ich muss ___ (zu / die) Arbeit gehen.",
       "answer": "keine, zur"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Die Kinder spielen ___ (auf / der) Hof.",
+      "answer": "auf dem"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Sie hängt das Poster ___ (an / die) Wand.",
+      "answer": "an die"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Das Café ist ___ (neben / der) Kino.",
+      "answer": "neben dem"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Wir laufen ___ (um / das) Haus herum.",
+      "answer": "um das"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Er wohnt ___ (bei / sein) Onkel.",
+      "answer": "bei seinem"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Ich fahre ___ (zu / der) Ärztin.",
+      "answer": "zur"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Wir bleiben ___ (bis / Montag) hier.",
+      "answer": "bis Montag"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Das Geschenk ist ___ (für / du).",
+      "answer": "für dich"
+    },
+    {
+      "type": "fill_blank",
+      "q": "Er kommt ___ (aus / die) Schweiz.",
+      "answer": "aus der"
+    },
+    {
+      "type": "fill_blank",
+      "q": " ___ (in / das) Jahr 1918 endete der Krieg? (со словом Jahr)",
+      "answer": "Im"
     }
   ]
 }
