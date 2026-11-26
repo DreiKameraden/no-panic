@@ -274,6 +274,40 @@
         "time": 0
       },
       "groups": ["MK"]
+    },
+    {
+      "id": "mk-2",
+      "level": "B2",
+      "hidden": true,
+      "material": {
+        "file": "materials/mk/2.md",
+        "title": "MK2"
+      },
+      "test": {
+        "file": "",
+        "title": "",
+        "description": "",
+        "questions": 0,
+        "time": 0
+      },
+      "groups": ["MK"]
+    },
+    {
+      "id": "mk-3",
+      "level": "B2",
+      "hidden": true,
+      "material": {
+        "file": "materials/mk/3.md",
+        "title": "MK3"
+      },
+      "test": {
+        "file": "",
+        "title": "",
+        "description": "",
+        "questions": 0,
+        "time": 0
+      },
+      "groups": ["MK"]
     }
 
   ],
