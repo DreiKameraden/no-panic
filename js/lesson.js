@@ -50,7 +50,7 @@ if (!filePath || !section) {
     .then(({ material, text }) => {
       document.getElementById('lessonTitle').textContent = material.title || 'Урок';
       document.getElementById('lessonSubtitle').textContent = material.description || '';
-      document.title = (material.title || 'Урок') + ' — Digital College';
+      document.title = (material.title || 'Урок');
 
       const metaHtml = [];
       if (material.time) metaHtml.push(`<span class="meta-tag">⏱️ ${material.time} мин</span>`);
