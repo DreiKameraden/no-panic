@@ -184,10 +184,120 @@
     },
 
 
+    {
+      "id": "theme-a2.1",
+      "level": "A2",
+      "unit": 1,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a2/a2-1.md",
+        "title": "Leo ist krank",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A2"]
+    },
+    {
+      "id": "theme-a2.2",
+      "level": "A2",
+      "unit": 2,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a2/a2-2.md",
+        "title": "Leo auf Dienstreise",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A2"]
+    },
+    {
+      "id": "theme-a2.3",
+      "level": "A2",
+      "unit": 3,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a2/a2-3.md",
+        "title": "Leo kommt zurück",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A2"]
+    },
+    {
+      "id": "theme-a2.4",
+      "level": "A2",
+      "unit": 4,
+      "canDo": "",
+      "grammar": "",
+      "vocabulary": "",
+      "product": "",
+      "material": {
+        "file": "materials/themes/a2/a2-4.md",
+        "title": "Einweihungsparty bei Leo",
+        "description": "",
+        "type": "Тема"
+      },
+      "test": {
+        "file": "tests",
+        "title": "Тест по теме",
+        "description": "Проверка базовой грамматики",
+        "questions": 15,
+        "time": 10
+      },
+      "groups": ["A2"]
+    },
+
 
 
     {
       "id": "Grammatik-1",
+      "level": "A1",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/wortstellung.md",
+        "title": "Порядок слов"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Предлоги",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-2",
       "level": "A1",
       "hidden": true,
       "material": {
@@ -204,7 +314,24 @@
       "groups": ["grammatik"]
     },
     {
-      "id": "Grammatik-2",
+      "id": "Grammatik-2.1",
+      "level": "A2+",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/zeit.md",
+        "title": "Времена"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Времена",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-3",
       "level": "A1",
       "hidden": true,
       "material": {
@@ -220,8 +347,8 @@
       },
       "groups": ["grammatik"]
     },
-        {
-      "id": "Grammatik-3",
+    {
+      "id": "Grammatik-4",
       "level": "A1",
       "hidden": true,
       "material": {
@@ -238,7 +365,7 @@
       "groups": ["grammatik"]
     },
     {
-      "id": "Grammatik-4",
+      "id": "Grammatik-5",
       "level": "A1",
       "hidden": true,
       "material": {
@@ -248,6 +375,57 @@
       "test": {
         "file": "tests/prepositionen.json",
         "title": "Предлоги",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-6",
+      "level": "A2+",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/adjektiv.md",
+        "title": "Прилагательные"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Прилагательные",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-7",
+      "level": "A2+",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/nomen.md",
+        "title": "Существительные"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Существительные",
+        "description": "Проверка грамматики",
+        "questions": 13,
+        "time": 15
+      },
+      "groups": ["grammatik"]
+    },
+    {
+      "id": "Grammatik-8",
+      "level": "A2+",
+      "hidden": true,
+      "material": {
+        "file": "materials/grammar/infin_zu.md",
+        "title": "Инфинитив + zu"
+      },
+      "test": {
+        "file": "tests/prepositionen.json",
+        "title": "Инфинитив + zu",
         "description": "Проверка грамматики",
         "questions": 13,
         "time": 15
